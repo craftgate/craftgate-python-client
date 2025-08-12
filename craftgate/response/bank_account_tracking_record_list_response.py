@@ -1,0 +1,6 @@
+from craftgate.response.common.list_response import ListResponse
+from craftgate.response.bank_account_tracking_record_response import BankAccountTrackingRecordResponse
+
+
+class BankAccountTrackingRecordListResponse(ListResponse[BankAccountTrackingRecordResponse]):
+    item_type = BankAccountTrackingRecordResponse

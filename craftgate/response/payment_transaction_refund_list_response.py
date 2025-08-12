@@ -1,0 +1,6 @@
+from craftgate.response.common.list_response import ListResponse
+from craftgate.response.payment_transaction_refund_response import PaymentTransactionRefundResponse
+
+
+class PaymentTransactionRefundListResponse(ListResponse[PaymentTransactionRefundResponse]):
+    item_type = PaymentTransactionRefundResponse

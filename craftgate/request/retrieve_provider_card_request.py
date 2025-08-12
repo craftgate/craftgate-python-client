@@ -1,0 +1,17 @@
+from typing import Optional
+
+from craftgate.model.card_provider import CardProvider
+
+
+class RetrieveProviderCardRequest(object):
+    def __init__(
+            self,
+            provider_card_token: Optional[str] = None,
+            external_id: Optional[str] = None,
+            provider_card_user_id: Optional[str] = None,
+            card_provider: Optional[CardProvider] = None
+    ) -> None:
+        self.provider_card_token = provider_card_token
+        self.external_id = external_id
+        self.provider_card_user_id = provider_card_user_id
+        self.card_provider = card_provider

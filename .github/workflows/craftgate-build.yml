@@ -1,0 +1,50 @@
+name: Craftgate Python CI
+
+on: [ pull_request ]
+
+jobs:
+  checks:
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version:
+          - "3.7"
+          - "3.8"
+          - "3.9"
+          - "3.10"
+          - "3.11"
+          - "3.12"
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+          cache: 'pip'
+
+      - name: Upgrade packaging tooling
+        run: python -m pip install --upgrade pip setuptools wheel
+
+      - name: Install project
+        run: pip install -e .
+
+      - name: Verify package structure
+        run: python scripts/check_init_files.py
+
+      - name: Compile sources
+        run: python -m compileall craftgate
+
+      - name: Build distribution and verify metadata
+        if: matrix.python-version == '3.12'
+        run: |
+          python -m pip install build twine
+          rm -rf dist build
+          python -m build
+          twine check dist/*
+
+      - name: Skip integration tests
+        run: echo "Integration tests rely on live credentials and are intentionally skipped in CI."

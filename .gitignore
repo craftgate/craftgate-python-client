@@ -1,0 +1,17 @@
+/dist
+/tags
+MANIFEST
+build
+/venv
+.idea
+__pycache__/
+*.egg-info/
+.env
+.pypirc
+.venv/
+.venv*/
+venv/
+.pytest_cache/
+.mypy_cache/
+.coverage
+*.DS_Store
