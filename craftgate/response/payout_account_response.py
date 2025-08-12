@@ -1,0 +1,23 @@
+from typing import Optional
+
+from craftgate.model.account_owner import AccountOwner
+from craftgate.model.currency import Currency
+from craftgate.model.payout_account_type import PayoutAccountType
+
+
+class PayoutAccountResponse(object):
+    def __init__(
+            self,
+            id: Optional[int] = None,
+            type: Optional[PayoutAccountType] = None,
+            external_account_id: Optional[str] = None,
+            currency: Optional[Currency] = None,
+            account_owner: Optional[AccountOwner] = None,
+            sub_merchant_member_id: Optional[int] = None
+    ) -> None:
+        self.id = id
+        self.type = type
+        self.external_account_id = external_account_id
+        self.currency = currency
+        self.account_owner = account_owner
+        self.sub_merchant_member_id = sub_merchant_member_id

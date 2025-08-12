@@ -1,0 +1,96 @@
+name: Craftgate Python Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: "Release version (format: 1.2.3)"
+        required: true
+      release_notes:
+        description: "Optional release notes (markdown)."
+        required: false
+        default: ""
+      publish_to_pypi:
+        description: "Upload build artifacts to PyPI"
+        type: boolean
+        default: true
+
+jobs:
+  Release:
+    runs-on: ubuntu-22.04
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          token: ${{ secrets.SDLC_BOT_TOKEN }}
+
+      - name: Ensure branch context
+        run: |
+          if [[ "${GITHUB_REF}" != refs/heads/* ]]; then
+            echo "::error::Release workflow must run against a branch ref."
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+
+      - name: Install build tooling
+        run: python -m pip install --upgrade pip setuptools wheel build twine
+
+      - name: Update version file
+        id: bump_version
+        run: |
+          set -euo pipefail
+          VERSION=$(python scripts/update_version.py "${{ inputs.version }}")
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+
+      - name: Build artifacts
+        run: |
+          rm -rf dist build
+          python -m build
+          twine check dist/*
+
+      - name: Commit version bump
+        run: |
+          git config --global user.name "craftgate-sdlc"
+          git config --global user.email "craftgate-sdlc@craftgate.io"
+          git add _version.py
+          if git diff --cached --quiet; then
+            echo "::error::No changes detected. Is the requested version already released?"
+            exit 1
+          fi
+          git commit -m "Release v${{ steps.bump_version.outputs.version }}"
+
+      - name: Create tag
+        run: git tag "v${{ steps.bump_version.outputs.version }}"
+
+      - name: Push changes
+        env:
+          TARGET_BRANCH: ${{ github.ref }}
+        run: |
+          BRANCH_NAME="${TARGET_BRANCH#refs/heads/}"
+          git push origin "HEAD:${BRANCH_NAME}"
+          git push origin "v${{ steps.bump_version.outputs.version }}"
+
+      - name: Publish to PyPI
+        if: inputs.publish_to_pypi == true
+        env:
+          TWINE_USERNAME: __token__
+          TWINE_PASSWORD: ${{ secrets.PYPI_API_TOKEN }}
+        run: twine upload dist/*
+
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: v${{ steps.bump_version.outputs.version }}
+          name: v${{ steps.bump_version.outputs.version }}
+          body: ${{ inputs.release_notes }}
+          generate_release_notes: true
+          files: |
+            dist/*

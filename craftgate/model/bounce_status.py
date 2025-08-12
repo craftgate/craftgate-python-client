@@ -1,0 +1,9 @@
+from enum import Enum
+
+
+class BounceStatus(str, Enum):
+    NOT_BOUNCED = "NOT_BOUNCED"
+    BOUNCED = "BOUNCED"
+    UPDATED = "UPDATED"
+    PAYOUT_STARTED = "PAYOUT_STARTED"
+    PAYOUT_COMPLETED = "PAYOUT_COMPLETED"

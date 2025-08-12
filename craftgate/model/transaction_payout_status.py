@@ -1,0 +1,9 @@
+from enum import Enum
+
+
+class TransactionPayoutStatus(str, Enum):
+    CANCELLED = "CANCELLED"
+    NO_PAYOUT = "NO_PAYOUT"
+    WAITING_FOR_PAYOUT = "WAITING_FOR_PAYOUT"
+    PAYOUT_STARTED = "PAYOUT_STARTED"
+    PAYOUT_COMPLETED = "PAYOUT_COMPLETED"
