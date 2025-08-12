@@ -1,0 +1,6 @@
+from enum import Enum
+
+class MemberType(str, Enum):
+    PERSONAL = "PERSONAL"
+    PRIVATE_COMPANY = "PRIVATE_COMPANY"
+    LIMITED_OR_JOINT_STOCK_COMPANY = "LIMITED_OR_JOINT_STOCK_COMPANY"

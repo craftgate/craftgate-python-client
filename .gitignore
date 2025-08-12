@@ -1,0 +1,6 @@
+/dist
+/tags
+MANIFEST
+build
+/venv
+.idea

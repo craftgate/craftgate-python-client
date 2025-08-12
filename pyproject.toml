@@ -1,0 +1,41 @@
+[build-system]
+requires = [
+    "setuptools<45; python_version < '3.6'",
+    "setuptools>=61; python_version >= '3.6'",
+    "wheel"
+]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "craftgate"
+dynamic = ["version"]
+description = "Python client for Craftgate API"
+readme = "README.md"
+requires-python = ">=3.5"
+license = { text = "MIT" }
+authors = [{ name = "Craftgate", email = "dev@craftgate.io" }]
+keywords = ["craftgate", "payments", "api", "client", "sdk"]
+dependencies = [
+    "requests>=2.20,<2.26; python_version < '3.6'",
+    "requests>=2.20; python_version >= '3.6'",
+    "typing_extensions<4; python_version < '3.8'"
+]
+
+[project.urls]
+Homepage = "https://github.com/craftgate/craftgate-python-client"
+Documentation = "https://developer.craftgate.io"
+Source = "https://github.com/craftgate/craftgate-python-client"
+Issues = "https://github.com/craftgate/craftgate-python-client/issues"
+
+[tool.setuptools]
+py-modules = ["_version"]
+
+[tool.setuptools.packages.find]
+include = ["craftgate*"]
+exclude = ["tests", "tests.*"]
+
+[tool.setuptools.package-data]
+craftgate = ["py.typed"]
+
+[tool.setuptools.dynamic]
+version = { attr = "_version.VERSION" }
