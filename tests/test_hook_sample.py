@@ -4,7 +4,7 @@ import unittest
 from datetime import datetime
 from craftgate import Craftgate
 
-from craftgate.model.webhook_data import WebhookData, WebhookEventType, WebhookStatus
+from craftgate.model import WebhookData, WebhookEventType, WebhookStatus
 from craftgate.request_options import RequestOptions
 
 
