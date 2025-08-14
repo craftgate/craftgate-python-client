@@ -2,12 +2,10 @@
 import os
 import unittest
 from datetime import date
-from craftgate import Craftgate
 
-from craftgate.adapter import FileReportingAdapter
+from craftgate import Craftgate, RequestOptions
 from craftgate.model import ReportFileType
 from craftgate.request import RetrieveDailyPaymentReportRequest, RetrieveDailyTransactionReportRequest
-from craftgate.request_options import RequestOptions
 
 
 class FileReportingSample(unittest.TestCase):

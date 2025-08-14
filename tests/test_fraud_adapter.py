@@ -2,11 +2,10 @@
 import os
 import unittest
 from datetime import datetime, timedelta
-from craftgate import Craftgate
 
+from craftgate import Craftgate, RequestOptions
 from craftgate.model import FraudAction, FraudValueType, FraudCheckStatus
 from craftgate.request import FraudValueListRequest, SearchFraudChecksRequest
-from craftgate.request_options import RequestOptions
 from craftgate.utils.converter import Converter
 
 

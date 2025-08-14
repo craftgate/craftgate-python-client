@@ -2,10 +2,9 @@
 import os
 import unittest
 from datetime import datetime
-from craftgate import Craftgate
 
+from craftgate import Craftgate, RequestOptions
 from craftgate.model import WebhookData, WebhookEventType, WebhookStatus
-from craftgate.request_options import RequestOptions
 
 
 class HookSample(unittest.TestCase):

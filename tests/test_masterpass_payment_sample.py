@@ -4,20 +4,11 @@ import unittest
 import uuid
 from decimal import Decimal
 
-from craftgate.adapter.masterpass_payment_adapter import MasterpassPaymentAdapter
-from craftgate.model.currency import Currency
-from craftgate.model.payment_group import PaymentGroup
-from craftgate.model.payment_phase import PaymentPhase
-from craftgate.model.payment_provider import PaymentProvider
-from craftgate.request.check_masterpass_user_request import CheckMasterpassUserRequest
-from craftgate.request.dto.masterpass_create_payment import MasterpassCreatePayment
-from craftgate.request.dto.payment_item import PaymentItem
-from craftgate.request.masterpass_payment_complete_request import MasterpassPaymentCompleteRequest
-from craftgate.request.masterpass_payment_threeds_complete_request import MasterpassPaymentThreeDSCompleteRequest
-from craftgate.request.masterpass_payment_threeds_init_request import MasterpassPaymentThreeDSInitRequest
-from craftgate.request.masterpass_payment_token_generate_request import MasterpassPaymentTokenGenerateRequest
-from craftgate.request.masterpass_retrieve_loyalties_request import MasterpassRetrieveLoyaltiesRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import Currency, PaymentGroup, PaymentPhase, PaymentProvider
+from craftgate.request import CheckMasterpassUserRequest, MasterpassPaymentCompleteRequest, \
+    MasterpassPaymentThreeDSCompleteRequest, MasterpassPaymentThreeDSInitRequest, MasterpassPaymentTokenGenerateRequest, \
+    MasterpassRetrieveLoyaltiesRequest,  MasterpassCreatePayment, PaymentItem
 
 
 class MasterpassSample(unittest.TestCase):
@@ -32,13 +23,13 @@ class MasterpassSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = MasterpassPaymentAdapter(options)
+        cls.masterpass_payment = Craftgate(options).masterpass_payment()
 
     def test_check_masterpass_user(self):
         request = CheckMasterpassUserRequest(
-            masterpass_gsm_number="5305289290"
+            masterpass_gsm_number="5550001122"
         )
-        response = self.adapter.check_masterpass_user(request)
+        response = self.masterpass_payment.check_masterpass_user(request)
         print(vars(response))
         self.assertIsNotNone(response)
 
@@ -65,7 +56,7 @@ class MasterpassSample(unittest.TestCase):
             force_three_d_s=False,
             create_payment=create_payment
         )
-        response = self.adapter.generate_masterpass_payment_token(request)
+        response = self.masterpass_payment.generate_masterpass_payment_token(request)
         print(vars(response))
         self.assertIsNotNone(response.reference_id)
         self.assertIsNotNone(response.order_no)
@@ -76,7 +67,7 @@ class MasterpassSample(unittest.TestCase):
             reference_id="83daa370-b935-4477-9be1-6010eb80f986",
             token="20250810052755062OfUa3vz"
         )
-        response = self.adapter.complete_masterpass_payment(request)
+        response = self.masterpass_payment.complete_masterpass_payment(request)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertEqual(PaymentProvider.MASTERPASS, response.payment_provider)
@@ -91,7 +82,7 @@ class MasterpassSample(unittest.TestCase):
             reference_id="referenceId",
             callback_url="https://www.your-website.com/craftgate-3DSecure-callback"
         )
-        response = self.adapter.init_3ds_masterpass_payment(request)
+        response = self.masterpass_payment.init_3ds_masterpass_payment(request)
         print(vars(response))
         self.assertIsNotNone(response.return_url)
 
@@ -99,7 +90,7 @@ class MasterpassSample(unittest.TestCase):
         request = MasterpassPaymentThreeDSCompleteRequest(
             payment_id=1
         )
-        response = self.adapter.complete_3ds_masterpass_payment(request)
+        response = self.masterpass_payment.complete_3ds_masterpass_payment(request)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertEqual(PaymentProvider.MASTERPASS, response.payment_provider)
@@ -115,7 +106,7 @@ class MasterpassSample(unittest.TestCase):
             msisdn="5305289290",
             bin_number="413226"
         )
-        response = self.adapter.retrieve_loyalties(request)
+        response = self.masterpass_payment.retrieve_loyalties(request)
         print(vars(response))
         self.assertIsNotNone(response)
 

@@ -4,15 +4,10 @@ import unittest
 import uuid
 from decimal import Decimal
 
-from craftgate.adapter.juzdan_payment_adapter import JuzdanPaymentAdapter
-from craftgate.model.currency import Currency
-from craftgate.model.payment_group import PaymentGroup
-from craftgate.model.payment_phase import PaymentPhase
-from craftgate.model.payment_source import PaymentSource
-from craftgate.model.payment_type import PaymentType
-from craftgate.request.dto.payment_item import PaymentItem
-from craftgate.request.init_juzdan_payment_request import InitJuzdanPaymentRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import Currency, PaymentGroup, PaymentPhase, PaymentSource, PaymentType
+from craftgate.request import InitJuzdanPaymentRequest
+from craftgate.request.dto import PaymentItem
 
 
 class JuzdanSample(unittest.TestCase):
@@ -27,7 +22,7 @@ class JuzdanSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = JuzdanPaymentAdapter(options)
+        cls.juzdan_payment = Craftgate(options).juzdan_payment()
 
     def test_init(self):
         items = [
@@ -47,7 +42,7 @@ class JuzdanSample(unittest.TestCase):
             payment_channel="testPaymentChannel",
             bank_order_id="testBankOrderId"
         )
-        resp = self.adapter.init(req)
+        resp = self.juzdan_payment.init(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.juzdan_qr_url)
@@ -55,7 +50,7 @@ class JuzdanSample(unittest.TestCase):
 
     def test_retrieve(self):
         reference_id = "5493c7a7-4d8b-4517-887d-f8b8f826a3d0"
-        resp = self.adapter.retrieve(reference_id)
+        resp = self.juzdan_payment.retrieve(reference_id)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(PaymentSource.JUZDAN, resp.payment_source)

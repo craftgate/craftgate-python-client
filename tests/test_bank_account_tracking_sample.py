@@ -1,11 +1,9 @@
 # tests/test_bank_account_tracking_sample.py
 import os
 import unittest
-from craftgate import Craftgate
 
-from craftgate.adapter.bank_account_tracking_adapter import BankAccountTrackingAdapter
-from craftgate.request.search_bank_account_tracking_records_request import SearchBankAccountTrackingRecordsRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.request import SearchBankAccountTrackingRecordsRequest
 
 
 class BankAccountTrackingSample(unittest.TestCase):

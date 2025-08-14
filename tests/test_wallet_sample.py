@@ -3,23 +3,12 @@ import os
 import unittest
 from decimal import Decimal
 
-from craftgate.adapter.wallet_adapter import WalletAdapter
-from craftgate.model.currency import Currency
-from craftgate.model.refund_status import RefundStatus
-from craftgate.model.remittance_reason_type import RemittanceReasonType
-from craftgate.model.remittance_type import RemittanceType
-from craftgate.model.status import Status
-from craftgate.model.transaction_payout_status import TransactionPayoutStatus
-from craftgate.model.wallet_transaction_refund_card_transaction_type import WalletTransactionRefundCardTransactionType
-from craftgate.request.create_remittance_request import CreateRemittanceRequest
-from craftgate.request.create_wallet_request import CreateWalletRequest
-from craftgate.request.create_withdraw_request import CreateWithdrawRequest
-from craftgate.request.refund_wallet_transaction_to_card_request import RefundWalletTransactionToCardRequest
-from craftgate.request.reset_merchant_member_wallet_balance_request import ResetMerchantMemberWalletBalanceRequest
-from craftgate.request.search_wallet_transactions_request import SearchWalletTransactionsRequest
-from craftgate.request.search_withdraws_request import SearchWithdrawsRequest
-from craftgate.request.update_wallet_request import UpdateWalletRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import Currency, RefundStatus, RemittanceReasonType, RemittanceType, Status, \
+    TransactionPayoutStatus, WalletTransactionRefundCardTransactionType
+from craftgate.request import CreateRemittanceRequest, CreateWalletRequest, CreateWithdrawRequest, \
+    RefundWalletTransactionToCardRequest, ResetMerchantMemberWalletBalanceRequest, SearchWalletTransactionsRequest, \
+    SearchWithdrawsRequest, UpdateWalletRequest
 
 
 class WalletSample(unittest.TestCase):
@@ -34,11 +23,11 @@ class WalletSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = WalletAdapter(options)
+        cls.wallet = Craftgate(options).wallet()
 
     def test_retrieve_member_wallet(self):
         member_id = 116212
-        response = self.adapter.retrieve_member_wallet(member_id)
+        response = self.wallet.retrieve_member_wallet(member_id)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertIsNotNone(response.created_date)
@@ -50,7 +39,7 @@ class WalletSample(unittest.TestCase):
     def test_search_wallet_transactions(self):
         wallet_id = 96749
         request = SearchWalletTransactionsRequest()
-        response = self.adapter.search_wallet_transactions(wallet_id, request)
+        response = self.wallet.search_wallet_transactions(wallet_id, request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
@@ -63,7 +52,7 @@ class WalletSample(unittest.TestCase):
             description="Loyalty send to memberId{}".format(member_id),
             remittance_reason_type=RemittanceReasonType.REDEEM_ONLY_LOYALTY
         )
-        response = self.adapter.send_remittance(request)
+        response = self.wallet.send_remittance(request)
         print(vars(response))
         self.assertIsNotNone(response)
         self.assertEqual(request.member_id, response.member_id)
@@ -81,7 +70,7 @@ class WalletSample(unittest.TestCase):
             description="Loyalty received from memberId{}".format(member_id),
             remittance_reason_type=RemittanceReasonType.REDEEM_ONLY_LOYALTY
         )
-        response = self.adapter.receive_remittance(request)
+        response = self.wallet.receive_remittance(request)
         print(vars(response))
         self.assertIsNotNone(response)
         self.assertEqual(request.member_id, response.member_id)
@@ -92,7 +81,7 @@ class WalletSample(unittest.TestCase):
 
     def test_retrieve_remittance(self):
         remittance_id = 96386
-        response = self.adapter.retrieve_remittance(remittance_id)
+        response = self.wallet.retrieve_remittance(remittance_id)
         print(vars(response))
         self.assertIsNotNone(response)
         self.assertIsNotNone(response.price)
@@ -102,7 +91,7 @@ class WalletSample(unittest.TestCase):
         self.assertEqual(RemittanceReasonType.REDEEM_ONLY_LOYALTY, response.remittance_reason_type)
 
     def test_retrieve_merchant_member_wallet(self):
-        response = self.adapter.retrieve_merchant_member_wallet()
+        response = self.wallet.retrieve_merchant_member_wallet()
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertIsNotNone(response.created_date)
@@ -114,7 +103,7 @@ class WalletSample(unittest.TestCase):
         request = ResetMerchantMemberWalletBalanceRequest(
             wallet_amount=Decimal("-5")
         )
-        response = self.adapter.reset_merchant_member_wallet_balance(request)
+        response = self.wallet.reset_merchant_member_wallet_balance(request)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertIsNotNone(response.created_date)
@@ -124,7 +113,7 @@ class WalletSample(unittest.TestCase):
 
     def test_retrieve_refundable_amount_of_wallet_transaction(self):
         wallet_transaction_id = 236377
-        response = self.adapter.retrieve_refundable_amount_of_wallet_transaction(wallet_transaction_id)
+        response = self.wallet.retrieve_refundable_amount_of_wallet_transaction(wallet_transaction_id)
         print(vars(response))
         self.assertTrue(response.refundable_amount > 0)
 
@@ -133,7 +122,7 @@ class WalletSample(unittest.TestCase):
         request = RefundWalletTransactionToCardRequest(
             refund_price=Decimal("10")
         )
-        response = self.adapter.refund_wallet_transaction(wallet_transaction_id, request)
+        response = self.wallet.refund_wallet_transaction(wallet_transaction_id, request)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertIsNone(response.payment_error)
@@ -144,7 +133,7 @@ class WalletSample(unittest.TestCase):
 
     def test_retrieve_refund_wallet_transactions_to_card(self):
         wallet_transaction_id = 236372
-        response = self.adapter.retrieve_refund_wallet_transactions(wallet_transaction_id)
+        response = self.wallet.retrieve_refund_wallet_transactions(wallet_transaction_id)
         print(vars(response))
         self.assertIsNotNone(response.items)
         self.assertTrue(len(response.items) > 0)
@@ -156,7 +145,7 @@ class WalletSample(unittest.TestCase):
             description="Hakediş Çekme Talebi",
             currency=Currency.TRY
         )
-        response = self.adapter.create_withdraw(request)
+        response = self.wallet.create_withdraw(request)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertIsNone(response.payout_id)
@@ -170,7 +159,7 @@ class WalletSample(unittest.TestCase):
 
     def test_cancel_withdraw(self):
         withdraw_id = 1136
-        response = self.adapter.cancel_withdraw(withdraw_id)
+        response = self.wallet.cancel_withdraw(withdraw_id)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertIsNotNone(response.created_date)
@@ -179,7 +168,7 @@ class WalletSample(unittest.TestCase):
 
     def test_retrieve_withdraw(self):
         withdraw_id = 1136
-        response = self.adapter.retrieve_withdraw(withdraw_id)
+        response = self.wallet.retrieve_withdraw(withdraw_id)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertIsNotNone(response.created_date)
@@ -193,7 +182,7 @@ class WalletSample(unittest.TestCase):
             min_withdraw_price=Decimal("5"),
             max_withdraw_price=Decimal("1000")
         )
-        response = self.adapter.search_withdraws(request)
+        response = self.wallet.search_withdraws(request)
         print(vars(response))
         self.assertIsNotNone(response.page)
         self.assertIsNotNone(response.size)
@@ -206,7 +195,7 @@ class WalletSample(unittest.TestCase):
             currency=Currency.TRY,
             negative_amount_limit=Decimal("0")
         )
-        response = self.adapter.create_wallet(member_id, request)
+        response = self.wallet.create_wallet(member_id, request)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertEqual(Currency.TRY, response.currency)
@@ -217,7 +206,7 @@ class WalletSample(unittest.TestCase):
         request = UpdateWalletRequest(
             negative_amount_limit=Decimal("-10")
         )
-        response = self.adapter.update_wallet(member_id, wallet_id, request)
+        response = self.wallet.update_wallet(member_id, wallet_id, request)
         print(vars(response))
         self.assertIsNotNone(response.id)
         self.assertEqual(Decimal("-10"), response.negative_amount_limit)

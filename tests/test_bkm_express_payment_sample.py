@@ -1,15 +1,11 @@
 # tests/test_bkm_express_payment_sample.py
 import os
 import unittest
-from craftgate import Craftgate
 
-from craftgate.adapter.bkm_express_payment_adapter import BkmExpressPaymentAdapter
-from craftgate.model.currency import Currency
-from craftgate.model.payment_group import PaymentGroup
-from craftgate.request.complete_bkm_express_request import CompleteBkmExpressRequest
-from craftgate.request.dto.payment_item import PaymentItem
-from craftgate.request.init_bkm_express_request import InitBkmExpressRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import Currency, PaymentGroup
+from craftgate.request import CompleteBkmExpressRequest, InitBkmExpressRequest
+from craftgate.request.dto import PaymentItem
 from craftgate.utils.converter import Converter
 
 
