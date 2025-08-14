@@ -2,8 +2,6 @@ import random
 import string
 from typing import Any, Dict, Optional
 
-from requests import __version__
-
 from craftgate.request_options import RequestOptions
 from craftgate.utils.hash_generator import HashGenerator
 
@@ -11,6 +9,7 @@ from craftgate.utils.hash_generator import HashGenerator
 class BaseAdapter:
     API_VERSION_HEADER_VALUE = "v1"
     CLIENT_NAME = "craftgate-python-client"
+    CLIENT_VERSION = "1.0.0"
     API_KEY_HEADER_NAME = "x-api-key"
     RANDOM_HEADER_NAME = "x-rnd-key"
     AUTH_VERSION_HEADER_NAME = "x-auth-version"
@@ -45,7 +44,7 @@ class BaseAdapter:
             self.API_KEY_HEADER_NAME: options.api_key,
             self.RANDOM_HEADER_NAME: random_key,
             self.AUTH_VERSION_HEADER_NAME: self.API_VERSION_HEADER_VALUE,
-            self.CLIENT_VERSION_HEADER_NAME: self.CLIENT_NAME + ":" + __version__,
+            self.CLIENT_VERSION_HEADER_NAME: self.CLIENT_NAME + ":" + self.CLIENT_VERSION,
             self.SIGNATURE_HEADER_NAME: signature,
         }
 

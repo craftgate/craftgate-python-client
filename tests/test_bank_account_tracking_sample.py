@@ -1,6 +1,7 @@
 # tests/test_bank_account_tracking_sample.py
 import os
 import unittest
+from craftgate import Craftgate
 
 from craftgate.adapter.bank_account_tracking_adapter import BankAccountTrackingAdapter
 from craftgate.request.search_bank_account_tracking_records_request import SearchBankAccountTrackingRecordsRequest
@@ -19,7 +20,7 @@ class BankAccountTrackingSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.craftgate = BankAccountTrackingAdapter(options)
+        cls.bank_account_tracking = Craftgate(options).bank_account_tracking()
 
     def test_search_bank_account_tracking_records(self):
         request = SearchBankAccountTrackingRecordsRequest(
@@ -28,13 +29,13 @@ class BankAccountTrackingSample(unittest.TestCase):
             sender_iban="TR260006231316984553846956"
         )
 
-        response = self.craftgate.search_records(request)
+        response = self.bank_account_tracking.search_records(request)
         print(vars(response))
         self.assertIsNotNone(response)
 
     def test_retrieve_bank_account_tracking_record(self):
         record_id = 158011
-        response = self.craftgate.retrieve_record(record_id)
+        response = self.bank_account_tracking.retrieve_record(record_id)
         print(vars(response))
         self.assertIsNotNone(response)
         self.assertEqual(response.id, record_id)
