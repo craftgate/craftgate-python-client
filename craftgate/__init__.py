@@ -5,7 +5,7 @@ from .net import *
 from .request import *
 from .response import *
 from .utils import *
-from request_options import RequestOptions
+from .request_options import RequestOptions
 
 class Craftgate:
 

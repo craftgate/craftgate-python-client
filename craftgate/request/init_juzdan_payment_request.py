@@ -14,8 +14,8 @@ class InitJuzdanPaymentRequest(object):
 
     def __init__(
             self,
-            price=None,  # type: Optional[decimal]
-            paid_price=None,  # type: Optional[decimal]
+            price=None,  # type: Optional[Decimal]
+            paid_price=None,  # type: Optional[Decimal]
             currency=None,  # type: Optional[Currency]
             payment_group=None,  # type: Optional[PaymentGroup]
             conversation_id=None,  # type: Optional[str]

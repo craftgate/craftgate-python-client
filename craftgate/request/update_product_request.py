@@ -15,7 +15,7 @@ class UpdateProductRequest(object):
             external_id=None,  # type: Optional[str]
             status=None,  # type: Optional[Status]
             stock=None,  # type: Optional[int]
-            price=None,  # type: Optional[decimal]
+            price=None,  # type: Optional[Decimal]
             currency=None,  # type: Optional[Currency]
             description=None,  # type: Optional[str]
             enabled_installments=None  # type: Optional[Set[int]]
