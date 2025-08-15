@@ -11,8 +11,8 @@ from craftgate.request.dto.payment_item import PaymentItem
 class InitBkmExpressRequest:
     def __init__(
         self,
-        price: Optional[decimal] = None,
-        paid_price: Optional[decimal] = None,
+        price: Optional[Decimal] = None,
+        paid_price: Optional[Decimal] = None,
         payment_group: Optional[PaymentGroup] = None,
         conversation_id: Optional[str] = None,
         payment_phase: Optional[PaymentPhase] = None,

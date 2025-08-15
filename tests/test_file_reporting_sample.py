@@ -3,11 +3,9 @@ import os
 import unittest
 from datetime import date
 
-from craftgate.adapter.file_reporting_adapter import FileReportingAdapter
-from craftgate.model.report_file_type import ReportFileType
-from craftgate.request.retrieve_daily_payment_report_request import RetrieveDailyPaymentReportRequest
-from craftgate.request.retrieve_daily_transaction_report_request import RetrieveDailyTransactionReportRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import ReportFileType
+from craftgate.request import RetrieveDailyPaymentReportRequest, RetrieveDailyTransactionReportRequest
 
 
 class FileReportingSample(unittest.TestCase):
@@ -18,7 +16,7 @@ class FileReportingSample(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         opts = RequestOptions(api_key=cls.API_KEY, secret_key=cls.SECRET_KEY, base_url=cls.BASE_URL)
-        cls.craftgate = FileReportingAdapter(opts)
+        cls.file_reporting = Craftgate(opts).file_reporting()
 
     def test_retrieve_daily_transaction_report_csv(self):
         request = RetrieveDailyTransactionReportRequest(
@@ -26,7 +24,7 @@ class FileReportingSample(unittest.TestCase):
             file_type=ReportFileType.CSV
         )
 
-        blob = self.craftgate.retrieve_daily_transaction_report(request)
+        blob = self.file_reporting.retrieve_daily_transaction_report(request)
 
         print(blob.decode('utf-8', errors='replace')[:200])
         self.assertIsInstance(blob, (bytes, bytearray))
@@ -44,7 +42,7 @@ class FileReportingSample(unittest.TestCase):
             file_type=ReportFileType.CSV
         )
 
-        blob = self.craftgate.retrieve_daily_payment_report(request)
+        blob = self.file_reporting.retrieve_daily_payment_report(request)
 
         print(blob.decode('utf-8', errors='replace')[:200])
         self.assertIsInstance(blob, (bytes, bytearray))

@@ -7,10 +7,10 @@ class PaymentItem:
     def __init__(
             self,
             name: Optional[str] = None,
-            price: Optional[decimal] = None,
+            price: Optional[Decimal] = None,
             external_id: Optional[str] = None,
             sub_merchant_member_id: Optional[int] = None,
-            sub_merchant_member_price: Optional[decimal] = None
+            sub_merchant_member_price: Optional[Decimal] = None
     ) -> None:
         self.name = name
         self.price = price

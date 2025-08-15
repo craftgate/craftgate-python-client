@@ -3,13 +3,9 @@ import os
 import unittest
 from decimal import Decimal
 
-from craftgate.adapter.pay_by_link_adapter import PayByLinkAdapter
-from craftgate.model.currency import Currency
-from craftgate.model.status import Status
-from craftgate.request.create_product_request import CreateProductRequest
-from craftgate.request.search_products_request import SearchProductsRequest
-from craftgate.request.update_product_request import UpdateProductRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import Currency, Status
+from craftgate.request import CreateProductRequest, SearchProductsRequest, UpdateProductRequest
 
 
 class PayByLinkSample(unittest.TestCase):
@@ -24,7 +20,7 @@ class PayByLinkSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = PayByLinkAdapter(options)
+        cls.pay_by_link = Craftgate(options).pay_by_link()
 
     def test_create_product(self):
         request = CreateProductRequest(
@@ -37,7 +33,7 @@ class PayByLinkSample(unittest.TestCase):
             enabled_installments={1, 2, 3, 6}
         )
 
-        response = self.adapter.create_product(request)
+        response = self.pay_by_link.create_product(request)
 
         print(vars(response))
         self.assertIsNotNone(response)
@@ -61,7 +57,7 @@ class PayByLinkSample(unittest.TestCase):
             enabled_installments={1, 2, 3, 6}
         )
 
-        response = self.adapter.update_product(product_id, request)
+        response = self.pay_by_link.update_product(product_id, request)
 
         print(vars(response))
         self.assertIsNotNone(response)
@@ -76,7 +72,7 @@ class PayByLinkSample(unittest.TestCase):
 
     def test_retrieve_product(self):
         product_id = 6807
-        response = self.adapter.retrieve_product(product_id)
+        response = self.pay_by_link.retrieve_product(product_id)
 
         print(vars(response))
 
@@ -89,7 +85,7 @@ class PayByLinkSample(unittest.TestCase):
 
     def test_delete_product(self):
         product_id = 6807
-        self.adapter.delete_product(product_id)
+        self.pay_by_link.delete_product(product_id)
         self.assertTrue(True)
 
     def test_search_products(self):
@@ -99,7 +95,7 @@ class PayByLinkSample(unittest.TestCase):
             currency=Currency.TRY
         )
 
-        response = self.adapter.search_products(request)
+        response = self.pay_by_link.search_products(request)
 
         print(vars(response))
 

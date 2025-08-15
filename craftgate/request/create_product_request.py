@@ -13,7 +13,7 @@ class CreateProductRequest(object):
             conversation_id=None,  # type: Optional[str]
             external_id=None,  # type: Optional[str]
             stock=None,  # type: Optional[int]
-            price=None,  # type: Optional[decimal]
+            price=None,  # type: Optional[Decimal]
             currency=None,  # type: Optional[Currency]
             description=None,  # type: Optional[str]
             multi_payment=None,  # type: Optional[bool]

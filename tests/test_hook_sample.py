@@ -3,11 +3,8 @@ import os
 import unittest
 from datetime import datetime
 
-from craftgate.adapter.hook_adapter import HookAdapter
-from craftgate.model.webhook_data import WebhookData
-from craftgate.model.webhook_event_type import WebhookEventType
-from craftgate.model.webhook_status import WebhookStatus
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import WebhookData, WebhookEventType, WebhookStatus
 
 
 class HookSample(unittest.TestCase):
@@ -22,7 +19,7 @@ class HookSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = HookAdapter(options)
+        cls.hook = Craftgate(options).hook()
 
     def test_should_verify_webhook_signature(self):
         merchant_hook_key = "Aoh7tReTybO6wOjBmOJFFsOR53SBojEp"
@@ -34,7 +31,7 @@ class HookSample(unittest.TestCase):
             status=WebhookStatus.SUCCESS,
             payload_id="584"
         )
-        is_verified = self.adapter.is_webhook_verified(merchant_hook_key, incoming_signature, webhook_data)
+        is_verified = self.hook.is_webhook_verified(merchant_hook_key, incoming_signature, webhook_data)
         self.assertTrue(is_verified)
 
     def test_should_not_verify_webhook_signature(self):
@@ -47,7 +44,7 @@ class HookSample(unittest.TestCase):
             status=WebhookStatus.SUCCESS,
             payload_id="584"
         )
-        is_verified = self.adapter.is_webhook_verified(merchant_hook_key, incoming_signature, webhook_data)
+        is_verified = self.hook.is_webhook_verified(merchant_hook_key, incoming_signature, webhook_data)
         self.assertFalse(is_verified)
 
 

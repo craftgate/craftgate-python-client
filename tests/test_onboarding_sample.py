@@ -3,14 +3,9 @@ import os
 import unittest
 import uuid
 
-from craftgate.adapter.onboarding_adapter import OnboardingAdapter
-from craftgate.model.member_type import MemberType
-from craftgate.model.settlement_earnings_destination import SettlementEarningsDestination
-from craftgate.request.create_member_request import CreateMemberRequest
-from craftgate.request.create_merchant_request import CreateMerchantRequest
-from craftgate.request.search_members_request import SearchMembersRequest
-from craftgate.request.update_member_request import UpdateMemberRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import MemberType, SettlementEarningsDestination
+from craftgate.request import CreateMemberRequest, CreateMerchantRequest, SearchMembersRequest, UpdateMemberRequest
 
 
 class OnboardingSample(unittest.TestCase):
@@ -25,7 +20,7 @@ class OnboardingSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = OnboardingAdapter(options)
+        cls.onboarding = Craftgate(options).onboarding()
 
     def test_create_sub_merchant(self):
         request = CreateMemberRequest(
@@ -44,7 +39,7 @@ class OnboardingSample(unittest.TestCase):
             tax_office="Erenköy",
             address="Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul"
         )
-        response = self.adapter.create_member(request)
+        response = self.onboarding.create_member(request)
         print(vars(response))
 
         self.assertIsNotNone(response.id)
@@ -79,7 +74,7 @@ class OnboardingSample(unittest.TestCase):
             iban="TR930006701000000001111111",
             settlement_earnings_destination=SettlementEarningsDestination.IBAN
         )
-        response = self.adapter.update_member(member_id, request)
+        response = self.onboarding.update_member(member_id, request)
 
         self.assertEqual(member_id, response.id)
         self.assertEqual(request.contact_name, response.contact_name)
@@ -94,7 +89,7 @@ class OnboardingSample(unittest.TestCase):
 
     def test_retrieve_sub_merchant(self):
         member_id = 116210
-        response = self.adapter.retrieve_member(member_id)
+        response = self.onboarding.retrieve_member(member_id)
         print(vars(response))
         self.assertEqual(member_id, response.id)
 
@@ -108,7 +103,7 @@ class OnboardingSample(unittest.TestCase):
             contact_name="Haluk",
             contact_surname="Demir"
         )
-        response = self.adapter.create_member(request)
+        response = self.onboarding.create_member(request)
 
         print(vars(response))
         self.assertIsNotNone(response.id)
@@ -128,7 +123,7 @@ class OnboardingSample(unittest.TestCase):
             contact_name="Haluk",
             contact_surname="Demir"
         )
-        response = self.adapter.update_member(member_id, request)
+        response = self.onboarding.update_member(member_id, request)
 
         print(vars(response))
         self.assertTrue(response.is_buyer)
@@ -139,7 +134,7 @@ class OnboardingSample(unittest.TestCase):
 
     def test_retrieve_buyer(self):
         member_id = 116211
-        response = self.adapter.retrieve_member(member_id)
+        response = self.onboarding.retrieve_member(member_id)
 
         print(vars(response))
         self.assertEqual(member_id, response.id)
@@ -149,7 +144,7 @@ class OnboardingSample(unittest.TestCase):
             member_ids={116210, 116211},
             name="Zeytinyağı Üretim"
         )
-        response = self.adapter.search_members(request)
+        response = self.onboarding.search_members(request)
 
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
@@ -169,9 +164,9 @@ class OnboardingSample(unittest.TestCase):
             member_external_id=str(uuid.uuid4()),
             tax_number="1111111114",
             tax_office="Erenköy",
-            address="Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul"
+            address="Suadiye Mah. Örnek Cd. No:23,"
         )
-        response = self.adapter.create_member(request)
+        response = self.onboarding.create_member(request)
 
         print(vars(response))
         self.assertIsNotNone(response.id)
@@ -199,7 +194,7 @@ class OnboardingSample(unittest.TestCase):
             phone_number="905555555566",
             contact_phone_number="905555555566"
         )
-        response = self.adapter.create_merchant(request)
+        response = self.onboarding.create_merchant(request)
 
         print(vars(response))
         self.assertIsNotNone(response.id)

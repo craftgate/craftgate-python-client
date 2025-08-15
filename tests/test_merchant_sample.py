@@ -2,25 +2,12 @@
 import os
 import unittest
 
-from craftgate.adapter.merchant_adapter import MerchantAdapter
-from craftgate.model.card_association import CardAssociation
-from craftgate.model.card_brand import CardBrand
-from craftgate.model.currency import Currency
-from craftgate.model.payment_authentication_type import PaymentAuthenticationType
-from craftgate.model.payment_phase import PaymentPhase
-from craftgate.model.pos_integrator import PosIntegrator
-from craftgate.model.pos_operation_type import PosOperationType
-from craftgate.model.pos_status import PosStatus
-from craftgate.model.pos_user_type import PosUserType
-from craftgate.model.status import Status
-from craftgate.request.create_merchant_pos_request import CreateMerchantPosRequest
-from craftgate.request.dto.create_merchant_pos_user import CreateMerchantPosUser
-from craftgate.request.dto.update_merchant_pos_commission import UpdateMerchantPosCommission
-from craftgate.request.dto.update_merchant_pos_user import UpdateMerchantPosUser
-from craftgate.request.search_merchant_pos_request import SearchMerchantPosRequest
-from craftgate.request.update_merchant_pos_commissions_request import UpdateMerchantPosCommissionsRequest
-from craftgate.request.update_merchant_pos_request import UpdateMerchantPosRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import CardAssociation, CardBrand, Currency, PaymentAuthenticationType, \
+    PaymentPhase, PosIntegrator, PosOperationType, PosStatus, PosUserType, Status
+from craftgate.request import CreateMerchantPosRequest, SearchMerchantPosRequest, UpdateMerchantPosCommissionsRequest, \
+    UpdateMerchantPosRequest
+from craftgate.request.dto import CreateMerchantPosUser, UpdateMerchantPosCommission, UpdateMerchantPosUser
 
 
 class MerchantSample(unittest.TestCase):
@@ -35,7 +22,7 @@ class MerchantSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = MerchantAdapter(options)
+        cls.merchant = Craftgate(options).merchant()
 
     def test_create_merchant_pos(self):
         create_user = CreateMerchantPosUser(
@@ -63,7 +50,7 @@ class MerchantSample(unittest.TestCase):
             merchant_pos_users=[create_user]
         )
 
-        resp = self.adapter.create_merchant_pos(request)
+        resp = self.merchant.create_merchant_pos(request)
 
         print(vars(resp))
         self.assertIsNotNone(resp)
@@ -101,7 +88,7 @@ class MerchantSample(unittest.TestCase):
             merchant_pos_users=[create_user]
         )
 
-        resp = self.adapter.create_merchant_pos(request)
+        resp = self.merchant.create_merchant_pos(request)
 
         print(vars(resp))
         self.assertIsNotNone(resp)
@@ -146,7 +133,7 @@ class MerchantSample(unittest.TestCase):
             merchant_pos_users=[pos_user]
         )
 
-        resp = self.adapter.update_merchant_pos(merchant_pos_id, request)
+        resp = self.merchant.update_merchant_pos(merchant_pos_id, request)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.id)
@@ -157,12 +144,12 @@ class MerchantSample(unittest.TestCase):
 
     def test_update_merchant_pos_status(self):
         merchant_pos_id = 3353325
-        self.adapter.update_merchant_pos_status(merchant_pos_id, PosStatus.PASSIVE)
+        self.merchant.update_merchant_pos_status(merchant_pos_id, PosStatus.PASSIVE)
         self.assertTrue(True)
 
     def test_retrieve_merchant_pos(self):
         merchant_pos_id = 3353325
-        resp = self.adapter.retrieve(merchant_pos_id)
+        resp = self.merchant.retrieve(merchant_pos_id)
 
         print(vars(resp))
         self.assertIsNotNone(resp)
@@ -170,7 +157,7 @@ class MerchantSample(unittest.TestCase):
 
     def test_delete_merchant_pos(self):
         merchant_pos_id = 3353325
-        self.adapter.delete_merchant_pos(merchant_pos_id)
+        self.merchant.delete_merchant_pos(merchant_pos_id)
         self.assertTrue(True)
 
     def test_search_merchant_poses(self):
@@ -179,7 +166,7 @@ class MerchantSample(unittest.TestCase):
             page=0,
             size=10
         )
-        resp = self.adapter.search_merchant_pos(request)
+        resp = self.merchant.search_merchant_pos(request)
 
         print(vars(resp))
         self.assertIsNotNone(resp)
@@ -189,7 +176,7 @@ class MerchantSample(unittest.TestCase):
 
     def test_retrieve_merchant_pos_commissions(self):
         merchant_pos_id = 3353326
-        resp = self.adapter.retrieve_merchant_pos_commissions(merchant_pos_id)
+        resp = self.merchant.retrieve_merchant_pos_commissions(merchant_pos_id)
 
         print(vars(resp))
         self.assertIsNotNone(resp)
@@ -225,7 +212,7 @@ class MerchantSample(unittest.TestCase):
             commissions=[installment1, installment2]
         )
 
-        resp = self.adapter.update_merchant_pos_commissions(merchant_pos_id, request)
+        resp = self.merchant.update_merchant_pos_commissions(merchant_pos_id, request)
 
         print(vars(resp))
         self.assertIsNotNone(resp)

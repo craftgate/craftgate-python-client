@@ -4,15 +4,9 @@ import unittest
 from datetime import datetime, timedelta
 from decimal import Decimal
 
-from craftgate.adapter.payment_reporting_adapter import PaymentReportingAdapter
-from craftgate.model.currency import Currency
-from craftgate.model.payment_status import PaymentStatus
-from craftgate.model.payment_type import PaymentType
-from craftgate.model.refund_status import RefundStatus
-from craftgate.request.search_payment_refunds_request import SearchPaymentRefundsRequest
-from craftgate.request.search_payment_transaction_refunds_request import SearchPaymentTransactionRefundsRequest
-from craftgate.request.search_payments_request import SearchPaymentsRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import Currency, PaymentStatus, PaymentType, RefundStatus
+from craftgate.request import SearchPaymentRefundsRequest, SearchPaymentTransactionRefundsRequest, SearchPaymentsRequest
 
 
 class PaymentReportingSample(unittest.TestCase):
@@ -27,7 +21,7 @@ class PaymentReportingSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = PaymentReportingAdapter(options)
+        cls.payment_reporting = Craftgate(options).payment_reporting()
 
     def test_search_payments(self):
         now = datetime.now()
@@ -52,13 +46,13 @@ class PaymentReportingSample(unittest.TestCase):
             min_created_date=now - timedelta(days=30),
             max_created_date=now
         )
-        response = self.adapter.search_payments(request)
+        response = self.payment_reporting.search_payments(request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payment(self):
         payment_id = 1289316
-        response = self.adapter.retrieve_payment(payment_id)
+        response = self.payment_reporting.retrieve_payment(payment_id)
         print(vars(response))
         self.assertEqual(payment_id, response.id)
         self.assertIsNotNone(response.price)
@@ -69,20 +63,20 @@ class PaymentReportingSample(unittest.TestCase):
 
     def test_retrieve_payment_transactions(self):
         payment_id = 1289316
-        response = self.adapter.retrieve_payment_transactions(payment_id)
+        response = self.payment_reporting.retrieve_payment_transactions(payment_id)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payment_refunds(self):
         payment_id = 1289311
-        response = self.adapter.retrieve_payment_refunds(payment_id)
+        response = self.payment_reporting.retrieve_payment_refunds(payment_id)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payment_transaction_refunds(self):
         payment_id = 1289311
         payment_transaction_id = 1244069
-        response = self.adapter.retrieve_payment_transaction_refunds(payment_id, payment_transaction_id)
+        response = self.payment_reporting.retrieve_payment_transaction_refunds(payment_id, payment_transaction_id)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
@@ -102,7 +96,7 @@ class PaymentReportingSample(unittest.TestCase):
             min_created_date=now - timedelta(days=30),
             max_created_date=now
         )
-        response = self.adapter.search_payment_refunds(request)
+        response = self.payment_reporting.search_payment_refunds(request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
@@ -124,7 +118,7 @@ class PaymentReportingSample(unittest.TestCase):
             min_created_date=now - timedelta(days=30),
             max_created_date=now
         )
-        response = self.adapter.search_payment_transaction_refunds(request)
+        response = self.payment_reporting.search_payment_transaction_refunds(request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 

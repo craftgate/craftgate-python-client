@@ -2,8 +2,7 @@
 import os
 import unittest
 
-from craftgate.adapter.merchant_apm_adapter import MerchantApmAdapter
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
 
 
 class MerchantApmSample(unittest.TestCase):
@@ -18,10 +17,10 @@ class MerchantApmSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = MerchantApmAdapter(options)
+        cls.merchant_apm = Craftgate(options).merchant_apm()
 
     def test_retrieve_merchant_apms(self):
-        response = self.adapter.retrieve_apms()
+        response = self.merchant_apm.retrieve_apms()
         print(vars(response))
         self.assertIsNotNone(response)
 

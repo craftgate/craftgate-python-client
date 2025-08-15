@@ -4,66 +4,27 @@ import unittest
 import uuid
 from decimal import Decimal
 
-from craftgate.adapter.payment_adapter import PaymentAdapter
-from craftgate.model.additional_action import AdditionalAction
-from craftgate.model.apm_additional_action import ApmAdditionalAction
-from craftgate.model.apm_type import ApmType
-from craftgate.model.card_association import CardAssociation
-from craftgate.model.card_provider import CardProvider
-from craftgate.model.card_type import CardType
-from craftgate.model.currency import Currency
-from craftgate.model.loyalty import Loyalty
-from craftgate.model.loyalty_params import LoyaltyParams
-from craftgate.model.loyalty_type import LoyaltyType
-from craftgate.model.payment_group import PaymentGroup
-from craftgate.model.payment_phase import PaymentPhase
-from craftgate.model.payment_status import PaymentStatus
-from craftgate.model.payment_type import PaymentType
-from craftgate.model.pos_apm_payment_provider import PosApmPaymentProvider
-from craftgate.model.refund_destination_type import RefundDestinationType
-from craftgate.model.refund_status import RefundStatus
-from craftgate.model.reward import Reward
-from craftgate.model.wallet_transaction_type import WalletTransactionType
-from craftgate.request.approve_payment_transactions_request import ApprovePaymentTransactionsRequest
-from craftgate.request.clone_card_request import CloneCardRequest
-from craftgate.request.complete_apm_payment_request import CompleteApmPaymentRequest
-from craftgate.request.complete_pos_apm_payment_request import CompletePosApmPaymentRequest
-from craftgate.request.complete_three_ds_payment_request import CompleteThreeDSPaymentRequest
-from craftgate.request.create_apm_payment_request import CreateApmPaymentRequest
-from craftgate.request.create_deposit_payment_request import CreateDepositPaymentRequest
-from craftgate.request.create_fund_transfer_deposit_payment_request import CreateFundTransferDepositPaymentRequest
-from craftgate.request.create_payment_request import CreatePaymentRequest
-from craftgate.request.delete_stored_card_request import DeleteStoredCardRequest
-from craftgate.request.disapprove_payment_transactions_request import DisapprovePaymentTransactionsRequest
-from craftgate.request.dto.card import Card
-from craftgate.request.dto.garanti_pay_installment import GarantiPayInstallment
-from craftgate.request.dto.payment_item import PaymentItem
-from craftgate.request.init_apm_deposit_payment_request import InitApmDepositPaymentRequest
-from craftgate.request.init_apm_payment_request import InitApmPaymentRequest
-from craftgate.request.init_checkout_payment_request import InitCheckoutPaymentRequest
-from craftgate.request.init_garanti_pay_payment_request import InitGarantiPayPaymentRequest
-from craftgate.request.init_pos_apm_payment_request import InitPosApmPaymentRequest
-from craftgate.request.init_three_ds_payment_request import InitThreeDSPaymentRequest
-from craftgate.request.post_auth_payment_request import PostAuthPaymentRequest
-from craftgate.request.refund_payment_request import RefundPaymentRequest
-from craftgate.request.refund_payment_transaction_mark_as_refunded_request import \
-    RefundPaymentTransactionMarkAsRefundedRequest
-from craftgate.request.refund_payment_transaction_request import RefundPaymentTransactionRequest
-from craftgate.request.retrieve_loyalties_request import RetrieveLoyaltiesRequest
-from craftgate.request.retrieve_provider_card_request import RetrieveProviderCardRequest
-from craftgate.request.search_stored_cards_request import SearchStoredCardsRequest
-from craftgate.request.store_card_request import StoreCardRequest
-from craftgate.request.update_card_request import UpdateCardRequest
-from craftgate.request.update_payment_transaction_request import UpdatePaymentTransactionRequest
-from craftgate.request_options import RequestOptions
-from craftgate.response.multi_payment_response import MultiPaymentResponse
-from craftgate.response.payment_transaction_approval_list_response import PaymentTransactionApprovalListResponse
-from craftgate.response.payment_transaction_response import PaymentTransactionResponse
-from craftgate.response.stored_card_list_response import StoredCardListResponse
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import AdditionalAction, ApmAdditionalAction, ApmType, CardAssociation, CardProvider, CardType, \
+    Currency, Loyalty, LoyaltyParams, LoyaltyType, PaymentGroup, PaymentPhase, PaymentStatus, PaymentType, \
+    PosApmPaymentProvider, RefundDestinationType, RefundStatus, Reward, WalletTransactionType
+
+from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardRequest, CompleteApmPaymentRequest, \
+    CompletePosApmPaymentRequest, CompleteThreeDSPaymentRequest, CreateApmPaymentRequest, CreateDepositPaymentRequest, \
+    CreateFundTransferDepositPaymentRequest, CreatePaymentRequest, DeleteStoredCardRequest, \
+    DisapprovePaymentTransactionsRequest, Card, GarantiPayInstallment, PaymentItem, InitApmDepositPaymentRequest, \
+    InitApmPaymentRequest, InitCheckoutPaymentRequest, InitGarantiPayPaymentRequest, InitPosApmPaymentRequest, \
+    InitThreeDSPaymentRequest, PostAuthPaymentRequest, RefundPaymentRequest, \
+    RefundPaymentTransactionMarkAsRefundedRequest, RefundPaymentTransactionRequest, RetrieveLoyaltiesRequest, \
+    RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
+    UpdatePaymentTransactionRequest
+
+from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalListResponse, PaymentTransactionResponse, \
+    StoredCardListResponse
 
 
 class PaymentSample(unittest.TestCase):
-    API_KEY = os.environ.get("CG_API_KEY", "sandbox-rTNqcafGLvvfZPQydPuynNXyCHdFuzhr")
+    API_KEY = os.environ.get("CG_API_KEY", "YOUR_API_KEY")
     SECRET_KEY = os.environ.get("CG_SECRET_KEY", "YOUR_SECRET_KEY")
     BASE_URL = os.environ.get("CG_BASE_URL", "https://sandbox-api.craftgate.io")
 
@@ -74,7 +35,7 @@ class PaymentSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = PaymentAdapter(options)
+        cls.payment = Craftgate(options).payment()
 
     def test_create_payment(self):
         items = []
@@ -116,7 +77,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -166,7 +127,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -201,7 +162,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -230,7 +191,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -262,7 +223,7 @@ class PaymentSample(unittest.TestCase):
             }
         }
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -302,7 +263,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -341,7 +302,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -370,7 +331,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -403,7 +364,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.init_3ds_payment(req)
+        resp = self.payment.init_3ds_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "html_content", None))
@@ -457,7 +418,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.init_3ds_payment(req)
+        resp = self.payment.init_3ds_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "html_content", None))
@@ -494,7 +455,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.init_3ds_payment(req)
+        resp = self.payment.init_3ds_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "html_content", None))
@@ -526,7 +487,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.init_3ds_payment(req)
+        resp = self.payment.init_3ds_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "html_content", None))
@@ -536,7 +497,7 @@ class PaymentSample(unittest.TestCase):
         req = CompleteThreeDSPaymentRequest()
         req.payment_id = 1291818
 
-        resp = self.adapter.complete_3ds_payment(req)
+        resp = self.payment.complete_3ds_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -560,7 +521,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_phase = PaymentPhase.AUTH
         req.items = items
 
-        resp = self.adapter.init_checkout_payment(req)
+        resp = self.payment.init_checkout_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "page_url", None))
@@ -579,7 +540,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_phase = PaymentPhase.AUTH
         req.deposit_payment = True
 
-        resp = self.adapter.init_checkout_payment(req)
+        resp = self.payment.init_checkout_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "page_url", None))
@@ -588,13 +549,13 @@ class PaymentSample(unittest.TestCase):
 
     def test_retrieve_checkout_payment(self):
         token = "5097ec00-ce50-4b56-82d3-6c2f86231ef2"
-        resp = self.adapter.retrieve_checkout_payment(token)
+        resp = self.payment.retrieve_checkout_payment(token)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
     def test_expire_checkout_payment(self):
         token = "a768c57c-5052-4038-857f-1e2cf54253bc"
-        self.adapter.expire_checkout_payment(token)
+        self.payment.expire_checkout_payment(token)
 
     def test_create_deposit_payment(self):
         card = Card()
@@ -610,7 +571,7 @@ class PaymentSample(unittest.TestCase):
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
         req.card = card
 
-        resp = self.adapter.create_deposit_payment(req)
+        resp = self.payment.create_deposit_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "id", None))
         self.assertEqual(req.buyer_member_id, resp.buyer_member_id)
@@ -633,7 +594,7 @@ class PaymentSample(unittest.TestCase):
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
         req.card = card
 
-        resp = self.adapter.init_3ds_deposit_payment(req)
+        resp = self.payment.init_3ds_deposit_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "html_content", None))
@@ -643,7 +604,7 @@ class PaymentSample(unittest.TestCase):
         req = CompleteThreeDSPaymentRequest()
         req.payment_id = 1
 
-        resp = self.adapter.complete_3ds_deposit_payment(req)
+        resp = self.payment.complete_3ds_deposit_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(Decimal("100"), resp.price)
@@ -656,7 +617,7 @@ class PaymentSample(unittest.TestCase):
         req.buyer_member_id = 1
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
 
-        resp = self.adapter.create_fund_transfer_deposit_payment(req)
+        resp = self.payment.create_fund_transfer_deposit_payment(req)
         print(vars(resp))
         self.assertEqual(req.buyer_member_id, resp.buyer_member_id)
         self.assertEqual(Decimal("100.00000000"), resp.price)
@@ -678,7 +639,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.client_ip = "127.0.0.1"
 
-        resp = self.adapter.init_apm_deposit_payment(req)
+        resp = self.payment.init_apm_deposit_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(getattr(resp, "redirect_url", None))
@@ -716,7 +677,7 @@ class PaymentSample(unittest.TestCase):
         req.installments = installments
         req.enabled_installments = [2, 3]
 
-        resp = self.adapter.init_garanti_pay_payment(req)
+        resp = self.payment.init_garanti_pay_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(getattr(resp, "html_content", None))
@@ -742,7 +703,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(getattr(resp, "redirect_url", None))
@@ -771,7 +732,7 @@ class PaymentSample(unittest.TestCase):
         req.items = items
         req.additional_params = {"sodexoCode": "843195"}
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNone(getattr(resp, "redirect_url", None))
@@ -799,7 +760,7 @@ class PaymentSample(unittest.TestCase):
         req.apm_user_identity = "6036819041742253"
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNone(getattr(resp, "redirect_url", None))
@@ -811,7 +772,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_id = 1
         req.additional_params = {"otpCode": "784294"}
 
-        resp = self.adapter.complete_apm_payment(req)
+        resp = self.payment.complete_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
@@ -836,7 +797,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNone(getattr(resp, "redirect_url", None))
@@ -864,7 +825,7 @@ class PaymentSample(unittest.TestCase):
         req.additional_params = {"cardNumber": "1111222233334444"}
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNone(getattr(resp, "redirect_url", None))
@@ -876,7 +837,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_id = 1
         req.additional_params = {"passCode": "1122"}
 
-        resp = self.adapter.complete_apm_payment(req)
+        resp = self.payment.complete_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
@@ -902,7 +863,7 @@ class PaymentSample(unittest.TestCase):
         req.items = items
         req.additional_params = {"country": "de", "locale": "en-DE"}
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(getattr(resp, "redirect_url", None))
@@ -929,7 +890,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(getattr(resp, "redirect_url", None))
@@ -955,7 +916,7 @@ class PaymentSample(unittest.TestCase):
         req.items = items
         req.additional_params = {"cardNumber": "6375780115068760"}
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(getattr(resp, "additional_data", None))
@@ -971,7 +932,7 @@ class PaymentSample(unittest.TestCase):
             "walletId": "1",
         }
 
-        resp = self.adapter.complete_apm_payment(req)
+        resp = self.payment.complete_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
@@ -996,7 +957,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(getattr(resp, "redirect_url", None))
@@ -1024,7 +985,7 @@ class PaymentSample(unittest.TestCase):
         req.items = items
         req.additional_params = {"channel": "channel", "phone": "5001112233"}
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
@@ -1051,7 +1012,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
@@ -1077,7 +1038,7 @@ class PaymentSample(unittest.TestCase):
         req.additional_params = {"buyerPhoneNumber": "34700000000"}
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
@@ -1103,7 +1064,7 @@ class PaymentSample(unittest.TestCase):
         req.additional_params = {"buyerPhoneNumber": "34700000000"}
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
@@ -1130,7 +1091,7 @@ class PaymentSample(unittest.TestCase):
         req.additional_params = {"paycellGsmNumber": "5305289290"}
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
@@ -1156,7 +1117,7 @@ class PaymentSample(unittest.TestCase):
         req.items = items
         req.additional_params = {"integrationId": "11223344"}
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
@@ -1182,7 +1143,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-pos-apm-callback"
         req.items = items
 
-        resp = self.adapter.init_pos_apm_payment(req)
+        resp = self.payment.init_pos_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(getattr(resp, "html_content", None))
@@ -1209,7 +1170,7 @@ class PaymentSample(unittest.TestCase):
         req.callback_url = "https://www.your-website.com/craftgate-pos-apm-callback"
         req.items = items
 
-        resp = self.adapter.init_pos_apm_payment(req)
+        resp = self.payment.init_pos_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertIsNotNone(resp.additional_data.get("redirectUrl"))
@@ -1237,7 +1198,7 @@ class PaymentSample(unittest.TestCase):
         req.additional_params = {"cardNumber": "7599640961180814"}
         req.items = items
 
-        resp = self.adapter.init_apm_payment(req)
+        resp = self.payment.init_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
@@ -1248,7 +1209,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_id = 1
         req.additional_params = {"otpCode": "123456"}
 
-        resp = self.adapter.complete_apm_payment(req)
+        resp = self.payment.complete_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
@@ -1257,7 +1218,7 @@ class PaymentSample(unittest.TestCase):
         req = CompletePosApmPaymentRequest()
         req.payment_id = 1
 
-        resp = self.adapter.complete_pos_apm_payment(req)
+        resp = self.payment.complete_pos_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -1280,7 +1241,7 @@ class PaymentSample(unittest.TestCase):
         req.external_id = "optional-externalId"
         req.items = items
 
-        resp = self.adapter.create_apm_payment(req)
+        resp = self.payment.create_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "id", None))
         self.assertEqual(Decimal("100.00000000"), resp.price)
@@ -1308,7 +1269,7 @@ class PaymentSample(unittest.TestCase):
         req.external_id = "optional-externalId"
         req.items = items
 
-        resp = self.adapter.create_apm_payment(req)
+        resp = self.payment.create_apm_payment(req)
         print(vars(resp))
         self.assertIsNotNone(getattr(resp, "id", None))
         self.assertEqual(Decimal("100.00000000"), resp.price)
@@ -1319,7 +1280,7 @@ class PaymentSample(unittest.TestCase):
 
     def test_retrieve_payment_by_id(self):
         payment_id = 1
-        resp = self.adapter.retrieve_payment(payment_id)
+        resp = self.payment.retrieve_payment(payment_id)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(payment_id, resp.id)
@@ -1331,7 +1292,7 @@ class PaymentSample(unittest.TestCase):
         req.expire_month = "07"
         req.cvc = "000"
 
-        resp = self.adapter.retrieve_loyalties(req)
+        resp = self.payment.retrieve_loyalties(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual("Bonus", resp.card_brand)
@@ -1347,7 +1308,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_id = 1
         req.refund_destination_type = RefundDestinationType.PROVIDER
 
-        resp = self.adapter.refund_payment(req)
+        resp = self.payment.refund_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(req.payment_id, resp.payment_id)
@@ -1355,7 +1316,7 @@ class PaymentSample(unittest.TestCase):
 
     def test_retrieve_payment_refund(self):
         payment_refund_id = 1
-        resp = self.adapter.retrieve_payment_refund(payment_refund_id)
+        resp = self.payment.retrieve_payment_refund(payment_refund_id)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(payment_refund_id, resp.id)
@@ -1367,7 +1328,7 @@ class PaymentSample(unittest.TestCase):
         req.refund_destination_type = RefundDestinationType.PROVIDER
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
 
-        resp = self.adapter.refund_payment_transaction(req)
+        resp = self.payment.refund_payment_transaction(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(req.payment_transaction_id, resp.payment_transaction_id)
@@ -1376,7 +1337,7 @@ class PaymentSample(unittest.TestCase):
     def test_retrieve_payment_transaction_refund(self):
         payment_transaction_refund_id = 1
 
-        resp = self.adapter.retrieve_payment_transaction_refund(payment_transaction_refund_id)
+        resp = self.payment.retrieve_payment_transaction_refund(payment_transaction_refund_id)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(payment_transaction_refund_id, resp.id)
@@ -1387,7 +1348,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_transaction_id = 1
         req.refund_price = Decimal("20")
 
-        resp = self.adapter.refund_payment_transaction_mark_as_refunded(req)
+        resp = self.payment.refund_payment_transaction_mark_as_refunded(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(RefundStatus.SUCCESS, resp.status)
@@ -1397,7 +1358,7 @@ class PaymentSample(unittest.TestCase):
         req.payment_id = 1024
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
 
-        resp = self.adapter.refund_payment_mark_as_refunded(req)
+        resp = self.payment.refund_payment_mark_as_refunded(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertTrue(len(resp.items) > 0)
@@ -1410,7 +1371,7 @@ class PaymentSample(unittest.TestCase):
         req.expire_month = "07"
         req.card_alias = "My Other Cards"
 
-        resp = self.adapter.store_card(req)
+        resp = self.payment.store_card(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.card_token)
@@ -1428,7 +1389,7 @@ class PaymentSample(unittest.TestCase):
         req.expire_year = "2044"
         req.expire_month = "07"
 
-        resp = self.adapter.update_card(req)
+        resp = self.payment.update_card(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.card_token)
@@ -1442,7 +1403,7 @@ class PaymentSample(unittest.TestCase):
         req.source_card_token = "11a078c4-3c32-4796-90b1-51ee5517a212"
         req.target_merchant_id = 1
 
-        resp = self.adapter.clone_card(req)
+        resp = self.payment.clone_card(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.card_token)
@@ -1458,7 +1419,7 @@ class PaymentSample(unittest.TestCase):
         req.card_token = "d9b19d1a-243c-43dc-a498-add08162df72"
         req.card_type = CardType.CREDIT_CARD
 
-        resp: StoredCardListResponse = self.adapter.search_stored_cards(req)
+        resp: StoredCardListResponse = self.payment.search_stored_cards(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertTrue(len(resp.items) == 0)
@@ -1468,14 +1429,14 @@ class PaymentSample(unittest.TestCase):
         req.card_user_key = "fac377f2-ab15-4696-88d2-5e71b27ec378"
         req.card_token = "11a078c4-3c32-4796-90b1-51ee5517a212"
 
-        self.adapter.delete_stored_card(req)
+        self.payment.delete_stored_card(req)
 
     def test_approve_payment_transactions(self):
         req = ApprovePaymentTransactionsRequest()
         req.is_transactional = True
         req.payment_transaction_ids = [1, 2]
 
-        resp: PaymentTransactionApprovalListResponse = self.adapter.approve_payment_transactions(req)
+        resp: PaymentTransactionApprovalListResponse = self.payment.approve_payment_transactions(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(2, resp.size)
@@ -1485,7 +1446,7 @@ class PaymentSample(unittest.TestCase):
         req.is_transactional = True
         req.payment_transaction_ids = [1, 2]
 
-        resp: PaymentTransactionApprovalListResponse = self.adapter.disapprove_payment_transactions(req)
+        resp: PaymentTransactionApprovalListResponse = self.payment.disapprove_payment_transactions(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(2, resp.size)
@@ -1530,7 +1491,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -1539,7 +1500,7 @@ class PaymentSample(unittest.TestCase):
         req = PostAuthPaymentRequest()
         req.paid_price = Decimal("100")
 
-        resp = self.adapter.post_auth_payment(payment_id, req)
+        resp = self.payment.post_auth_payment(payment_id, req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(payment_id, resp.id)
@@ -1585,7 +1546,7 @@ class PaymentSample(unittest.TestCase):
         req.card = card
         req.items = items
 
-        resp = self.adapter.create_payment(req)
+        resp = self.payment.create_payment(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.id)
@@ -1602,7 +1563,7 @@ class PaymentSample(unittest.TestCase):
         req.sub_merchant_member_id = 1
         req.sub_merchant_member_price = Decimal("10")
 
-        resp: PaymentTransactionResponse = self.adapter.update_payment_transaction(req)
+        resp: PaymentTransactionResponse = self.payment.update_payment_transaction(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
         self.assertEqual(req.sub_merchant_member_id, resp.sub_merchant_member_id)
@@ -1610,7 +1571,7 @@ class PaymentSample(unittest.TestCase):
 
     def test_retrieve_multi_payment(self):
         token = "6d7e66b5-9b1c-4c1d-879a-2557b651096e"
-        resp: MultiPaymentResponse = self.adapter.retrieve_multi_payment(token)
+        resp: MultiPaymentResponse = self.payment.retrieve_multi_payment(token)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -1621,7 +1582,7 @@ class PaymentSample(unittest.TestCase):
         req.external_id = "1001"
         req.card_provider = CardProvider.MEX
 
-        resp: StoredCardListResponse = self.adapter.retrieve_provider_cards(req)
+        resp: StoredCardListResponse = self.payment.retrieve_provider_cards(req)
         print(vars(resp))
         self.assertIsNotNone(resp)
 
@@ -1636,7 +1597,7 @@ class PaymentSample(unittest.TestCase):
             "completeStatus": "WAITING",
         }
 
-        is_verified = self.adapter.is_3d_secure_callback_verified(merchant_key, params)
+        is_verified = self.payment.is_3d_secure_callback_verified(merchant_key, params)
         self.assertTrue(is_verified)
 
     def test_should_validate_3d_secure_callback_verified_even_params_has_nullable_value(self):
@@ -1649,7 +1610,7 @@ class PaymentSample(unittest.TestCase):
             "completeStatus": "WAITING"
         }
 
-        is_verified = self.adapter.is_3d_secure_callback_verified(merchant_key, params)
+        is_verified = self.payment.is_3d_secure_callback_verified(merchant_key, params)
         self.assertTrue(is_verified)
 
     def test_should_not_validate_3d_secure_callback_when_hashes_are_not_equal(self):
@@ -1663,7 +1624,7 @@ class PaymentSample(unittest.TestCase):
             "completeStatus": "WAITING",
         }
 
-        is_verified = self.adapter.is_3d_secure_callback_verified(merchant_key, params)
+        is_verified = self.payment.is_3d_secure_callback_verified(merchant_key, params)
         self.assertFalse(is_verified)
 
 

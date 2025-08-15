@@ -3,13 +3,10 @@ import os
 import unittest
 from datetime import datetime, timedelta
 
-from craftgate.adapter.settlement_reporting_adapter import SettlementReportingAdapter
-from craftgate.model.file_status import FileStatus
-from craftgate.model.settlement_type import SettlementType
-from craftgate.request.search_payout_bounced_transactions_request import SearchPayoutBouncedTransactionsRequest
-from craftgate.request.search_payout_completed_transactions_request import SearchPayoutCompletedTransactionsRequest
-from craftgate.request.search_payout_rows_request import SearchPayoutRowsRequest
-from craftgate.request_options import RequestOptions
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import FileStatus, SettlementType
+from craftgate.request import SearchPayoutBouncedTransactionsRequest, SearchPayoutCompletedTransactionsRequest, \
+    SearchPayoutRowsRequest
 
 
 class SettlementReportingSample(unittest.TestCase):
@@ -24,7 +21,7 @@ class SettlementReportingSample(unittest.TestCase):
             secret_key=cls.SECRET_KEY,
             base_url=cls.BASE_URL
         )
-        cls.adapter = SettlementReportingAdapter(options)
+        cls.settlement_reporting = Craftgate(options).settlement_reporting()
 
     def test_search_settlement_payout_completed_transactions(self):
         now = datetime.now()
@@ -37,7 +34,7 @@ class SettlementReportingSample(unittest.TestCase):
             page=0,
             size=10
         )
-        response = self.adapter.search_payout_completed_transactions(request)
+        response = self.settlement_reporting.search_payout_completed_transactions(request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
@@ -52,7 +49,7 @@ class SettlementReportingSample(unittest.TestCase):
             page=0,
             size=10
         )
-        response = self.adapter.search_payout_completed_transactions(request)
+        response = self.settlement_reporting.search_payout_completed_transactions(request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
@@ -64,13 +61,13 @@ class SettlementReportingSample(unittest.TestCase):
             start_date=start,
             end_date=end
         )
-        response = self.adapter.search_bounced_payout_transactions(request)
+        response = self.settlement_reporting.search_bounced_payout_transactions(request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payout_details(self):
         payout_id = 1
-        response = self.adapter.retrieve_payout_details(payout_id)
+        response = self.settlement_reporting.retrieve_payout_details(payout_id)
         print(vars(response))
         self.assertIsNotNone(response)
 
@@ -85,7 +82,7 @@ class SettlementReportingSample(unittest.TestCase):
             page=0,
             size=10
         )
-        response = self.adapter.search_payout_rows(request)
+        response = self.settlement_reporting.search_payout_rows(request)
         print(vars(response))
         self.assertTrue(len(response.items) > 0)
 

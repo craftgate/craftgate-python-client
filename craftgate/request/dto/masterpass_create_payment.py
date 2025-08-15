@@ -10,8 +10,8 @@ from craftgate.request.dto.payment_item import PaymentItem
 class MasterpassCreatePayment(object):
     def __init__(
             self,
-            price=None,  # type: Optional[decimal]
-            paid_price=None,  # type: Optional[decimal]
+            price=None,  # type: Optional[Decimal]
+            paid_price=None,  # type: Optional[Decimal]
             pos_alias=None,  # type: Optional[str]
             installment=None,  # type: Optional[int]
             currency=None,  # type: Optional[Currency]
