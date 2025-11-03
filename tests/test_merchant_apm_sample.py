@@ -21,7 +21,7 @@ class MerchantApmSample(unittest.TestCase):
 
     def test_retrieve_merchant_apms(self):
         response = self.merchant_apm.retrieve_apms()
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response)
 
 

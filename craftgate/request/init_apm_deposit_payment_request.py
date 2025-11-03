@@ -1,23 +1,27 @@
+from decimal import Decimal
 from typing import Optional, Dict, Any
+
 from craftgate.model.apm_type import ApmType
 from craftgate.model.currency import Currency
 
+
 class InitApmDepositPaymentRequest(object):
-    def __init__(self,
-                 apm_type=None,                # type: Optional[ApmType]
-                 merchant_apm_id=None,         # type: Optional[int]
-                 price=None,                   # type: Optional[float]
-                 currency=None,                # type: Optional[Currency]
-                 buyer_member_id=None,         # type: Optional[int]
-                 payment_channel=None,         # type: Optional[str]
-                 conversation_id=None,         # type: Optional[str]
-                 external_id=None,             # type: Optional[str]
-                 callback_url=None,            # type: Optional[str]
-                 apm_order_id=None,             # type: Optional[str]
-                 apm_user_identity=None,        # type: Optional[str]
-                 additional_params=None,        # type: Optional[Dict[str, Any]]
-                 client_ip=None                 # type: Optional[str]
-                 ):
+    def __init__(
+            self,
+            apm_type: Optional[ApmType] = None,
+            merchant_apm_id: Optional[int] = None,
+            price: Optional[Decimal] = None,
+            currency: Optional[Currency] = None,
+            buyer_member_id: Optional[int] = None,
+            payment_channel: Optional[str] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            callback_url: Optional[str] = None,
+            apm_order_id: Optional[str] = None,
+            apm_user_identity: Optional[str] = None,
+            additional_params: Optional[Dict[str, Any]] = None,
+            client_ip: Optional[str] = None
+    ) -> None:
         self.apm_type = apm_type
         self.merchant_apm_id = merchant_apm_id
         self.price = price

@@ -1,21 +1,22 @@
-from typing import Optional
 from datetime import datetime
+from decimal import Decimal
+from typing import Optional
 
 
 class PayoutBouncedTransaction(object):
     def __init__(
-        self,
-        id=None,                     # type: Optional[int]
-        iban=None,                   # type: Optional[str]
-        created_date=None,           # type: Optional[datetime]
-        updated_date=None,           # type: Optional[datetime]
-        payout_id=None,              # type: Optional[int]
-        payout_amount=None,          # type: Optional[float]
-        contact_name=None,           # type: Optional[str]
-        contact_surname=None,        # type: Optional[str]
-        legal_company_title=None,    # type: Optional[str]
-        row_description=None         # type: Optional[str]
-    ):
+            self,
+            id: Optional[int] = None,
+            iban: Optional[str] = None,
+            created_date: Optional[datetime] = None,
+            updated_date: Optional[datetime] = None,
+            payout_id: Optional[int] = None,
+            payout_amount: Optional[Decimal] = None,
+            contact_name: Optional[str] = None,
+            contact_surname: Optional[str] = None,
+            legal_company_title: Optional[str] = None,
+            row_description: Optional[str] = None
+    ) -> None:
         self.id = id
         self.iban = iban
         self.created_date = created_date

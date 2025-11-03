@@ -1,26 +1,28 @@
-from typing import Optional
 from datetime import datetime
-from craftgate.model.refund_status import RefundStatus
+from decimal import Decimal
+from typing import Any, Optional
+
 from craftgate.model.refund_destination_type import RefundDestinationType
+from craftgate.model.refund_status import RefundStatus
 
 
 class BasePaymentRefundResponse(object):
     def __init__(
-        self,
-        id=None,  # type: Optional[int]
-        created_date=None,  # type: Optional[datetime]
-        status=None,  # type: Optional[RefundStatus]
-        refund_destination_type=None,  # type: Optional[RefundDestinationType]
-        refund_price=None,  # type: Optional[float]
-        refund_bank_price=None,  # type: Optional[float]
-        refund_wallet_price=None,  # type: Optional[float]
-        conversation_id=None,  # type: Optional[str]
-        auth_code=None,  # type: Optional[str]
-        host_reference=None,  # type: Optional[str]
-        trans_id=None,  # type: Optional[str]
-        payment_id=None,  # type: Optional[int]
-        **kwargs
-    ):
+            self,
+            id: Optional[int] = None,
+            created_date: Optional[datetime] = None,
+            status: Optional[RefundStatus] = None,
+            refund_destination_type: Optional[RefundDestinationType] = None,
+            refund_price: Optional[Decimal] = None,
+            refund_bank_price: Optional[Decimal] = None,
+            refund_wallet_price: Optional[Decimal] = None,
+            conversation_id: Optional[str] = None,
+            auth_code: Optional[str] = None,
+            host_reference: Optional[str] = None,
+            trans_id: Optional[str] = None,
+            payment_id: Optional[int] = None,
+            **kwargs: Any
+    ) -> None:
         self.id = id
         self.created_date = created_date
         self.status = status

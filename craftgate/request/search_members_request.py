@@ -1,19 +1,20 @@
 from typing import Optional, Set
+
 from craftgate.model.member_type import MemberType
 
 
 class SearchMembersRequest(object):
     def __init__(
-        self,
-        page=0,  # type: int
-        size=10,  # type: int
-        is_buyer=None,  # type: Optional[bool]
-        is_sub_merchant=None,  # type: Optional[bool]
-        name=None,  # type: Optional[str]
-        member_ids=None,  # type: Optional[Set[int]]
-        member_type=None,  # type: Optional[MemberType]
-        member_external_id=None  # type: Optional[str]
-    ):
+            self,
+            page: int = 0,
+            size: int = 10,
+            is_buyer: Optional[bool] = None,
+            is_sub_merchant: Optional[bool] = None,
+            name: Optional[str] = None,
+            member_ids: Optional[Set[int]] = None,
+            member_type: Optional[MemberType] = None,
+            member_external_id: Optional[str] = None
+    ) -> None:
         self.page = page
         self.size = size
         self.is_buyer = is_buyer

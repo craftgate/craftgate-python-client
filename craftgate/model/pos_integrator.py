@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class PosIntegrator(str, Enum):
     YKB = "YKB"
     GARANTI = "GARANTI"

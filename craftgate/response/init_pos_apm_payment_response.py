@@ -1,18 +1,20 @@
-from typing import Optional, Dict, Any
-from craftgate.model.payment_status import PaymentStatus
+from typing import Any, Dict, Optional
+
 from craftgate.model.additional_action import AdditionalAction
+from craftgate.model.payment_status import PaymentStatus
 from craftgate.response.dto.payment_error import PaymentError
+
 
 class InitPosApmPaymentResponse(object):
     def __init__(
-        self,
-        html_content=None,            # type: Optional[str]
-        payment_id=None,              # type: Optional[int]
-        payment_status=None,          # type: Optional[PaymentStatus]
-        additional_action=None,       # type: Optional[AdditionalAction]
-        payment_error=None,           # type: Optional[PaymentError]
-        additional_data=None          # type: Optional[Dict[str, Any]]
-    ):
+            self,
+            html_content: Optional[str] = None,
+            payment_id: Optional[int] = None,
+            payment_status: Optional[PaymentStatus] = None,
+            additional_action: Optional[AdditionalAction] = None,
+            payment_error: Optional[PaymentError] = None,
+            additional_data: Optional[Dict[str, Any]] = None
+    ) -> None:
         self.html_content = html_content
         self.payment_id = payment_id
         self.payment_status = payment_status

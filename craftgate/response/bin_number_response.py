@@ -6,15 +6,15 @@ from craftgate.model.card_association import CardAssociation
 
 class BinNumberResponse(object):
     def __init__(
-        self,
-        bin_number=None,                  # type: Optional[str]
-        card_type=None,                   # type: Optional[CardType]
-        card_association=None,            # type: Optional[CardAssociation]
-        card_brand=None,                  # type: Optional[str]
-        bank_name=None,                   # type: Optional[str]
-        bank_code=None,                   # type: Optional[int]
-        commercial=None                   # type: Optional[bool]
-    ):
+            self,
+            bin_number: Optional[str] = None,
+            card_type: Optional[CardType] = None,
+            card_association: Optional[CardAssociation] = None,
+            card_brand: Optional[str] = None,
+            bank_name: Optional[str] = None,
+            bank_code: Optional[int] = None,
+            commercial: Optional[bool] = None
+    ) -> None:
         self.bin_number = bin_number
         self.card_type = card_type
         self.card_association = card_association

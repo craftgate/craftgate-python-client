@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Optional, List
 
 from craftgate.model.apm_type import ApmType
@@ -7,20 +8,21 @@ from craftgate.request.dto.payment_item import PaymentItem
 
 
 class CreateApmPaymentRequest(object):
-    def __init__(self,
-                 apm_type=None,  # type: Optional[ApmType]
-                 price=None,  # type: Optional[float]
-                 paid_price=None,  # type: Optional[float]
-                 currency=None,  # type: Optional[Currency]
-                 payment_group=None,  # type: Optional[PaymentGroup]
-                 payment_channel=None,  # type: Optional[str]
-                 conversation_id=None,  # type: Optional[str]
-                 external_id=None,  # type: Optional[str]
-                 buyer_member_id=None,  # type: Optional[int]
-                 apm_order_id=None,  # type: Optional[str]
-                 client_ip=None,  # type: Optional[str]
-                 items=None  # type: Optional[List[PaymentItem]]
-                 ):
+    def __init__(
+            self,
+            apm_type: Optional[ApmType] = None,
+            price: Optional[Decimal] = None,
+            paid_price: Optional[Decimal] = None,
+            currency: Optional[Currency] = None,
+            payment_group: Optional[PaymentGroup] = None,
+            payment_channel: Optional[str] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            buyer_member_id: Optional[int] = None,
+            apm_order_id: Optional[str] = None,
+            client_ip: Optional[str] = None,
+            items: Optional[List[PaymentItem]] = None
+    ) -> None:
         self.apm_type = apm_type
         self.price = price
         self.paid_price = paid_price

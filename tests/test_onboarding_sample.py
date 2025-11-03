@@ -40,7 +40,7 @@ class OnboardingSample(unittest.TestCase):
             address="Suadiye Mah. Örnek Cd. No:23, 34740 Kadıköy/İstanbul"
         )
         response = self.onboarding.create_member(request)
-        print(vars(response))
+        print(response)
 
         self.assertIsNotNone(response.id)
         self.assertEqual(request.contact_name, response.contact_name)
@@ -75,6 +75,7 @@ class OnboardingSample(unittest.TestCase):
             settlement_earnings_destination=SettlementEarningsDestination.IBAN
         )
         response = self.onboarding.update_member(member_id, request)
+        print(response)
 
         self.assertEqual(member_id, response.id)
         self.assertEqual(request.contact_name, response.contact_name)
@@ -90,7 +91,7 @@ class OnboardingSample(unittest.TestCase):
     def test_retrieve_sub_merchant(self):
         member_id = 116210
         response = self.onboarding.retrieve_member(member_id)
-        print(vars(response))
+        print(response)
         self.assertEqual(member_id, response.id)
 
     def test_create_buyer(self):
@@ -105,7 +106,8 @@ class OnboardingSample(unittest.TestCase):
         )
         response = self.onboarding.create_member(request)
 
-        print(vars(response))
+        print(response)
+
         self.assertIsNotNone(response.id)
         self.assertTrue(response.is_buyer)
         self.assertEqual(request.member_external_id, response.member_external_id)
@@ -125,7 +127,8 @@ class OnboardingSample(unittest.TestCase):
         )
         response = self.onboarding.update_member(member_id, request)
 
-        print(vars(response))
+        print(response)
+
         self.assertTrue(response.is_buyer)
         self.assertEqual(member_id, response.id)
         self.assertEqual(request.email, response.email)
@@ -136,7 +139,7 @@ class OnboardingSample(unittest.TestCase):
         member_id = 116211
         response = self.onboarding.retrieve_member(member_id)
 
-        print(vars(response))
+        print(response)
         self.assertEqual(member_id, response.id)
 
     def test_search_members(self):
@@ -146,7 +149,7 @@ class OnboardingSample(unittest.TestCase):
         )
         response = self.onboarding.search_members(request)
 
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_create_member_as_sub_merchant_and_buyer(self):
@@ -168,7 +171,8 @@ class OnboardingSample(unittest.TestCase):
         )
         response = self.onboarding.create_member(request)
 
-        print(vars(response))
+        print(response)
+
         self.assertIsNotNone(response.id)
         self.assertEqual(request.contact_name, response.contact_name)
         self.assertEqual(request.contact_surname, response.contact_surname)
@@ -196,7 +200,8 @@ class OnboardingSample(unittest.TestCase):
         )
         response = self.onboarding.create_merchant(request)
 
-        print(vars(response))
+        print(response)
+
         self.assertIsNotNone(response.id)
         self.assertEqual(request.name, response.name)
         self.assertEqual(len(response.merchant_api_credentials), 1)

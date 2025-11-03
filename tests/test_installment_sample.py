@@ -1,6 +1,7 @@
 # tests/test_installment_sample.py
 import os
 import unittest
+from decimal import Decimal
 
 from craftgate import Craftgate
 from craftgate.model import Currency
@@ -25,13 +26,13 @@ class InstallmentSample(unittest.TestCase):
     def test_search_installments(self):
         request = SearchInstallmentsRequest(
             bin_number="520922",
-            price=100,
+            price=Decimal("100"),
             currency=Currency.TRY
         )
 
         resp = self.installment.search_installments(request)
 
-        print(vars(resp))
+        print(resp)
         self.assertIsNotNone(resp)
         self.assertIsInstance(getattr(resp, "items", []), list)
 
@@ -39,7 +40,7 @@ class InstallmentSample(unittest.TestCase):
         bin_number = "525864"
         resp = self.installment.retrieve_bin_number(bin_number)
 
-        print(vars(resp))
+        print(resp)
         self.assertIsNotNone(resp)
         self.assertEqual(getattr(resp, "bin_number", None), bin_number)
 

@@ -1,34 +1,36 @@
-from typing import Optional
-from decimal import Decimal
 from datetime import datetime
-from craftgate.model.payment_type import PaymentType
-from craftgate.model.payment_status import PaymentStatus
+from decimal import Decimal
+from typing import Optional
+
 from craftgate.model.fraud_action import FraudAction
+from craftgate.model.payment_status import PaymentStatus
+from craftgate.model.payment_type import PaymentType
 from craftgate.response.dto.wallet_transaction import WalletTransaction
+
 
 class DepositPaymentResponse(object):
     def __init__(
-        self,
-        id=None,                            # type: Optional[int]
-        price=None,                         # type: Optional[Decimal]
-        currency=None,                       # type: Optional[str]
-        buyer_member_id=None,                # type: Optional[int]
-        conversation_id=None,                # type: Optional[str]
-        bank_commission_rate=None,           # type: Optional[Decimal]
-        bank_commission_rate_amount=None,    # type: Optional[Decimal]
-        auth_code=None,                       # type: Optional[str]
-        host_reference=None,                  # type: Optional[str]
-        trans_id=None,                        # type: Optional[str]
-        order_id=None,                        # type: Optional[str]
-        payment_type=None,                    # type: Optional[PaymentType]
-        created_date=None,                    # type: Optional[datetime]
-        payment_status=None,                  # type: Optional[PaymentStatus]
-        card_user_key=None,                   # type: Optional[str]
-        card_token=None,                      # type: Optional[str]
-        wallet_transaction=None,              # type: Optional[WalletTransaction]
-        fraud_id=None,                         # type: Optional[int]
-        fraud_action=None                      # type: Optional[FraudAction]
-    ):
+            self,
+            id: Optional[int] = None,
+            price: Optional[Decimal] = None,
+            currency: Optional[str] = None,
+            buyer_member_id: Optional[int] = None,
+            conversation_id: Optional[str] = None,
+            bank_commission_rate: Optional[Decimal] = None,
+            bank_commission_rate_amount: Optional[Decimal] = None,
+            auth_code: Optional[str] = None,
+            host_reference: Optional[str] = None,
+            trans_id: Optional[str] = None,
+            order_id: Optional[str] = None,
+            payment_type: Optional[PaymentType] = None,
+            created_date: Optional[datetime] = None,
+            payment_status: Optional[PaymentStatus] = None,
+            card_user_key: Optional[str] = None,
+            card_token: Optional[str] = None,
+            wallet_transaction: Optional[WalletTransaction] = None,
+            fraud_id: Optional[int] = None,
+            fraud_action: Optional[FraudAction] = None
+    ) -> None:
         self.id = id
         self.price = price
         self.currency = currency

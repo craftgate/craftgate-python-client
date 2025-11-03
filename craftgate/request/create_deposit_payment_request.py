@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
@@ -5,16 +6,17 @@ from craftgate.request.dto.card import Card
 
 
 class CreateDepositPaymentRequest(object):
-    def __init__(self,
-                 buyer_member_id=None,  # type: Optional[int]
-                 price=None,  # type: Optional[float]
-                 currency=None,  # type: Optional[Currency]
-                 conversation_id=None,  # type: Optional[str]
-                 callback_url=None,  # type: Optional[str]
-                 pos_alias=None,  # type: Optional[str]
-                 client_ip=None,  # type: Optional[str]
-                 card=None  # type: Optional[Card]
-                 ):
+    def __init__(
+            self,
+            buyer_member_id: Optional[int] = None,
+            price: Optional[Decimal] = None,
+            currency: Optional[Currency] = None,
+            conversation_id: Optional[str] = None,
+            callback_url: Optional[str] = None,
+            pos_alias: Optional[str] = None,
+            client_ip: Optional[str] = None,
+            card: Optional[Card] = None
+    ) -> None:
         self.buyer_member_id = buyer_member_id
         self.price = price
         self.currency = currency

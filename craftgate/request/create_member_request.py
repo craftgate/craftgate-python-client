@@ -8,25 +8,25 @@ from craftgate.model.settlement_earnings_destination import SettlementEarningsDe
 class CreateMemberRequest(object):
     def __init__(
             self,
-            member_external_id=None,  # type: Optional[str]
-            name=None,  # type: Optional[str]
-            address=None,  # type: Optional[str]
-            email=None,  # type: Optional[str]
-            phone_number=None,  # type: Optional[str]
-            contact_name=None,  # type: Optional[str]
-            contact_surname=None,  # type: Optional[str]
-            member_type=None,  # type: Optional[MemberType]
-            legal_company_title=None,  # type: Optional[str]
-            tax_office=None,  # type: Optional[str]
-            tax_number=None,  # type: Optional[str]
-            iban=None,  # type: Optional[str]
-            settlement_earnings_destination=None,  # type: Optional[SettlementEarningsDestination]
-            negative_wallet_amount_limit=None,  # type: Optional[Decimal]  # Deprecated
-            sub_merchant_maximum_allowed_negative_balance=None,  # type: Optional[Decimal]
-            is_buyer=None,  # type: Optional[bool]
-            is_sub_merchant=None,  # type: Optional[bool]
-            settlement_delay_count=None  # type: Optional[int]
-    ):
+            member_external_id: Optional[str] = None,
+            name: Optional[str] = None,
+            address: Optional[str] = None,
+            email: Optional[str] = None,
+            phone_number: Optional[str] = None,
+            contact_name: Optional[str] = None,
+            contact_surname: Optional[str] = None,
+            member_type: Optional[MemberType] = None,
+            legal_company_title: Optional[str] = None,
+            tax_office: Optional[str] = None,
+            tax_number: Optional[str] = None,
+            iban: Optional[str] = None,
+            settlement_earnings_destination: Optional[SettlementEarningsDestination] = None,
+            negative_wallet_amount_limit: Optional[Decimal] = None,  # Deprecated
+            sub_merchant_maximum_allowed_negative_balance: Optional[Decimal] = None,
+            is_buyer: Optional[bool] = None,
+            is_sub_merchant: Optional[bool] = None,
+            settlement_delay_count: Optional[int] = None
+    ) -> None:
         self.member_external_id = member_external_id
         self.name = name
         self.address = address
@@ -41,7 +41,9 @@ class CreateMemberRequest(object):
         self.iban = iban
         self.settlement_earnings_destination = settlement_earnings_destination
         self.negative_wallet_amount_limit = negative_wallet_amount_limit  # Deprecated
-        self.sub_merchant_maximum_allowed_negative_balance = sub_merchant_maximum_allowed_negative_balance
+        self.sub_merchant_maximum_allowed_negative_balance = (
+            sub_merchant_maximum_allowed_negative_balance
+        )
         self.is_buyer = is_buyer
         self.is_sub_merchant = is_sub_merchant
         self.settlement_delay_count = settlement_delay_count

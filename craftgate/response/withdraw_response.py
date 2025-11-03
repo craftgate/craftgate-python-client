@@ -2,24 +2,24 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Optional
 
-from craftgate.model.status import Status
 from craftgate.model.currency import Currency
+from craftgate.model.status import Status
 from craftgate.model.transaction_payout_status import TransactionPayoutStatus
 
 
 class WithdrawResponse(object):
     def __init__(
-        self,
-        id=None,  # type: Optional[int]
-        created_date=None,  # type: Optional[datetime]
-        status=None,  # type: Optional[Status]
-        price=None,  # type: Optional[Decimal]
-        description=None,  # type: Optional[str]
-        currency=None,  # type: Optional[Currency]
-        payout_status=None,  # type: Optional[TransactionPayoutStatus]
-        member_id=None,  # type: Optional[int]
-        payout_id=None  # type: Optional[int]
-    ):
+            self,
+            id: Optional[int] = None,
+            created_date: Optional[datetime] = None,
+            status: Optional[Status] = None,
+            price: Optional[Decimal] = None,
+            description: Optional[str] = None,
+            currency: Optional[Currency] = None,
+            payout_status: Optional[TransactionPayoutStatus] = None,
+            member_id: Optional[int] = None,
+            payout_id: Optional[int] = None
+    ) -> None:
         self.id = id
         self.created_date = created_date
         self.status = status

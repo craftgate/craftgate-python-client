@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class BounceStatus(str, Enum):
     NOT_BOUNCED = "NOT_BOUNCED"
     BOUNCED = "BOUNCED"

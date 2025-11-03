@@ -1,8 +1,12 @@
+from decimal import Decimal
 from typing import Optional
 
 
 class GarantiPayInstallment(object):
-    def __init__(self, number=None, total_price=None):
-        # type: (Optional[int], Optional[float]) -> None
+    def __init__(
+            self,
+            number: Optional[int] = None,
+            total_price: Optional[Decimal] = None
+    ) -> None:
         self.number = number
         self.total_price = total_price

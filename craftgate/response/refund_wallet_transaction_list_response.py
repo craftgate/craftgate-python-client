@@ -1,5 +1,6 @@
 from craftgate.response.common.list_response import ListResponse
+from craftgate.response.refund_wallet_transaction_response import RefundWalletTransactionResponse
 
 
-class RefundWalletTransactionListResponse(ListResponse):
-    pass
+class RefundWalletTransactionListResponse(ListResponse[RefundWalletTransactionResponse]):
+    item_type = RefundWalletTransactionResponse

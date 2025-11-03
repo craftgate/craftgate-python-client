@@ -1,16 +1,19 @@
+from typing import Optional
+
+
 class CreateMerchantRequest(object):
     def __init__(
             self,
-            name=None,  # type: str
-            legal_company_title=None,  # type: str
-            email=None,  # type: str
-            secret_word=None,  # type: str
-            website=None,  # type: str
-            phone_number=None,  # type: str
-            contact_name=None,  # type: str
-            contact_surname=None,  # type: str
-            contact_phone_number=None  # type: str
-    ):
+            name: Optional[str] = None,
+            legal_company_title: Optional[str] = None,
+            email: Optional[str] = None,
+            secret_word: Optional[str] = None,
+            website: Optional[str] = None,
+            phone_number: Optional[str] = None,
+            contact_name: Optional[str] = None,
+            contact_surname: Optional[str] = None,
+            contact_phone_number: Optional[str] = None
+    ) -> None:
         self.name = name
         self.legal_company_title = legal_company_title
         self.email = email

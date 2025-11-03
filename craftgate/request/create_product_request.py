@@ -1,4 +1,5 @@
-import decimal
+from datetime import datetime
+from decimal import Decimal
 from typing import Optional, Set
 
 from craftgate.model.currency import Currency
@@ -7,18 +8,19 @@ from craftgate.model.currency import Currency
 class CreateProductRequest(object):
     def __init__(
             self,
-            name=None,  # type: Optional[str]
-            channel=None,  # type: Optional[str]
-            order_id=None,  # type: Optional[str]
-            conversation_id=None,  # type: Optional[str]
-            external_id=None,  # type: Optional[str]
-            stock=None,  # type: Optional[int]
-            price=None,  # type: Optional[Decimal]
-            currency=None,  # type: Optional[Currency]
-            description=None,  # type: Optional[str]
-            multi_payment=None,  # type: Optional[bool]
-            enabled_installments=None  # type: Optional[Set[int]]
-    ):
+            name: Optional[str] = None,
+            channel: Optional[str] = None,
+            order_id: Optional[str] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            stock: Optional[int] = None,
+            price: Optional[Decimal] = None,
+            currency: Optional[Currency] = None,
+            expires_at: Optional[datetime] = None,
+            description: Optional[str] = None,
+            multi_payment: bool = False,
+            enabled_installments: Optional[Set[int]] = None
+    ) -> None:
         self.name = name
         self.channel = channel
         self.order_id = order_id
@@ -27,6 +29,7 @@ class CreateProductRequest(object):
         self.stock = stock
         self.price = price
         self.currency = currency
+        self.expires_at = expires_at
         self.description = description
         self.multi_payment = multi_payment
         self.enabled_installments = enabled_installments

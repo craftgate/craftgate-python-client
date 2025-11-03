@@ -1,25 +1,27 @@
-from typing import Optional
 from datetime import datetime
-from craftgate.model.card_type import CardType
+from typing import Optional
+
 from craftgate.model.card_association import CardAssociation
 from craftgate.model.card_expiry_status import CardExpiryStatus
+from craftgate.model.card_type import CardType
+
 
 class SearchStoredCardsRequest(object):
     def __init__(
-        self,
-        card_alias=None,               # type: Optional[str]
-        card_brand=None,               # type: Optional[str]
-        card_type=None,                 # type: Optional[CardType]
-        card_user_key=None,             # type: Optional[str]
-        card_token=None,                # type: Optional[str]
-        card_bank_name=None,            # type: Optional[str]
-        card_association=None,          # type: Optional[CardAssociation]
-        card_expiry_status=None,        # type: Optional[CardExpiryStatus]
-        min_created_date=None,          # type: Optional[datetime]
-        max_created_date=None,          # type: Optional[datetime]
-        page=0,                         # type: int
-        size=10                         # type: int
-    ):
+            self,
+            card_alias: Optional[str] = None,
+            card_brand: Optional[str] = None,
+            card_type: Optional[CardType] = None,
+            card_user_key: Optional[str] = None,
+            card_token: Optional[str] = None,
+            card_bank_name: Optional[str] = None,
+            card_association: Optional[CardAssociation] = None,
+            card_expiry_status: Optional[CardExpiryStatus] = None,
+            min_created_date: Optional[datetime] = None,
+            max_created_date: Optional[datetime] = None,
+            page: int = 0,
+            size: int = 10
+    ) -> None:
         self.card_alias = card_alias
         self.card_brand = card_brand
         self.card_type = card_type

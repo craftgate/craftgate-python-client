@@ -1,19 +1,21 @@
-from typing import Optional, List
+from typing import List, Optional
+
 from craftgate.response.dto.bnpl_bank_offer_term import BnplBankOfferTerm
+
 
 class BnplBankOffer(object):
     def __init__(
-        self,
-        bank_code=None,                             # type: Optional[str]
-        bank_name=None,                             # type: Optional[str]
-        bank_icon_url=None,                         # type: Optional[str]
-        bank_table_banner_message=None,             # type: Optional[str]
-        bank_small_banner_message=None,             # type: Optional[str]
-        pre_approved_application_id=None,           # type: Optional[str]
-        is_support_non_customer=None,               # type: Optional[bool]
-        is_payment_plan_calculated_by_bank=None,    # type: Optional[bool]
-        bank_offer_terms=None                       # type: Optional[List[BnplBankOfferTerm]]
-    ):
+            self,
+            bank_code: Optional[str] = None,
+            bank_name: Optional[str] = None,
+            bank_icon_url: Optional[str] = None,
+            bank_table_banner_message: Optional[str] = None,
+            bank_small_banner_message: Optional[str] = None,
+            pre_approved_application_id: Optional[str] = None,
+            is_support_non_customer: Optional[bool] = None,
+            is_payment_plan_calculated_by_bank: Optional[bool] = None,
+            bank_offer_terms: Optional[List[BnplBankOfferTerm]] = None
+    ) -> None:
         self.bank_code = bank_code
         self.bank_name = bank_name
         self.bank_icon_url = bank_icon_url

@@ -1,15 +1,16 @@
-from typing import Optional
 from decimal import Decimal
+from typing import Optional
+
 
 class BnplBankOfferTerm(object):
     def __init__(
-        self,
-        term=None,                   # type: Optional[int]
-        amount=None,                  # type: Optional[Decimal]
-        total_amount=None,            # type: Optional[Decimal]
-        interest_rate=None,           # type: Optional[Decimal]
-        annual_interest_rate=None     # type: Optional[Decimal]
-    ):
+            self,
+            term: Optional[int] = None,
+            amount: Optional[Decimal] = None,
+            total_amount: Optional[Decimal] = None,
+            interest_rate: Optional[Decimal] = None,
+            annual_interest_rate: Optional[Decimal] = None
+    ) -> None:
         self.term = term
         self.amount = amount
         self.total_amount = total_amount

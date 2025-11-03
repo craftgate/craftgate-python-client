@@ -1,4 +1,4 @@
-from typing import Optional, List
+from typing import List, Optional
 
 from craftgate.model.card_association import CardAssociation
 from craftgate.model.payment_authentication_type import PaymentAuthenticationType
@@ -8,30 +8,30 @@ from craftgate.request.dto.update_merchant_pos_user import UpdateMerchantPosUser
 
 class UpdateMerchantPosRequest(object):
     def __init__(
-        self,
-        name=None,                                        # type: Optional[str]
-        hostname=None,                                    # type: Optional[str]
-        client_id=None,                                   # type: Optional[str]
-        mode=None,                                        # type: Optional[str]
-        path=None,                                        # type: Optional[str]
-        port=None,                                        # type: Optional[int]
-        posnet_id=None,                                   # type: Optional[str]
-        terminal_id=None,                                 # type: Optional[str]
-        threeds_posnet_id=None,                           # type: Optional[str]
-        threeds_terminal_id=None,                         # type: Optional[str]
-        threeds_key=None,                                 # type: Optional[str]
-        threeds_path=None,                                # type: Optional[str]
-        enable_foreign_card=None,                         # type: Optional[bool]
-        enable_installment=None,                          # type: Optional[bool]
-        enable_payment_without_cvc=None,                  # type: Optional[bool]
-        enable_loyalty=None,                              # type: Optional[bool]
-        new_integration=None,                             # type: Optional[bool]
-        order_number=None,                                # type: Optional[int]
-        supported_card_associations=None,                 # type: Optional[List[CardAssociation]]
-        enabled_payment_authentication_types=None,        # type: Optional[List[PaymentAuthenticationType]]
-        merchant_pos_users=None,                          # type: Optional[List[UpdateMerchantPosUser]]
-        enabled_payment_phases=None                       # type: Optional[List[PaymentPhase]]
-    ):
+            self,
+            name: Optional[str] = None,
+            hostname: Optional[str] = None,
+            client_id: Optional[str] = None,
+            mode: Optional[str] = None,
+            path: Optional[str] = None,
+            port: Optional[int] = None,
+            posnet_id: Optional[str] = None,
+            terminal_id: Optional[str] = None,
+            threeds_posnet_id: Optional[str] = None,
+            threeds_terminal_id: Optional[str] = None,
+            threeds_key: Optional[str] = None,
+            threeds_path: Optional[str] = None,
+            enable_foreign_card: Optional[bool] = None,
+            enable_installment: Optional[bool] = None,
+            enable_payment_without_cvc: Optional[bool] = None,
+            enable_loyalty: Optional[bool] = None,
+            new_integration: Optional[bool] = None,
+            order_number: Optional[int] = None,
+            supported_card_associations: Optional[List[CardAssociation]] = None,
+            enabled_payment_authentication_types: Optional[List[PaymentAuthenticationType]] = None,
+            merchant_pos_users: Optional[List[UpdateMerchantPosUser]] = None,
+            enabled_payment_phases: Optional[List[PaymentPhase]] = None
+    ) -> None:
         self.name = name
         self.hostname = hostname
         self.client_id = client_id

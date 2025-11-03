@@ -1,4 +1,5 @@
 import json
+from datetime import date, datetime
 from decimal import Decimal
 
 try:
@@ -24,6 +25,11 @@ def _convert(obj):
             return obj.name
     except Exception:
         pass
+
+    if isinstance(obj, datetime):
+        return obj.strftime("%Y-%m-%dT%H:%M:%S")
+    if isinstance(obj, date):
+        return obj.strftime("%Y-%m-%d")
 
     if isinstance(obj, Decimal):
         return float(obj)

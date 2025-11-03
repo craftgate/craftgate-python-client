@@ -1,17 +1,18 @@
-from typing import Optional
 from datetime import datetime
+from decimal import Decimal
+from typing import Optional
 
 
 class PayoutRow(object):
     def __init__(
-        self,
-        name=None,            # type: Optional[str]
-        iban=None,            # type: Optional[str]
-        payout_id=None,       # type: Optional[int]
-        merchant_id=None,     # type: Optional[int]
-        merchant_type=None,   # type: Optional[str]
-        payout_amount=None,   # type: Optional[float]
-        payout_date=None      # type: Optional[datetime]
+            self,
+            name: Optional[str] = None,
+            iban: Optional[str] = None,
+            payout_id: Optional[int] = None,
+            merchant_id: Optional[int] = None,
+            merchant_type: Optional[str] = None,
+            payout_amount: Optional[Decimal] = None,
+            payout_date: Optional[datetime] = None
     ):
         self.name = name
         self.iban = iban

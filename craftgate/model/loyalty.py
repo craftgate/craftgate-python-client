@@ -8,12 +8,12 @@ from craftgate.model.loyalty_data import LoyaltyData
 
 class Loyalty:
     def __init__(
-        self,
-        type: Optional[LoyaltyType] = None,
-        reward: Optional[Reward] = None,
-        message: Optional[str] = None,
-        loyalty_params: Optional[LoyaltyParams] = None,
-        loyalty_data: Optional[LoyaltyData] = None
+            self,
+            type: Optional[LoyaltyType] = None,
+            reward: Optional[Reward] = None,
+            message: Optional[str] = None,
+            loyalty_params: Optional[LoyaltyParams] = None,
+            loyalty_data: Optional[LoyaltyData] = None
     ) -> None:
         self.type = type
         self.reward = reward

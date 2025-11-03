@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class TransactionPayoutStatus(str, Enum):
     CANCELLED = "CANCELLED"
     NO_PAYOUT = "NO_PAYOUT"

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class PaymentRefundStatus(str, Enum):
     NO_REFUND = "NO_REFUND"
     NOT_REFUNDED = "NOT_REFUNDED"

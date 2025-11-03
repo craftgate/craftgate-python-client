@@ -3,8 +3,8 @@ import os
 import unittest
 
 from craftgate import Craftgate, RequestOptions
-from craftgate.request import CreatePaymentTokenRequest
 from craftgate.model import ApmType
+from craftgate.request import CreatePaymentTokenRequest
 
 
 class PaymentTokenSample(unittest.TestCase):
@@ -27,7 +27,7 @@ class PaymentTokenSample(unittest.TestCase):
             issuer="EDENRED"
         )
         response = self.payment_token.create_payment_token(request)
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response)
         if ApmType is not None and hasattr(ApmType, "EDENRED"):
             self.assertEqual(response.issuer, ApmType.EDENRED)

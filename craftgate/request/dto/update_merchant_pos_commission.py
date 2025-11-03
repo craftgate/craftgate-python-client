@@ -1,3 +1,4 @@
+from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.status import Status
@@ -5,19 +6,19 @@ from craftgate.model.status import Status
 
 class UpdateMerchantPosCommission(object):
     def __init__(
-        self,
-        card_brand_name=None,                                 # type: Optional[str]
-        installment=None,                                     # type: Optional[int]
-        status=None,                                          # type: Optional[Status]
-        blockage_day=None,                                    # type: Optional[int]
-        installment_label=None,                               # type: Optional[str]
-        bank_on_us_credit_card_commission_rate=None,          # type: Optional[float]
-        bank_on_us_debit_card_commission_rate=None,           # type: Optional[float]
-        bank_not_on_us_credit_card_commission_rate=None,      # type: Optional[float]
-        bank_not_on_us_debit_card_commission_rate=None,       # type: Optional[float]
-        bank_foreign_card_commission_rate=None,               # type: Optional[float]
-        merchant_commission_rate=None                         # type: Optional[float]
-    ):
+            self,
+            card_brand_name: Optional[str] = None,
+            installment: Optional[int] = None,
+            status: Optional[Status] = None,
+            blockage_day: Optional[int] = None,
+            installment_label: Optional[str] = None,
+            bank_on_us_credit_card_commission_rate: Optional[Decimal] = None,
+            bank_on_us_debit_card_commission_rate: Optional[Decimal] = None,
+            bank_not_on_us_credit_card_commission_rate: Optional[Decimal] = None,
+            bank_not_on_us_debit_card_commission_rate: Optional[Decimal] = None,
+            bank_foreign_card_commission_rate: Optional[Decimal] = None,
+            merchant_commission_rate: Optional[Decimal] = None
+    ) -> None:
         self.card_brand_name = card_brand_name
         self.installment = installment
         self.status = status

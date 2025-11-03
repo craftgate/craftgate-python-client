@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
@@ -8,21 +9,21 @@ from craftgate.model.refund_status import RefundStatus
 class SearchPaymentTransactionRefundsRequest(object):
     def __init__(
             self,
-            page=None,  # type: Optional[int]
-            size=None,  # type: Optional[int]
-            id=None,  # type: Optional[int]
-            payment_id=None,  # type: Optional[int]
-            payment_transaction_id=None,  # type: Optional[int]
-            buyer_member_id=None,  # type: Optional[int]
-            conversation_id=None,  # type: Optional[str]
-            status=None,  # type: Optional[RefundStatus]
-            currency=None,  # type: Optional[Currency]
-            min_refund_price=None,  # type: Optional[Decimal]
-            max_refund_price=None,  # type: Optional[Decimal]
-            is_after_settlement=None,  # type: Optional[bool]
-            min_created_date=None,  # type: Optional[datetime]
-            max_created_date=None  # type: Optional[datetime]
-    ):
+            page: Optional[int] = None,
+            size: Optional[int] = None,
+            id: Optional[int] = None,
+            payment_id: Optional[int] = None,
+            payment_transaction_id: Optional[int] = None,
+            buyer_member_id: Optional[int] = None,
+            conversation_id: Optional[str] = None,
+            status: Optional[RefundStatus] = None,
+            currency: Optional[Currency] = None,
+            min_refund_price: Optional[Decimal] = None,
+            max_refund_price: Optional[Decimal] = None,
+            is_after_settlement: Optional[bool] = None,
+            min_created_date: Optional[datetime] = None,
+            max_created_date: Optional[datetime] = None
+    ) -> None:
         self.page = page
         self.size = size
         self.id = id

@@ -26,7 +26,7 @@ class SettlementSample(unittest.TestCase):
         request = CreateInstantWalletSettlementRequest()
         response = self.settlement.create_instant_wallet_settlement(request)
 
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response.settlement_result_status)
 
     def test_create_merchant_payout_account(self):
@@ -38,7 +38,7 @@ class SettlementSample(unittest.TestCase):
         )
         response = self.settlement.create_payout_account(request)
 
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response.id)
 
     def test_create_sub_merchant_payout_account(self):
@@ -51,7 +51,7 @@ class SettlementSample(unittest.TestCase):
         )
         response = self.settlement.create_payout_account(request)
 
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response.id)
 
     def test_update_payout_account(self):
@@ -71,7 +71,7 @@ class SettlementSample(unittest.TestCase):
         )
         response = self.settlement.search_payout_account(request)
 
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response.items)
 
     def test_delete_payout_account(self):

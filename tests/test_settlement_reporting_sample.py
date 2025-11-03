@@ -35,7 +35,7 @@ class SettlementReportingSample(unittest.TestCase):
             size=10
         )
         response = self.settlement_reporting.search_payout_completed_transactions(request)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_search_bounced_settlement_payout_completed_transactions(self):
@@ -50,7 +50,7 @@ class SettlementReportingSample(unittest.TestCase):
             size=10
         )
         response = self.settlement_reporting.search_payout_completed_transactions(request)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_search_payout_bounced_transactions(self):
@@ -62,13 +62,13 @@ class SettlementReportingSample(unittest.TestCase):
             end_date=end
         )
         response = self.settlement_reporting.search_bounced_payout_transactions(request)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payout_details(self):
         payout_id = 1
         response = self.settlement_reporting.retrieve_payout_details(payout_id)
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response)
 
     def test_search_payout_rows(self):
@@ -83,7 +83,7 @@ class SettlementReportingSample(unittest.TestCase):
             size=10
         )
         response = self.settlement_reporting.search_payout_rows(request)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
 

@@ -10,25 +10,25 @@ from craftgate.request.dto.create_merchant_pos_user import CreateMerchantPosUser
 class CreateMerchantPosRequest(object):
     def __init__(
             self,
-            status=PosStatus.AUTOPILOT,  # type: PosStatus
-            name=None,  # type: Optional[str]
-            client_id=None,  # type: Optional[str]
-            currency=None,  # type: Optional[Currency]
-            posnet_id=None,  # type: Optional[str]
-            terminal_id=None,  # type: Optional[str]
-            threeds_posnet_id=None,  # type: Optional[str]
-            threeds_terminal_id=None,  # type: Optional[str]
-            threeds_key=None,  # type: Optional[str]
-            enable_foreign_card=None,  # type: Optional[bool]
-            enable_installment=None,  # type: Optional[bool]
-            enable_payment_without_cvc=None,  # type: Optional[bool]
-            enable_loyalty=None,  # type: Optional[bool]
-            new_integration=None,  # type: Optional[bool]
-            order_number=None,  # type: Optional[int]
-            pos_integrator=None,  # type: Optional[PosIntegrator]
-            enabled_payment_authentication_types=None,  # type: Optional[List[PaymentAuthenticationType]]
-            merchant_pos_users=None  # type: Optional[List[CreateMerchantPosUser]]
-    ):
+            status: PosStatus = PosStatus.AUTOPILOT,
+            name: Optional[str] = None,
+            client_id: Optional[str] = None,
+            currency: Optional[Currency] = None,
+            posnet_id: Optional[str] = None,
+            terminal_id: Optional[str] = None,
+            threeds_posnet_id: Optional[str] = None,
+            threeds_terminal_id: Optional[str] = None,
+            threeds_key: Optional[str] = None,
+            enable_foreign_card: Optional[bool] = None,
+            enable_installment: Optional[bool] = None,
+            enable_payment_without_cvc: Optional[bool] = None,
+            enable_loyalty: Optional[bool] = None,
+            new_integration: Optional[bool] = None,
+            order_number: Optional[int] = None,
+            pos_integrator: Optional[PosIntegrator] = None,
+            enabled_payment_authentication_types: Optional[List[PaymentAuthenticationType]] = None,
+            merchant_pos_users: Optional[List[CreateMerchantPosUser]] = None
+    ) -> None:
         self.status = status
         self.name = name
         self.client_id = client_id

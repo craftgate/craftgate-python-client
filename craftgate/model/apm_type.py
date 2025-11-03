@@ -1,9 +1,11 @@
 from enum import Enum
 
+
 class ApmType(str, Enum):
     PAPARA = "PAPARA"
     PAYONEER = "PAYONEER"
     SODEXO = "SODEXO"
+    SODEXO_GIFT = "SODEXO_GIFT"
     EDENRED = "EDENRED"
     EDENRED_GIFT = "EDENRED_GIFT"
     PAYPAL = "PAYPAL"
@@ -33,4 +35,5 @@ class ApmType(str, Enum):
     IWALLET = "IWALLET"
     FUND_TRANSFER = "FUND_TRANSFER"
     SETCARD = "SETCARD"
+    PAPEL = "PAPEL"
     CASH_ON_DELIVERY = "CASH_ON_DELIVERY"

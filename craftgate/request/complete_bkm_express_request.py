@@ -4,7 +4,7 @@ from typing import Optional
 class CompleteBkmExpressRequest:
     def __init__(
             self,
-            status: Optional[bool] = None,
+            status: bool = False,
             message: Optional[str] = None,
             ticket_id: Optional[str] = None,
             bkm_express_payment_token: Optional[str] = None

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class SettlementResultStatus(str, Enum):
     SUCCESS = "SUCCESS"
     FAILURE = "FAILURE"

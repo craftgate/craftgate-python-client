@@ -1,12 +1,12 @@
 # tests/test_bkm_express_payment_sample.py
 import os
 import unittest
+from decimal import Decimal
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import Currency, PaymentGroup
 from craftgate.request import CompleteBkmExpressRequest, InitBkmExpressRequest
 from craftgate.request.dto import PaymentItem
-from craftgate.utils.converter import Converter
 
 
 class BkmExpressPaymentSample(unittest.TestCase):
@@ -25,14 +25,14 @@ class BkmExpressPaymentSample(unittest.TestCase):
 
     def test_init_bkm_express(self):
         items = [
-            PaymentItem(name="Item 1", price=30.0, external_id="123d1297-839e-4bd6-a13b-4be31a6e12a8"),
-            PaymentItem(name="Item 2", price=50.0, external_id="789d1297-839e-4bd6-a13b-4be31a6e13f7"),
-            PaymentItem(name="Item 3", price=20.0, external_id="3a1d1297-839e-4bd6-a13b-4be31a6e18e6"),
+            PaymentItem(name="Item 1", price=Decimal("30"), external_id="123d1297-839e-4bd6-a13b-4be31a6e12a8"),
+            PaymentItem(name="Item 2", price=Decimal("50"), external_id="789d1297-839e-4bd6-a13b-4be31a6e13f7"),
+            PaymentItem(name="Item 3", price=Decimal("20"), external_id="3a1d1297-839e-4bd6-a13b-4be31a6e18e6"),
         ]
 
         request = InitBkmExpressRequest(
-            price=100.0,
-            paid_price=100.0,
+            price=Decimal("100"),
+            paid_price=Decimal("100"),
             conversation_id="456d1297-908e-4bd6-a13b-4be31a6e47d5",
             currency=Currency.TRY,
             payment_group=PaymentGroup.LISTING_OR_SUBSCRIPTION,
@@ -41,7 +41,7 @@ class BkmExpressPaymentSample(unittest.TestCase):
 
         response = self.bkm_express_payment.init(request)
 
-        print(Converter.to_clean_dict(response))
+        print(response)
         self.assertIsNotNone(response)
         self.assertIsNotNone(response.token)
         self.assertIsNotNone(response.path)
@@ -57,7 +57,7 @@ class BkmExpressPaymentSample(unittest.TestCase):
         )
 
         response = self.bkm_express_payment.complete(request)
-        print(Converter.to_clean_dict(response))
+        print(response)
         self.assertIsNotNone(response)
         self.assertIsNotNone(response.order_id)
 
@@ -65,14 +65,14 @@ class BkmExpressPaymentSample(unittest.TestCase):
         ticket_id = os.environ.get("BKM_TICKET_ID", "ce6d93c3-b399-406d-8efc-fdba0b37768c")
 
         response = self.bkm_express_payment.retrieve_payment(ticket_id)
-        print(Converter.to_clean_dict(response))
+        print(response)
         self.assertIsNotNone(response)
 
     def test_retrieve_payment_by_token(self):
         token = os.environ.get("BKM_TOKEN", "cb90071c-1f2c-4fb7-9049-c5f13f9f7286")
 
         response = self.bkm_express_payment.retrieve_payment_by_token(token)
-        print(Converter.to_clean_dict(response))
+        print(response)
         self.assertIsNotNone(response)
 
 

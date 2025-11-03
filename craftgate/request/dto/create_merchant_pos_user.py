@@ -7,11 +7,11 @@ from craftgate.model.pos_user_type import PosUserType
 class CreateMerchantPosUser(object):
     def __init__(
             self,
-            pos_username=None,  # type: Optional[str]
-            pos_password=None,  # type: Optional[str]
-            pos_user_type=None,  # type: Optional[PosUserType]
-            pos_operation_type=None  # type: Optional[PosOperationType]
-    ):
+            pos_username: Optional[str] = None,
+            pos_password: Optional[str] = None,
+            pos_user_type: Optional[PosUserType] = None,
+            pos_operation_type: Optional[PosOperationType] = None
+    ) -> None:
         self.pos_username = pos_username
         self.pos_password = pos_password
         self.pos_user_type = pos_user_type

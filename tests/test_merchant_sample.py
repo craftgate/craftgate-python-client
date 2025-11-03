@@ -1,6 +1,7 @@
 # tests/test_merchant_sample.py
 import os
 import unittest
+from decimal import Decimal
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import CardAssociation, CardBrand, Currency, PaymentAuthenticationType, \
@@ -52,7 +53,8 @@ class MerchantSample(unittest.TestCase):
 
         resp = self.merchant.create_merchant_pos(request)
 
-        print(vars(resp))
+        print(resp)
+
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.id)
         self.assertIsNotNone(resp.hostname)
@@ -60,6 +62,7 @@ class MerchantSample(unittest.TestCase):
         self.assertIsNotNone(resp.path)
         self.assertIsNotNone(resp.threeds_path)
         self.assertEqual(resp.pos_integrator, PosIntegrator.AKBANK)
+        self.assertEqual(resp.merchant_pos_users[0].pos_username, create_user.pos_username)
 
     def test_create_merchant_pos_with_enable_loyalty_flag(self):
         create_user = CreateMerchantPosUser(
@@ -90,7 +93,8 @@ class MerchantSample(unittest.TestCase):
 
         resp = self.merchant.create_merchant_pos(request)
 
-        print(vars(resp))
+        print(resp)
+
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.id)
         self.assertIsNotNone(resp.hostname)
@@ -134,7 +138,8 @@ class MerchantSample(unittest.TestCase):
         )
 
         resp = self.merchant.update_merchant_pos(merchant_pos_id, request)
-        print(vars(resp))
+        print(resp)
+
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.id)
         self.assertIsNotNone(resp.hostname)
@@ -148,10 +153,10 @@ class MerchantSample(unittest.TestCase):
         self.assertTrue(True)
 
     def test_retrieve_merchant_pos(self):
-        merchant_pos_id = 3353325
+        merchant_pos_id = 4816
         resp = self.merchant.retrieve(merchant_pos_id)
 
-        print(vars(resp))
+        print(resp)
         self.assertIsNotNone(resp)
         self.assertEqual(resp.id, merchant_pos_id)
 
@@ -168,7 +173,9 @@ class MerchantSample(unittest.TestCase):
         )
         resp = self.merchant.search_merchant_pos(request)
 
-        print(vars(resp))
+        print(resp.items[0].merchant_pos_users[0].pos_username)
+        print(resp.items)
+
         self.assertIsNotNone(resp)
         self.assertEqual(resp.page, 0)
         self.assertEqual(resp.size, 10)
@@ -178,7 +185,7 @@ class MerchantSample(unittest.TestCase):
         merchant_pos_id = 3353326
         resp = self.merchant.retrieve_merchant_pos_commissions(merchant_pos_id)
 
-        print(vars(resp))
+        print(resp)
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.items)
 
@@ -191,11 +198,11 @@ class MerchantSample(unittest.TestCase):
             status=Status.ACTIVE,
             card_brand_name=CardBrand.AXESS,
             installment_label="Single installment",
-            bank_on_us_debit_card_commission_rate=1.0,
-            bank_on_us_credit_card_commission_rate=1.1,
-            bank_not_on_us_debit_card_commission_rate=1.2,
-            bank_not_on_us_credit_card_commission_rate=1.3,
-            bank_foreign_card_commission_rate=1.5
+            bank_on_us_debit_card_commission_rate=Decimal("1.0"),
+            bank_on_us_credit_card_commission_rate=Decimal("1.1"),
+            bank_not_on_us_debit_card_commission_rate=Decimal("1.2"),
+            bank_not_on_us_credit_card_commission_rate=Decimal("1.3"),
+            bank_foreign_card_commission_rate=Decimal("1.5")
         )
 
         installment2 = UpdateMerchantPosCommission(
@@ -204,8 +211,8 @@ class MerchantSample(unittest.TestCase):
             status=Status.ACTIVE,
             card_brand_name=CardBrand.AXESS,
             installment_label="installment 2",
-            bank_on_us_credit_card_commission_rate=2.1,
-            merchant_commission_rate=2.3
+            bank_on_us_credit_card_commission_rate=Decimal("2.1"),
+            merchant_commission_rate=Decimal("2.3")
         )
 
         request = UpdateMerchantPosCommissionsRequest(
@@ -214,7 +221,7 @@ class MerchantSample(unittest.TestCase):
 
         resp = self.merchant.update_merchant_pos_commissions(merchant_pos_id, request)
 
-        print(vars(resp))
+        print(resp)
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.items)
 

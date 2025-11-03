@@ -2,7 +2,7 @@
 import os
 import unittest
 
-from craftgate import Craftgate, RequestOptions
+from craftgate import Craftgate, RequestOptions, Currency
 from craftgate.request import SearchBankAccountTrackingRecordsRequest
 
 
@@ -24,17 +24,19 @@ class BankAccountTrackingSample(unittest.TestCase):
         request = SearchBankAccountTrackingRecordsRequest(
             page=0,
             size=10,
-            sender_iban="TR260006231316984553846956"
+            currency=Currency.TRY
         )
 
         response = self.bank_account_tracking.search_records(request)
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response)
+        self.assertIsNotNone(response.items)
+        self.assertGreater(len(response.items), 0)
 
     def test_retrieve_bank_account_tracking_record(self):
         record_id = 158011
         response = self.bank_account_tracking.retrieve_record(record_id)
-        print(vars(response))
+        print(response)
         self.assertIsNotNone(response)
         self.assertEqual(response.id, record_id)
 

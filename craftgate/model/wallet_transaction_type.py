@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class WalletTransactionType(str, Enum):
     PAYMENT_REDEEM = "PAYMENT_REDEEM"
     REFUND_DEPOSIT = "REFUND_DEPOSIT"

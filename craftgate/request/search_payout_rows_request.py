@@ -1,17 +1,18 @@
-from typing import Optional
 from datetime import datetime
+from typing import Optional
+
 from craftgate.model.file_status import FileStatus
 
 
 class SearchPayoutRowsRequest(object):
     def __init__(
-        self,
-        page=0,               # type: Optional[int]
-        size=10,              # type: Optional[int]
-        file_status=None,     # type: Optional[FileStatus]
-        start_date=None,      # type: Optional[datetime]
-        end_date=None         # type: Optional[datetime]
-    ):
+            self,
+            page: int = 0,
+            size: int = 10,
+            file_status: Optional[FileStatus] = None,
+            start_date: Optional[datetime] = None,
+            end_date: Optional[datetime] = None
+    ) -> None:
         self.page = page
         self.size = size
         self.file_status = file_status

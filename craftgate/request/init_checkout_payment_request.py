@@ -1,4 +1,6 @@
-from typing import Optional, List, Dict
+from decimal import Decimal
+from typing import Any, Dict, List, Optional
+
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_method import PaymentMethod
@@ -9,38 +11,39 @@ from craftgate.request.dto.payment_item import PaymentItem
 
 
 class InitCheckoutPaymentRequest(object):
-    def __init__(self,
-                 price=None,                                    # type: Optional[float]
-                 paid_price=None,                               # type: Optional[float]
-                 currency=None,                                 # type: Optional[Currency]
-                 payment_group=None,                            # type: Optional[PaymentGroup]
-                 conversation_id=None,                          # type: Optional[str]
-                 external_id=None,                              # type: Optional[str]
-                 order_id=None,                                 # type: Optional[str]
-                 callback_url=None,                             # type: Optional[str]
-                 client_ip=None,                                # type: Optional[str]
-                 payment_phase=PaymentPhase.AUTH,               # type: PaymentPhase
-                 payment_channel=None,                          # type: Optional[str]
-                 enabled_payment_methods=None,                  # type: Optional[List[PaymentMethod]]
-                 masterpass_gsm_number=None,                    # type: Optional[str]
-                 masterpass_user_id=None,                       # type: Optional[str]
-                 card_user_key=None,                            # type: Optional[str]
-                 buyer_member_id=None,                          # type: Optional[int]
-                 enabled_installments=None,                     # type: Optional[List[int]]
-                 always_store_card_after_payment=False,         # type: bool
-                 allow_only_stored_cards=False,                 # type: bool
-                 allow_only_credit_card=False,                  # type: bool
-                 allow_installment_only_commercial_cards=False, # type: bool
-                 force_three_ds=False,                          # type: bool
-                 force_auth_for_non_credit_cards=False,         # type: bool
-                 deposit_payment=False,                         # type: bool
-                 ttl=None,                                      # type: Optional[int]
-                 custom_installments=None,                      # type: Optional[List[CustomInstallment]]
-                 items=None,                                    # type: Optional[List[PaymentItem]]
-                 fraud_params=None,                             # type: Optional[FraudCheckParameters]
-                 additional_params=None,                        # type: Optional[Dict[str, object]]
-                 card_brand_installments=None                   # type: Optional[Dict[str, List[CustomInstallment]]]
-                 ):
+    def __init__(
+            self,
+            price: Optional[Decimal] = None,
+            paid_price: Optional[Decimal] = None,
+            currency: Optional[Currency] = None,
+            payment_group: Optional[PaymentGroup] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            order_id: Optional[str] = None,
+            callback_url: Optional[str] = None,
+            client_ip: Optional[str] = None,
+            payment_phase: PaymentPhase = PaymentPhase.AUTH,
+            payment_channel: Optional[str] = None,
+            enabled_payment_methods: Optional[List[PaymentMethod]] = None,
+            masterpass_gsm_number: Optional[str] = None,
+            masterpass_user_id: Optional[str] = None,
+            card_user_key: Optional[str] = None,
+            buyer_member_id: Optional[int] = None,
+            enabled_installments: Optional[List[int]] = None,
+            always_store_card_after_payment: bool = False,
+            allow_only_stored_cards: bool = False,
+            allow_only_credit_card: bool = False,
+            allow_installment_only_commercial_cards: bool = False,
+            force_three_ds: bool = False,
+            force_auth_for_non_credit_cards: bool = False,
+            deposit_payment: bool = False,
+            ttl: Optional[int] = None,
+            custom_installments: Optional[List[CustomInstallment]] = None,
+            items: Optional[List[PaymentItem]] = None,
+            fraud_params: Optional[FraudCheckParameters] = None,
+            additional_params: Optional[Dict[str, Any]] = None,
+            card_brand_installments: Optional[Dict[str, List[CustomInstallment]]] = None
+    ) -> None:
         self.price = price
         self.paid_price = paid_price
         self.currency = currency

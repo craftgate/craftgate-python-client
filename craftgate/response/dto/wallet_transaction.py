@@ -1,15 +1,17 @@
-from typing import Optional
 from decimal import Decimal
+from typing import Optional
+
 from craftgate.model.wallet_transaction_type import WalletTransactionType
+
 
 class WalletTransaction(object):
     def __init__(
-        self,
-        id=None,                           # type: Optional[int]
-        wallet_transaction_type=None,      # type: Optional[WalletTransactionType]
-        amount=None,                        # type: Optional[Decimal]
-        wallet_id=None                      # type: Optional[int]
-    ):
+            self,
+            id: Optional[int] = None,
+            wallet_transaction_type: Optional[WalletTransactionType] = None,
+            amount: Optional[Decimal] = None,
+            wallet_id: Optional[int] = None
+    ) -> None:
         self.id = id
         self.wallet_transaction_type = wallet_transaction_type
         self.amount = amount

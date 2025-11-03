@@ -1,6 +1,14 @@
+from typing import Optional
+
+
 class FraudValue(object):
-    def __init__(self, id=None, label=None, value=None, expire_in_seconds=None):
-        # type: (Optional[str], Optional[str], Optional[str], Optional[int]) -> None
+    def __init__(
+            self,
+            id: Optional[str] = None,
+            label: Optional[str] = None,
+            value: Optional[str] = None,
+            expire_in_seconds: Optional[int] = None
+    ) -> None:
         self.id = id
         self.label = label
         self.value = value

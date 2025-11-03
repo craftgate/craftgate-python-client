@@ -8,18 +8,17 @@ from craftgate.model.payment_status import PaymentStatus
 
 class SearchFraudChecksRequest(object):
     def __init__(
-        self,
-        page=None,                          # type: Optional[int]
-        size=None,                          # type: Optional[int]
-        action=None,                        # type: Optional[FraudAction]
-        check_status=None,                  # type: Optional[FraudCheckStatus]
-        min_created_date=None,              # type: Optional[datetime]
-        max_created_date=None,              # type: Optional[datetime]
-        rule_id=None,                       # type: Optional[int]
-        payment_id=None,                    # type: Optional[int]
-        payment_status=None                 # type: Optional[PaymentStatus]
-    ):
-        # type: (...) -> None
+            self,
+            page: Optional[int] = None,
+            size: Optional[int] = None,
+            action: Optional[FraudAction] = None,
+            check_status: Optional[FraudCheckStatus] = None,
+            min_created_date: Optional[datetime] = None,
+            max_created_date: Optional[datetime] = None,
+            rule_id: Optional[int] = None,
+            payment_id: Optional[int] = None,
+            payment_status: Optional[PaymentStatus] = None
+    ) -> None:
         self.page = page
         self.size = size
         self.action = action

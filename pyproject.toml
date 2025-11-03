@@ -11,14 +11,30 @@ name = "craftgate"
 dynamic = ["version"]
 description = "Python client for Craftgate API"
 readme = "README.md"
-requires-python = ">=3.5"
-license = { text = "MIT" }
-authors = [{ name = "Craftgate", email = "dev@craftgate.io" }]
+requires-python = ">=3.6"
+license = { file = "LICENSE" }
+authors = [{ name = "Craftgate", email = "support@craftgate.io" }]
 keywords = ["craftgate", "payments", "api", "client", "sdk"]
 dependencies = [
-    "requests>=2.20,<2.26; python_version < '3.6'",
-    "requests>=2.20; python_version >= '3.6'",
-    "typing_extensions<4; python_version < '3.8'"
+    "requests>=2.20"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.6",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: Implementation :: PyPy",
+    "Typing :: Typed",
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
 
 [project.urls]

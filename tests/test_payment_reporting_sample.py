@@ -47,13 +47,13 @@ class PaymentReportingSample(unittest.TestCase):
             max_created_date=now
         )
         response = self.payment_reporting.search_payments(request)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payment(self):
         payment_id = 1289316
         response = self.payment_reporting.retrieve_payment(payment_id)
-        print(vars(response))
+        print(response)
         self.assertEqual(payment_id, response.id)
         self.assertIsNotNone(response.price)
         self.assertIsNotNone(response.paid_price)
@@ -64,20 +64,20 @@ class PaymentReportingSample(unittest.TestCase):
     def test_retrieve_payment_transactions(self):
         payment_id = 1289316
         response = self.payment_reporting.retrieve_payment_transactions(payment_id)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payment_refunds(self):
         payment_id = 1289311
         response = self.payment_reporting.retrieve_payment_refunds(payment_id)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_retrieve_payment_transaction_refunds(self):
         payment_id = 1289311
         payment_transaction_id = 1244069
         response = self.payment_reporting.retrieve_payment_transaction_refunds(payment_id, payment_transaction_id)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_search_payment_refunds(self):
@@ -97,7 +97,7 @@ class PaymentReportingSample(unittest.TestCase):
             max_created_date=now
         )
         response = self.payment_reporting.search_payment_refunds(request)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
     def test_search_payment_transaction_refunds(self):
@@ -119,7 +119,7 @@ class PaymentReportingSample(unittest.TestCase):
             max_created_date=now
         )
         response = self.payment_reporting.search_payment_transaction_refunds(request)
-        print(vars(response))
+        print(response)
         self.assertTrue(len(response.items) > 0)
 
 

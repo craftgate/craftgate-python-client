@@ -1,23 +1,26 @@
 from datetime import datetime
+from decimal import Decimal
+from typing import Optional
 
 from craftgate.model.payment_refund_status import PaymentRefundStatus
-from craftgate.response.dto.payout_status import PayoutStatus
 from craftgate.response.dto.payment_transaction import PaymentTransaction
+from craftgate.response.dto.payout_status import PayoutStatus
+from craftgate.response.member_response import MemberResponse
 
 
 class ReportingPaymentTransaction(PaymentTransaction):
     def __init__(
-        self,
-        created_date=None,                 # type: datetime
-        transaction_status_date=None,      # type: datetime
-        refundable_price=None,             # type: float
-        sub_merchant_member=None,          # type: object  # MemberResponse
-        refund_status=None,                # type: PaymentRefundStatus
-        payout_status=None,                # type: PayoutStatus
-        bank_commission_rate=None,         # type: float
-        bank_commission_rate_amount=None,  # type: float
-        **kwargs
-    ):
+            self,
+            created_date: Optional[datetime] = None,
+            transaction_status_date: Optional[datetime] = None,
+            refundable_price: Optional[Decimal] = None,
+            sub_merchant_member: Optional[MemberResponse] = None,
+            refund_status: Optional[PaymentRefundStatus] = None,
+            payout_status: Optional[PayoutStatus] = None,
+            bank_commission_rate: Optional[Decimal] = None,
+            bank_commission_rate_amount: Optional[Decimal] = None,
+            **kwargs
+    ) -> None:
         super(ReportingPaymentTransaction, self).__init__(**kwargs)
         self.created_date = created_date
         self.transaction_status_date = transaction_status_date

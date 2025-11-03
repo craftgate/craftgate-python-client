@@ -43,7 +43,8 @@ class JuzdanSample(unittest.TestCase):
             bank_order_id="testBankOrderId"
         )
         resp = self.juzdan_payment.init(req)
-        print(vars(resp))
+        print(resp)
+
         self.assertIsNotNone(resp)
         self.assertIsNotNone(resp.juzdan_qr_url)
         self.assertIsNotNone(resp.reference_id)
@@ -51,7 +52,8 @@ class JuzdanSample(unittest.TestCase):
     def test_retrieve(self):
         reference_id = "5493c7a7-4d8b-4517-887d-f8b8f826a3d0"
         resp = self.juzdan_payment.retrieve(reference_id)
-        print(vars(resp))
+        print(resp)
+
         self.assertIsNotNone(resp)
         self.assertEqual(PaymentSource.JUZDAN, resp.payment_source)
         self.assertEqual(PaymentType.CARD_PAYMENT, resp.payment_type)

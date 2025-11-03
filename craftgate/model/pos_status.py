@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class PosStatus(str, Enum):
     DELETED = "DELETED"
     PASSIVE = "PASSIVE"

@@ -6,7 +6,6 @@ from datetime import datetime, timedelta
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import FraudAction, FraudValueType, FraudCheckStatus
 from craftgate.request import FraudValueListRequest, SearchFraudChecksRequest
-from craftgate.utils.converter import Converter
 
 
 class FraudAdapterSample(unittest.TestCase):
@@ -38,14 +37,14 @@ class FraudAdapterSample(unittest.TestCase):
 
     def test_retrieve_value_list(self):
         resp = self.fraud.retrieve_value_list("test")
-        print(Converter.to_clean_dict(resp))
+        print(resp)
 
         self.assertIsNotNone(resp)
         self.assertEqual("test", resp.name)
 
     def test_retrieve_all_value_lists(self):
         resp = self.fraud.retrieve_all_value_lists()
-        print(Converter.to_clean_dict(resp))
+        print(resp)
 
         self.assertIsNotNone(resp)
         self.assertTrue(resp.items)
@@ -65,7 +64,7 @@ class FraudAdapterSample(unittest.TestCase):
             check_status=FraudCheckStatus.WAITING
         )
         resp = self.fraud.search_fraud_checks(req)
-        print(Converter.to_clean_dict(resp))
+        print(resp)
 
         self.assertIsNotNone(resp)
         self.assertTrue(resp.items)

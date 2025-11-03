@@ -1,11 +1,13 @@
 from enum import Enum
 
+
 class PaymentMethod(str, Enum):
     CARD = "CARD"
     MASTERPASS = "MASTERPASS"
     PAPARA = "PAPARA"
     PAYONEER = "PAYONEER"
     SODEXO = "SODEXO"
+    SODEXO_GIFT = "SODEXO_GIFT"
     EDENRED = "EDENRED"
     EDENRED_GIFT = "EDENRED_GIFT"
     ALIPAY = "ALIPAY"

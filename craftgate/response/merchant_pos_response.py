@@ -1,48 +1,49 @@
-from typing import Optional, List
+from typing import List, Optional
 
-from craftgate.model.pos_status import PosStatus
-from craftgate.model.pos_integrator import PosIntegrator
 from craftgate.model.autopilot_state import AutopilotState
-from craftgate.model.currency import Currency
 from craftgate.model.card_association import CardAssociation
+from craftgate.model.currency import Currency
 from craftgate.model.payment_authentication_type import PaymentAuthenticationType
+from craftgate.model.pos_integrator import PosIntegrator
+from craftgate.model.pos_status import PosStatus
 from craftgate.response.dto.merchant_pos_user import MerchantPosUser
+
 
 class MerchantPosResponse(object):
     def __init__(
-        self,
-        id=None,                                       # type: Optional[int]
-        status=None,                                   # type: Optional[PosStatus]
-        name=None,                                     # type: Optional[str]
-        alias=None,                                    # type: Optional[str]
-        pos_integrator=None,                           # type: Optional[PosIntegrator]
-        hostname=None,                                 # type: Optional[str]
-        client_id=None,                                # type: Optional[str]
-        pos_currency_code=None,                        # type: Optional[str]
-        mode=None,                                     # type: Optional[str]
-        path=None,                                     # type: Optional[str]
-        port=None,                                     # type: Optional[int]
-        posnet_id=None,                                # type: Optional[str]
-        terminal_id=None,                              # type: Optional[str]
-        threeds_posnet_id=None,                        # type: Optional[str]
-        threeds_terminal_id=None,                      # type: Optional[str]
-        threeds_key=None,                              # type: Optional[str]
-        threeds_path=None,                             # type: Optional[str]
-        enable_foreign_card=None,                      # type: Optional[bool]
-        enable_installment=None,                       # type: Optional[bool]
-        enable_payment_without_cvc=None,               # type: Optional[bool]
-        enable_loyalty=None,                           # type: Optional[bool]
-        new_integration=None,                          # type: Optional[bool]
-        order_number=None,                             # type: Optional[int]
-        autopilot_state=None,                          # type: Optional[AutopilotState]
-        currency=None,                                 # type: Optional[Currency]
-        bank_id=None,                                  # type: Optional[int]
-        bank_name=None,                                # type: Optional[str]
-        is_pf=None,                                    # type: Optional[bool]
-        merchant_pos_users=None,                       # type: Optional[List[MerchantPosUser]]
-        supported_card_associations=None,              # type: Optional[List[CardAssociation]]
-        enabled_payment_authentication_types=None      # type: Optional[List[PaymentAuthenticationType]]
-    ):
+            self,
+            id: Optional[int] = None,
+            status: Optional[PosStatus] = None,
+            name: Optional[str] = None,
+            alias: Optional[str] = None,
+            pos_integrator: Optional[PosIntegrator] = None,
+            hostname: Optional[str] = None,
+            client_id: Optional[str] = None,
+            pos_currency_code: Optional[str] = None,
+            mode: Optional[str] = None,
+            path: Optional[str] = None,
+            port: Optional[int] = None,
+            posnet_id: Optional[str] = None,
+            terminal_id: Optional[str] = None,
+            threeds_posnet_id: Optional[str] = None,
+            threeds_terminal_id: Optional[str] = None,
+            threeds_key: Optional[str] = None,
+            threeds_path: Optional[str] = None,
+            enable_foreign_card: Optional[bool] = None,
+            enable_installment: Optional[bool] = None,
+            enable_payment_without_cvc: Optional[bool] = None,
+            enable_loyalty: Optional[bool] = None,
+            new_integration: Optional[bool] = None,
+            order_number: Optional[int] = None,
+            autopilot_state: Optional[AutopilotState] = None,
+            currency: Optional[Currency] = None,
+            bank_id: Optional[int] = None,
+            bank_name: Optional[str] = None,
+            is_pf: Optional[bool] = None,
+            merchant_pos_users: Optional[List[MerchantPosUser]] = None,
+            supported_card_associations: Optional[List[CardAssociation]] = None,
+            enabled_payment_authentication_types: Optional[List[PaymentAuthenticationType]] = None
+    ) -> None:
         self.id = id
         self.status = status
         self.name = name

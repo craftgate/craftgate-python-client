@@ -1,28 +1,32 @@
-from typing import Optional, Dict, List
+from decimal import Decimal
+from typing import Dict, List, Optional
+
 from craftgate.model.apm_type import ApmType
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.request.dto.payment_item import PaymentItem
 
+
 class InitApmPaymentRequest(object):
-    def __init__(self,
-                 apm_type=None,                 # type: Optional[ApmType]
-                 merchant_apm_id=None,          # type: Optional[int]
-                 price=None,                    # type: Optional[float]
-                 paid_price=None,                # type: Optional[float]
-                 buyer_member_id=None,          # type: Optional[int]
-                 currency=None,                  # type: Optional[Currency]
-                 payment_group=None,             # type: Optional[PaymentGroup]
-                 payment_channel=None,           # type: Optional[str]
-                 conversation_id=None,           # type: Optional[str]
-                 external_id=None,               # type: Optional[str]
-                 callback_url=None,              # type: Optional[str]
-                 apm_order_id=None,              # type: Optional[str]
-                 apm_user_identity=None,         # type: Optional[str]
-                 additional_params=None,         # type: Optional[Dict[str, str]]
-                 client_ip=None,                 # type: Optional[str]
-                 items=None                      # type: Optional[List[PaymentItem]]
-                 ):
+    def __init__(
+            self,
+            apm_type: Optional[ApmType] = None,
+            merchant_apm_id: Optional[int] = None,
+            price: Optional[Decimal] = None,
+            paid_price: Optional[Decimal] = None,
+            buyer_member_id: Optional[int] = None,
+            currency: Optional[Currency] = None,
+            payment_group: Optional[PaymentGroup] = None,
+            payment_channel: Optional[str] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            callback_url: Optional[str] = None,
+            apm_order_id: Optional[str] = None,
+            apm_user_identity: Optional[str] = None,
+            additional_params: Optional[Dict[str, str]] = None,
+            client_ip: Optional[str] = None,
+            items: Optional[List[PaymentItem]] = None
+    ) -> None:
         self.apm_type = apm_type
         self.merchant_apm_id = merchant_apm_id
         self.price = price

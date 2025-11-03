@@ -1,28 +1,32 @@
+from datetime import datetime
+from decimal import Decimal
 from typing import Optional, Set
+
 from craftgate.model.currency import Currency
 from craftgate.model.status import Status
 
 
 class ProductResponse(object):
     def __init__(
-        self,
-        id=None,                     # type: Optional[int]
-        name=None,                   # type: Optional[str]
-        description=None,             # type: Optional[str]
-        order_id=None,                # type: Optional[str]
-        conversation_id=None,         # type: Optional[str]
-        external_id=None,             # type: Optional[str]
-        status=None,                  # type: Optional[Status]
-        price=None,                   # type: Optional[float]
-        currency=None,                # type: Optional[Currency]
-        stock=None,                   # type: Optional[int]
-        sold_count=None,              # type: Optional[int]
-        token=None,                   # type: Optional[str]
-        enabled_installments=None,    # type: Optional[Set[int]]
-        url=None,                     # type: Optional[str]
-        qr_code_url=None,             # type: Optional[str]
-        channel=None                  # type: Optional[str]
-    ):
+            self,
+            id: Optional[int] = None,
+            name: Optional[str] = None,
+            description: Optional[str] = None,
+            order_id: Optional[str] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            status: Optional[Status] = None,
+            price: Optional[Decimal] = None,
+            currency: Optional[Currency] = None,
+            stock: Optional[int] = None,
+            sold_count: Optional[int] = None,
+            token: Optional[str] = None,
+            enabled_installments: Optional[Set[int]] = None,
+            url: Optional[str] = None,
+            qr_code_url: Optional[str] = None,
+            channel: Optional[str] = None,
+            expires_at: Optional[datetime] = None
+    ) -> None:
         self.id = id
         self.name = name
         self.description = description
@@ -39,3 +43,4 @@ class ProductResponse(object):
         self.url = url
         self.qr_code_url = qr_code_url
         self.channel = channel
+        self.expires_at = expires_at

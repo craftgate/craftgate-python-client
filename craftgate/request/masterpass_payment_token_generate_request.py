@@ -8,16 +8,16 @@ from craftgate.request.dto.masterpass_create_payment import MasterpassCreatePaym
 class MasterpassPaymentTokenGenerateRequest(object):
     def __init__(
             self,
-            msisdn=None,  # type: Optional[str]
-            user_id=None,  # type: Optional[str]
-            bin_number=None,  # type: Optional[str]
-            force_three_d_s=None,  # type: Optional[bool]
-            is_msisdn_validated=None,  # type: Optional[bool]
-            create_payment=None,  # type: Optional[MasterpassCreatePayment]
-            masterpass_integration_version=None,  # type: Optional[int]
-            loyalty=None,  # type: Optional[Loyalty]
-            validation_type=None  # type: Optional[MasterpassValidationType]
-    ):
+            msisdn: Optional[str] = None,
+            user_id: Optional[str] = None,
+            bin_number: Optional[str] = None,
+            force_three_d_s: Optional[bool] = None,
+            is_msisdn_validated: Optional[bool] = None,
+            create_payment: Optional[MasterpassCreatePayment] = None,
+            masterpass_integration_version: Optional[int] = None,
+            loyalty: Optional[Loyalty] = None,
+            validation_type: Optional[MasterpassValidationType] = None
+    ) -> None:
         self.msisdn = msisdn
         self.user_id = user_id
         self.bin_number = bin_number

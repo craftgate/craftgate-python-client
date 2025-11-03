@@ -1,5 +1,7 @@
-from typing import Optional
 from datetime import datetime
+from decimal import Decimal
+from typing import Optional
+
 from craftgate.model.merchant_type import MerchantType
 from craftgate.model.settlement_earnings_destination import SettlementEarningsDestination
 from craftgate.model.settlement_source import SettlementSource
@@ -7,18 +9,18 @@ from craftgate.model.settlement_source import SettlementSource
 
 class PayoutCompletedTransaction(object):
     def __init__(
-        self,
-        payout_id=None,                          # type: Optional[int]
-        transaction_id=None,                     # type: Optional[int]
-        transaction_type=None,                   # type: Optional[str]
-        payout_amount=None,                      # type: Optional[float]
-        payout_date=None,                        # type: Optional[datetime]
-        currency=None,                           # type: Optional[str]
-        merchant_id=None,                        # type: Optional[int]
-        merchant_type=None,                      # type: Optional[MerchantType]
-        settlement_earnings_destination=None,    # type: Optional[SettlementEarningsDestination]
-        settlement_source=None                   # type: Optional[SettlementSource]
-    ):
+            self,
+            payout_id: Optional[int] = None,
+            transaction_id: Optional[int] = None,
+            transaction_type: Optional[str] = None,
+            payout_amount: Optional[Decimal] = None,
+            payout_date: Optional[datetime] = None,
+            currency: Optional[str] = None,
+            merchant_id: Optional[int] = None,
+            merchant_type: Optional[MerchantType] = None,
+            settlement_earnings_destination: Optional[SettlementEarningsDestination] = None,
+            settlement_source: Optional[SettlementSource] = None
+    ) -> None:
         self.payout_id = payout_id
         self.transaction_id = transaction_id
         self.transaction_type = transaction_type

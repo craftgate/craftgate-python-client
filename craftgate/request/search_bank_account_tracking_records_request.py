@@ -4,17 +4,17 @@ from typing import Optional
 from craftgate.model.currency import Currency
 
 
-class SearchBankAccountTrackingRecordsRequest:
+class SearchBankAccountTrackingRecordsRequest(object):
     def __init__(
-        self,
-        currency: Optional[Currency] = None,
-        description: Optional[str] = None,
-        sender_name: Optional[str] = None,
-        sender_iban: Optional[str] = None,
-        min_record_date: Optional[datetime] = None,
-        max_record_date: Optional[datetime] = None,
-        page: int = 0,
-        size: int = 10
+            self,
+            currency: Optional[Currency] = None,
+            description: Optional[str] = None,
+            sender_name: Optional[str] = None,
+            sender_iban: Optional[str] = None,
+            min_record_date: Optional[datetime] = None,
+            max_record_date: Optional[datetime] = None,
+            page: int = 0,
+            size: int = 10
     ) -> None:
         self.currency = currency
         self.description = description

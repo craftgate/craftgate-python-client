@@ -1,4 +1,5 @@
-import decimal
+from datetime import datetime
+from decimal import Decimal
 from typing import Optional, Set
 
 from craftgate.model.currency import Currency
@@ -8,18 +9,19 @@ from craftgate.model.status import Status
 class UpdateProductRequest(object):
     def __init__(
             self,
-            name=None,  # type: Optional[str]
-            channel=None,  # type: Optional[str]
-            order_id=None,  # type: Optional[str]
-            conversation_id=None,  # type: Optional[str]
-            external_id=None,  # type: Optional[str]
-            status=None,  # type: Optional[Status]
-            stock=None,  # type: Optional[int]
-            price=None,  # type: Optional[Decimal]
-            currency=None,  # type: Optional[Currency]
-            description=None,  # type: Optional[str]
-            enabled_installments=None  # type: Optional[Set[int]]
-    ):
+            name: Optional[str] = None,
+            channel: Optional[str] = None,
+            order_id: Optional[str] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            status: Optional[Status] = None,
+            stock: Optional[int] = None,
+            price: Optional[Decimal] = None,
+            currency: Optional[Currency] = None,
+            description: Optional[str] = None,
+            expires_at: Optional[datetime] = None,
+            enabled_installments: Optional[Set[int]] = None
+    ) -> None:
         self.name = name
         self.channel = channel
         self.order_id = order_id
@@ -30,4 +32,5 @@ class UpdateProductRequest(object):
         self.price = price
         self.currency = currency
         self.description = description
+        self.expires_at = expires_at
         self.enabled_installments = enabled_installments

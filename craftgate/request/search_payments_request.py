@@ -1,4 +1,5 @@
 from datetime import datetime
+from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
@@ -11,30 +12,30 @@ from craftgate.model.payment_type import PaymentType
 class SearchPaymentsRequest(object):
     def __init__(
             self,
-            page=None,  # type: Optional[int]
-            size=None,  # type: Optional[int]
-            payment_id=None,  # type: Optional[int]
-            payment_transaction_id=None,  # type: Optional[int]
-            buyer_member_id=None,  # type: Optional[int]
-            sub_merchant_member_id=None,  # type: Optional[int]
-            conversation_id=None,  # type: Optional[str]
-            external_id=None,  # type: Optional[str]
-            order_id=None,  # type: Optional[str]
-            payment_type=None,  # type: Optional[PaymentType]
-            payment_provider=None,  # type: Optional[PaymentProvider]
-            payment_status=None,  # type: Optional[PaymentStatus]
-            payment_source=None,  # type: Optional[PaymentSource]
-            payment_channel=None,  # type: Optional[str]
-            bin_number=None,  # type: Optional[str]
-            last_four_digits=None,  # type: Optional[str]
-            currency=None,  # type: Optional[Currency]
-            min_paid_price=None,  # type: Optional[Decimal]
-            max_paid_price=None,  # type: Optional[Decimal]
-            installment=None,  # type: Optional[int]
-            is_three_ds=None,  # type: Optional[bool]
-            min_created_date=None,  # type: Optional[datetime]
-            max_created_date=None  # type: Optional[datetime]
-    ):
+            page: Optional[int] = None,
+            size: Optional[int] = None,
+            payment_id: Optional[int] = None,
+            payment_transaction_id: Optional[int] = None,
+            buyer_member_id: Optional[int] = None,
+            sub_merchant_member_id: Optional[int] = None,
+            conversation_id: Optional[str] = None,
+            external_id: Optional[str] = None,
+            order_id: Optional[str] = None,
+            payment_type: Optional[PaymentType] = None,
+            payment_provider: Optional[PaymentProvider] = None,
+            payment_status: Optional[PaymentStatus] = None,
+            payment_source: Optional[PaymentSource] = None,
+            payment_channel: Optional[str] = None,
+            bin_number: Optional[str] = None,
+            last_four_digits: Optional[str] = None,
+            currency: Optional[Currency] = None,
+            min_paid_price: Optional[Decimal] = None,
+            max_paid_price: Optional[Decimal] = None,
+            installment: Optional[int] = None,
+            is_three_ds: Optional[bool] = None,
+            min_created_date: Optional[datetime] = None,
+            max_created_date: Optional[datetime] = None
+    ) -> None:
         self.page = page
         self.size = size
         self.payment_id = payment_id

@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class MemberType(str, Enum):
     PERSONAL = "PERSONAL"
     PRIVATE_COMPANY = "PRIVATE_COMPANY"

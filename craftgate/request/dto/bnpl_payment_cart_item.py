@@ -1,17 +1,19 @@
 from typing import Optional
 
+from decimal import Decimal
 from craftgate.model.bnpl_cart_item_type import BnplCartItemType
 
 
 class BnplPaymentCartItem(object):
-    def __init__(self,
-                 id=None,  # type: Optional[str]
-                 name=None,  # type: Optional[str]
-                 brand_name=None,  # type: Optional[str]
-                 type=None,  # type: Optional[BnplCartItemType]
-                 unit_price=None,  # type: Optional[float]
-                 quantity=None  # type: Optional[int]
-                 ):
+    def __init__(
+            self,
+            id: Optional[str] = None,
+            name: Optional[str] = None,
+            brand_name: Optional[str] = None,
+            type: Optional[BnplCartItemType] = None,
+            unit_price: Optional[Decimal] = None,
+            quantity: Optional[int] = None
+    ) -> None:
         self.id = id
         self.name = name
         self.brand_name = brand_name

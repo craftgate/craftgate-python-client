@@ -1,4 +1,3 @@
-import decimal
 from decimal import Decimal
 from typing import Optional
 
@@ -10,10 +9,12 @@ class PaymentItem:
             price: Optional[Decimal] = None,
             external_id: Optional[str] = None,
             sub_merchant_member_id: Optional[int] = None,
-            sub_merchant_member_price: Optional[Decimal] = None
+            sub_merchant_member_price: Optional[Decimal] = None,
+            blockage_day: Optional[int] = None
     ) -> None:
         self.name = name
         self.price = price
         self.external_id = external_id
         self.sub_merchant_member_id = sub_merchant_member_id
         self.sub_merchant_member_price = sub_merchant_member_price
+        self.blockage_day = blockage_day

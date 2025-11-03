@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class FraudValueType(str, Enum):
     CARD = "CARD"
     IP = "IP"

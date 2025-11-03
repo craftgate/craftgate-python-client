@@ -1,5 +1,6 @@
 from enum import Enum
 
+
 class WebhookEventType(str, Enum):
     API_AUTH = "API_AUTH"
     API_VERIFY_AND_AUTH = "API_VERIFY_AND_AUTH"

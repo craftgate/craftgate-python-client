@@ -39,4 +39,5 @@ class PaymentProvider(str, Enum):
     PAYCELL_DCB = "PAYCELL_DCB"
     IWALLET = "IWALLET"
     SETCARD = "SETCARD"
+    PAPEL = "PAPEL"
     OFFLINE = "OFFLINE"
