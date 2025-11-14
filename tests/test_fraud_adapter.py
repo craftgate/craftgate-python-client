@@ -5,7 +5,9 @@ from datetime import datetime, timedelta
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import FraudAction, FraudValueType, FraudCheckStatus
+from craftgate.model.fraud_operation import FraudOperation
 from craftgate.request import FraudValueListRequest, SearchFraudChecksRequest
+from craftgate.request.fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintToListRequest
 
 
 class FraudAdapterSample(unittest.TestCase):
@@ -34,6 +36,15 @@ class FraudAdapterSample(unittest.TestCase):
             duration_in_seconds=600
         )
         self.fraud.add_value_to_value_list(req)
+
+    def test_add_card_fingerprint_to_value_list(self):
+        req = FraudAddCardFingerprintToListRequest(
+            operation=FraudOperation.PAYMENT,
+            operation_id="12420", #payment_id
+            label="John Doe's card",
+            duration_in_seconds=600
+        )
+        self.fraud.add_card_fingerprint_to_value_list("test", req)
 
     def test_retrieve_value_list(self):
         resp = self.fraud.retrieve_value_list("test")

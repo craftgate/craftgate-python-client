@@ -4,6 +4,7 @@ from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.model.fraud_check_status import FraudCheckStatus
 from craftgate.model.fraud_value_type import FraudValueType
 from craftgate.net.base_http_client import BaseHttpClient
+from craftgate.request.fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintToListRequest
 from craftgate.request.fraud_value_list_request import FraudValueListRequest
 from craftgate.request.search_fraud_checks_request import SearchFraudChecksRequest
 from craftgate.request.update_fraud_check_request import UpdateFraudCheckRequest
@@ -86,6 +87,17 @@ class FraudAdapter(BaseAdapter):
 
     def add_value_to_value_list(self, request: FraudValueListRequest) -> None:
         path = "/fraud/v1/value-lists"
+        headers = self._create_headers(request, path)
+        self._http_client.request(
+            method="POST",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=request,
+            response_type=None
+        )
+
+    def add_card_fingerprint_to_value_list(self, list_name: str, request: FraudAddCardFingerprintToListRequest) -> None:
+        path = "/fraud/v1/value-lists/{}/card-fingerprints".format(list_name)
         headers = self._create_headers(request, path)
         self._http_client.request(
             method="POST",
