@@ -1,5 +1,3 @@
-from typing import Optional
-
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.init_juzdan_payment_request import InitJuzdanPaymentRequest
@@ -12,7 +10,7 @@ class JuzdanPaymentAdapter(BaseAdapter):
         super(JuzdanPaymentAdapter, self).__init__(request_options)
         self._http_client = BaseHttpClient()
 
-    def init(self, request: InitJuzdanPaymentRequest) -> Optional[InitJuzdanPaymentResponse]:
+    def init(self, request: InitJuzdanPaymentRequest) -> InitJuzdanPaymentResponse:
         path = "/payment/v1/juzdan-payments/init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -23,7 +21,7 @@ class JuzdanPaymentAdapter(BaseAdapter):
             response_type=InitJuzdanPaymentResponse
         )
 
-    def retrieve(self, reference_id: str) -> Optional[PaymentResponse]:
+    def retrieve(self, reference_id: str) -> PaymentResponse:
         path = "/payment/v1/juzdan-payments/{}".format(reference_id)
         headers = self._create_headers(None, path)
         return self._http_client.request(

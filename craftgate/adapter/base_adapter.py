@@ -1,9 +1,7 @@
-import random
-import string
+import uuid
 from typing import Any, Dict, Optional
 
 from _version import VERSION
-
 from craftgate.request_options import RequestOptions
 from craftgate.utils.hash_generator import HashGenerator
 
@@ -18,8 +16,6 @@ class BaseAdapter:
     CLIENT_VERSION_HEADER_NAME = "x-client-version"
     SIGNATURE_HEADER_NAME = "x-signature"
     LANGUAGE_HEADER_NAME = "lang"
-    RANDOM_STRING_LENGTH = 8
-    RANDOM_CHARS = string.ascii_letters + string.digits
 
     def __init__(self, request_options: RequestOptions) -> None:
         self.request_options = request_options
@@ -31,7 +27,7 @@ class BaseAdapter:
             custom_options: Optional[RequestOptions] = None
     ) -> Dict[str, str]:
         options = custom_options or self.request_options
-        random_key = self._generate_random_string(self.RANDOM_STRING_LENGTH)
+        random_key = self._generate_random_string()
 
         signature = HashGenerator.generate_hash(
             base_url=options.base_url,
@@ -55,5 +51,5 @@ class BaseAdapter:
 
         return headers
 
-    def _generate_random_string(self, length: int) -> str:
-        return ''.join(random.choice(self.RANDOM_CHARS) for _ in range(length))
+    def _generate_random_string(self) -> str:
+        return str(uuid.uuid4())

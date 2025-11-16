@@ -1,11 +1,7 @@
 import json
 from datetime import date, datetime
 from decimal import Decimal
-
-try:
-    from enum import Enum
-except ImportError:
-    Enum = object
+from enum import Enum
 
 
 def _to_camel(s):
@@ -15,6 +11,15 @@ def _to_camel(s):
     if len(parts) == 1:
         return s
     return parts[0] + ''.join(p[:1].upper() + p[1:] for p in parts[1:])
+
+
+def _format_datetime(value: datetime) -> str:
+    naive = value.replace(tzinfo=None) if getattr(value, "tzinfo", None) else value
+    base = naive.strftime("%Y-%m-%dT%H:%M:%S")
+    if naive.microsecond:
+        fractional = f"{naive.microsecond:06d}".rstrip("0")
+        base = f"{base}.{fractional}"
+    return base
 
 
 def _convert(obj):
@@ -27,7 +32,7 @@ def _convert(obj):
         pass
 
     if isinstance(obj, datetime):
-        return obj.strftime("%Y-%m-%dT%H:%M:%S")
+        return _format_datetime(obj)
     if isinstance(obj, date):
         return obj.strftime("%Y-%m-%d")
 

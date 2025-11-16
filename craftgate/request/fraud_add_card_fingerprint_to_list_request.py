@@ -7,7 +7,7 @@ class FraudAddCardFingerprintToListRequest(object):
     def __init__(
             self,
             label: Optional[str] = None,
-            operation: Optional[FraudOperation] = None,
+            operation: FraudOperation = FraudOperation.PAYMENT,
             operation_id: Optional[str] = None,
             duration_in_seconds: Optional[int] = None
     ) -> None:

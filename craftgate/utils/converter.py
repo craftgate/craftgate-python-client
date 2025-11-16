@@ -1,15 +1,11 @@
 import re
 from datetime import datetime
 from decimal import Decimal
+from enum import Enum
 from typing import Any, Dict, List, Set, Union, get_type_hints
 
 try:
-    from enum import Enum
-except ImportError:
-    Enum = object
-
-try:
-    from typing import get_origin as _get_origin, get_args as _get_args
+    from typing import get_origin as _get_origin, get_args as _get_args  # type: ignore[attr-defined]
 except ImportError:
     def _get_origin(tp):
         return getattr(tp, "__origin__", None)
@@ -140,10 +136,16 @@ class Converter:
                     return parsed
                 except Exception:
                     pass
-            for fmt in ("%Y-%m-%dT%H:%M:%S%z", "%Y-%m-%dT%H:%M:%S"):
+            formats = (
+                "%Y-%m-%dT%H:%M:%S.%f%z",
+                "%Y-%m-%dT%H:%M:%S%z",
+                "%Y-%m-%dT%H:%M:%S.%f",
+                "%Y-%m-%dT%H:%M:%S"
+            )
+            for fmt in formats:
                 try:
                     candidate = normalized_value
-                    if fmt.endswith("%z") and len(candidate) >= 6 and candidate[-3] == ":" and candidate[-6] in "+-":
+                    if "%z" in fmt and len(candidate) >= 6 and candidate[-3] == ":" and candidate[-6] in "+-":
                         candidate = candidate[:-3] + candidate[-2:]
                     parsed = datetime.strptime(candidate, fmt)
                     if parsed.tzinfo is not None:

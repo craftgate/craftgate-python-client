@@ -10,9 +10,6 @@ class PaymentTransactionApproval(object):
             approval_status: Optional[ApprovalStatus] = None,
             failed_reason: Optional[str] = None
     ) -> None:
-        if approval_status is not None and not isinstance(approval_status, ApprovalStatus):
-            approval_status = ApprovalStatus(approval_status)
-
         self.payment_transaction_id = payment_transaction_id
         self.approval_status = approval_status
         self.failed_reason = failed_reason

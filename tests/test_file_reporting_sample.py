@@ -1,11 +1,16 @@
 # tests/test_file_reporting_sample.py
 import os
 import unittest
-from datetime import date
+from datetime import date, datetime, timedelta
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import ReportFileType
-from craftgate.request import RetrieveDailyPaymentReportRequest, RetrieveDailyTransactionReportRequest
+from craftgate.request import (
+    CreateReportRequest,
+    RetrieveDailyPaymentReportRequest,
+    RetrieveDailyTransactionReportRequest,
+    RetrieveReportRequest
+)
 
 
 class FileReportingSample(unittest.TestCase):
@@ -20,7 +25,7 @@ class FileReportingSample(unittest.TestCase):
 
     def test_retrieve_daily_transaction_report_csv(self):
         request = RetrieveDailyTransactionReportRequest(
-            report_date=date(2025, 8, 8),
+            report_date=date(2025, 11, 15),
             file_type=ReportFileType.CSV
         )
 
@@ -38,8 +43,8 @@ class FileReportingSample(unittest.TestCase):
 
     def test_retrieve_daily_payment_report_csv(self):
         request = RetrieveDailyPaymentReportRequest(
-            report_date=date(2025, 8, 7),
-            file_type=ReportFileType.CSV
+            report_date=date(2025, 11, 15),
+            file_type=ReportFileType.XLSX
         )
 
         blob = self.file_reporting.retrieve_daily_payment_report(request)
@@ -51,6 +56,32 @@ class FileReportingSample(unittest.TestCase):
         file_name = f"payment-report-{request.report_date.isoformat()}.{request.file_type.value}"
         out_path = os.path.join(os.getcwd(), file_name)
 
+        with open(out_path, "wb") as f:
+            f.write(blob)
+
+    def test_create_report_demand(self):
+        request = CreateReportRequest(
+            start_date=datetime.utcnow() - timedelta(days=10),
+            end_date=datetime.utcnow()
+        )
+
+        response = self.file_reporting.create_report(request)
+        print(response)
+        self.assertIsNotNone(response)
+        self.assertIsNotNone(getattr(response, "id", None))
+
+    def test_retrieve_report_by_id(self):
+        self.REPORT_ID = "25397"
+        request = RetrieveReportRequest(file_type=ReportFileType.CSV)
+
+        blob = self.file_reporting.retrieve_report(request, report_id=int(self.REPORT_ID))
+        self.assertIsInstance(blob, (bytes, bytearray))
+        self.assertGreater(len(blob), 0)
+
+        out_path = os.path.join(
+            os.getcwd(),
+            f"report-{self.REPORT_ID}.{request.file_type.value}"
+        )
         with open(out_path, "wb") as f:
             f.write(blob)
 

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.model.fraud_check_status import FraudCheckStatus
 from craftgate.model.fraud_value_type import FraudValueType
@@ -8,6 +6,7 @@ from craftgate.request.fraud_add_card_fingerprint_to_list_request import FraudAd
 from craftgate.request.fraud_value_list_request import FraudValueListRequest
 from craftgate.request.search_fraud_checks_request import SearchFraudChecksRequest
 from craftgate.request.update_fraud_check_request import UpdateFraudCheckRequest
+from craftgate.request_options import RequestOptions
 from craftgate.response.fraud_all_value_lists_response import FraudAllValueListsResponse
 from craftgate.response.fraud_check_list_response import FraudCheckListResponse
 from craftgate.response.fraud_value_list_response import FraudValueListResponse
@@ -15,11 +14,11 @@ from craftgate.utils.request_query_params_builder import RequestQueryParamsBuild
 
 
 class FraudAdapter(BaseAdapter):
-    def __init__(self, request_options) -> None:
+    def __init__(self, request_options: RequestOptions) -> None:
         super(FraudAdapter, self).__init__(request_options)
         self._http_client = BaseHttpClient()
 
-    def search_fraud_checks(self, request: SearchFraudChecksRequest) -> Optional[FraudCheckListResponse]:
+    def search_fraud_checks(self, request: SearchFraudChecksRequest) -> FraudCheckListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/fraud/v1/fraud-checks" + query
         headers = self._create_headers(None, path)
@@ -43,7 +42,7 @@ class FraudAdapter(BaseAdapter):
             response_type=None
         )
 
-    def retrieve_all_value_lists(self) -> Optional[FraudAllValueListsResponse]:
+    def retrieve_all_value_lists(self) -> FraudAllValueListsResponse:
         path = "/fraud/v1/value-lists/all"
         headers = self._create_headers(None, path)
         return self._http_client.request(
@@ -54,7 +53,7 @@ class FraudAdapter(BaseAdapter):
             response_type=FraudAllValueListsResponse
         )
 
-    def retrieve_value_list(self, list_name: str) -> Optional[FraudValueListResponse]:
+    def retrieve_value_list(self, list_name: str) -> FraudValueListResponse:
         path = "/fraud/v1/value-lists/{}".format(list_name)
         headers = self._create_headers(None, path)
         return self._http_client.request(
@@ -65,9 +64,9 @@ class FraudAdapter(BaseAdapter):
             response_type=FraudValueListResponse
         )
 
-    def create_value_list(self, list_name: str, type: FraudValueType) -> None:
+    def create_value_list(self, list_name: str, value_type: FraudValueType) -> None:
         body = FraudValueListRequest(
-            type=type,
+            type=value_type,
             list_name=list_name,
             value=None,
             duration_in_seconds=None
@@ -96,7 +95,7 @@ class FraudAdapter(BaseAdapter):
             response_type=None
         )
 
-    def add_card_fingerprint_to_value_list(self, list_name: str, request: FraudAddCardFingerprintToListRequest) -> None:
+    def add_card_fingerprint(self, request: FraudAddCardFingerprintToListRequest, list_name: str) -> None:
         path = "/fraud/v1/value-lists/{}/card-fingerprints".format(list_name)
         headers = self._create_headers(request, path)
         self._http_client.request(
@@ -106,6 +105,14 @@ class FraudAdapter(BaseAdapter):
             body=request,
             response_type=None
         )
+
+    def add_card_fingerprint_to_value_list(
+            self, list_name: str, request: FraudAddCardFingerprintToListRequest
+    ) -> None:
+        """
+        Deprecated: use add_card_fingerprint(request, list_name) instead.
+        """
+        self.add_card_fingerprint(request=request, list_name=list_name)
 
     def remove_value_from_value_list(self, list_name: str, value_id: str) -> None:
         path = "/fraud/v1/value-lists/{}/values/{}".format(list_name, value_id)

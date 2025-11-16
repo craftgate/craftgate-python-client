@@ -1,5 +1,3 @@
-from typing import Optional
-
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.apple_pay_merchant_session_create_request import ApplePayMerchantSessionCreateRequest
@@ -33,6 +31,7 @@ from craftgate.request.search_stored_cards_request import SearchStoredCardsReque
 from craftgate.request.store_card_request import StoreCardRequest
 from craftgate.request.update_card_request import UpdateCardRequest
 from craftgate.request.update_payment_transaction_request import UpdatePaymentTransactionRequest
+from craftgate.request_options import RequestOptions
 from craftgate.response.apm_deposit_payment_response import ApmDepositPaymentResponse
 from craftgate.response.apm_payment_complete_response import ApmPaymentCompleteResponse
 from craftgate.response.apm_payment_init_response import ApmPaymentInitResponse
@@ -61,11 +60,11 @@ from craftgate.utils.request_query_params_builder import RequestQueryParamsBuild
 
 
 class PaymentAdapter(BaseAdapter):
-    def __init__(self, request_options) -> None:
+    def __init__(self, request_options: RequestOptions) -> None:
         super(PaymentAdapter, self).__init__(request_options)
         self._http_client = BaseHttpClient()
 
-    def create_payment(self, request: CreatePaymentRequest) -> Optional[PaymentResponse]:
+    def create_payment(self, request: CreatePaymentRequest) -> PaymentResponse:
         path = "/payment/v1/card-payments"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -76,7 +75,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def retrieve_payment(self, payment_id: int) -> Optional[PaymentResponse]:
+    def retrieve_payment(self, payment_id: int) -> PaymentResponse:
         path = "/payment/v1/card-payments/{}".format(payment_id)
         headers = self._create_headers(None, path)
         return self._http_client.request(
@@ -87,7 +86,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def init_3ds_payment(self, request: InitThreeDSPaymentRequest) -> Optional[InitThreeDSPaymentResponse]:
+    def init_3ds_payment(self, request: InitThreeDSPaymentRequest) -> InitThreeDSPaymentResponse:
         path = "/payment/v1/card-payments/3ds-init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -98,7 +97,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=InitThreeDSPaymentResponse
         )
 
-    def complete_3ds_payment(self, request: CompleteThreeDSPaymentRequest) -> Optional[PaymentResponse]:
+    def complete_3ds_payment(self, request: CompleteThreeDSPaymentRequest) -> PaymentResponse:
         path = "/payment/v1/card-payments/3ds-complete"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -109,7 +108,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def post_auth_payment(self, payment_id: int, request: PostAuthPaymentRequest) -> Optional[PaymentResponse]:
+    def post_auth_payment(self, payment_id: int, request: PostAuthPaymentRequest) -> PaymentResponse:
         path = "/payment/v1/card-payments/{}/post-auth".format(payment_id)
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -120,7 +119,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def init_checkout_payment(self, request: InitCheckoutPaymentRequest) -> Optional[InitCheckoutPaymentResponse]:
+    def init_checkout_payment(self, request: InitCheckoutPaymentRequest) -> InitCheckoutPaymentResponse:
         path = "/payment/v1/checkout-payments/init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -131,7 +130,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=InitCheckoutPaymentResponse
         )
 
-    def retrieve_checkout_payment(self, token: str) -> Optional[PaymentResponse]:
+    def retrieve_checkout_payment(self, token: str) -> PaymentResponse:
         path = "/payment/v1/checkout-payments/{}".format(token)
         headers = self._create_headers(None, path)
         return self._http_client.request(
@@ -149,10 +148,11 @@ class PaymentAdapter(BaseAdapter):
             method="DELETE",
             url=self.request_options.base_url + path,
             headers=headers,
-            body=None
+            body=None,
+            response_type=None
         )
 
-    def create_deposit_payment(self, request: CreateDepositPaymentRequest) -> Optional[DepositPaymentResponse]:
+    def create_deposit_payment(self, request: CreateDepositPaymentRequest) -> DepositPaymentResponse:
         path = "/payment/v1/deposits"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -163,7 +163,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=DepositPaymentResponse
         )
 
-    def init_3ds_deposit_payment(self, request: CreateDepositPaymentRequest) -> Optional[InitThreeDSPaymentResponse]:
+    def init_3ds_deposit_payment(self, request: CreateDepositPaymentRequest) -> InitThreeDSPaymentResponse:
         path = "/payment/v1/deposits/3ds-init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -174,7 +174,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=InitThreeDSPaymentResponse
         )
 
-    def complete_3ds_deposit_payment(self, request: CompleteThreeDSPaymentRequest) -> Optional[DepositPaymentResponse]:
+    def complete_3ds_deposit_payment(self, request: CompleteThreeDSPaymentRequest) -> DepositPaymentResponse:
         path = "/payment/v1/deposits/3ds-complete"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -185,8 +185,8 @@ class PaymentAdapter(BaseAdapter):
             response_type=DepositPaymentResponse
         )
 
-    def create_fund_transfer_deposit_payment(self, request: CreateFundTransferDepositPaymentRequest) -> Optional[
-        FundTransferDepositPaymentResponse]:
+    def create_fund_transfer_deposit_payment(self,
+                                             request: CreateFundTransferDepositPaymentRequest) -> FundTransferDepositPaymentResponse:
         path = "/payment/v1/deposits/fund-transfer"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -197,7 +197,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=FundTransferDepositPaymentResponse
         )
 
-    def init_apm_deposit_payment(self, request: InitApmDepositPaymentRequest) -> Optional[ApmDepositPaymentResponse]:
+    def init_apm_deposit_payment(self, request: InitApmDepositPaymentRequest) -> ApmDepositPaymentResponse:
         path = "/payment/v1/deposits/apm-init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -208,8 +208,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=ApmDepositPaymentResponse
         )
 
-    def init_garanti_pay_payment(self, request: InitGarantiPayPaymentRequest) -> Optional[
-        InitGarantiPayPaymentResponse]:
+    def init_garanti_pay_payment(self, request: InitGarantiPayPaymentRequest) -> InitGarantiPayPaymentResponse:
         path = "/payment/v1/garanti-pay-payments"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -220,7 +219,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=InitGarantiPayPaymentResponse
         )
 
-    def init_apm_payment(self, request: InitApmPaymentRequest) -> Optional[ApmPaymentInitResponse]:
+    def init_apm_payment(self, request: InitApmPaymentRequest) -> ApmPaymentInitResponse:
         path = "/payment/v1/apm-payments/init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -231,7 +230,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=ApmPaymentInitResponse
         )
 
-    def complete_apm_payment(self, request: CompleteApmPaymentRequest) -> Optional[ApmPaymentCompleteResponse]:
+    def complete_apm_payment(self, request: CompleteApmPaymentRequest) -> ApmPaymentCompleteResponse:
         path = "/payment/v1/apm-payments/complete"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -242,7 +241,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=ApmPaymentCompleteResponse
         )
 
-    def create_apm_payment(self, request: CreateApmPaymentRequest) -> Optional[PaymentResponse]:
+    def create_apm_payment(self, request: CreateApmPaymentRequest) -> PaymentResponse:
         path = "/payment/v1/apm-payments"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -253,7 +252,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def init_pos_apm_payment(self, request: InitPosApmPaymentRequest) -> Optional[InitPosApmPaymentResponse]:
+    def init_pos_apm_payment(self, request: InitPosApmPaymentRequest) -> InitPosApmPaymentResponse:
         path = "/payment/v1/pos-apm-payments/init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -264,7 +263,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=InitPosApmPaymentResponse
         )
 
-    def complete_pos_apm_payment(self, request: CompletePosApmPaymentRequest) -> Optional[PaymentResponse]:
+    def complete_pos_apm_payment(self, request: CompletePosApmPaymentRequest) -> PaymentResponse:
         path = "/payment/v1/pos-apm-payments/complete"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -275,7 +274,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def retrieve_loyalties(self, request: RetrieveLoyaltiesRequest) -> Optional[RetrieveLoyaltiesResponse]:
+    def retrieve_loyalties(self, request: RetrieveLoyaltiesRequest) -> RetrieveLoyaltiesResponse:
         path = "/payment/v1/card-loyalties/retrieve"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -286,8 +285,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=RetrieveLoyaltiesResponse
         )
 
-    def refund_payment_transaction(self, request: RefundPaymentTransactionRequest) -> Optional[
-        PaymentTransactionRefundResponse]:
+    def refund_payment_transaction(self, request: RefundPaymentTransactionRequest) -> PaymentTransactionRefundResponse:
         path = "/payment/v1/refund-transactions"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -298,10 +296,9 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentTransactionRefundResponse
         )
 
-    def retrieve_payment_transaction_refund(self, refund_transaction_id: int) -> Optional[
-        PaymentTransactionRefundResponse]:
+    def retrieve_payment_transaction_refund(self, refund_transaction_id: int) -> PaymentTransactionRefundResponse:
         path = "/payment/v1/refund-transactions/{}".format(refund_transaction_id)
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -312,7 +309,7 @@ class PaymentAdapter(BaseAdapter):
 
     def refund_payment_transaction_mark_as_refunded(
             self, request: RefundPaymentTransactionMarkAsRefundedRequest
-    ) -> Optional[PaymentTransactionRefundResponse]:
+    ) -> PaymentTransactionRefundResponse:
         path = "/payment/v1/refund-transactions/mark-as-refunded"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -325,7 +322,7 @@ class PaymentAdapter(BaseAdapter):
 
     def refund_payment_mark_as_refunded(
             self, request: RefundPaymentRequest
-    ) -> Optional[PaymentTransactionRefundListResponse]:
+    ) -> PaymentTransactionRefundListResponse:
         path = "/payment/v1/refunds/mark-as-refunded"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -338,7 +335,7 @@ class PaymentAdapter(BaseAdapter):
 
     def refund_payment(
             self, request: RefundPaymentRequest
-    ) -> Optional[PaymentRefundResponse]:
+    ) -> PaymentRefundResponse:
         path = "/payment/v1/refunds"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -349,9 +346,9 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentRefundResponse
         )
 
-    def retrieve_payment_refund(self, refund_id: int) -> Optional[PaymentRefundResponse]:
+    def retrieve_payment_refund(self, refund_id: int) -> PaymentRefundResponse:
         path = "/payment/v1/refunds/{}".format(refund_id)
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -360,7 +357,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentRefundResponse
         )
 
-    def store_card(self, request: StoreCardRequest) -> Optional[StoredCardResponse]:
+    def store_card(self, request: StoreCardRequest) -> StoredCardResponse:
         path = "/payment/v1/cards"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -371,7 +368,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=StoredCardResponse
         )
 
-    def update_card(self, request: UpdateCardRequest) -> Optional[StoredCardResponse]:
+    def update_card(self, request: UpdateCardRequest) -> StoredCardResponse:
         path = "/payment/v1/cards/update"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -382,7 +379,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=StoredCardResponse
         )
 
-    def clone_card(self, request: CloneCardRequest) -> Optional[StoredCardResponse]:
+    def clone_card(self, request: CloneCardRequest) -> StoredCardResponse:
         path = "/payment/v1/cards/clone"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -393,10 +390,10 @@ class PaymentAdapter(BaseAdapter):
             response_type=StoredCardResponse
         )
 
-    def search_stored_cards(self, request: SearchStoredCardsRequest) -> Optional[StoredCardListResponse]:
+    def search_stored_cards(self, request: SearchStoredCardsRequest) -> StoredCardListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment/v1/cards" + query
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -416,8 +413,8 @@ class PaymentAdapter(BaseAdapter):
             response_type=None
         )
 
-    def approve_payment_transactions(self, request: ApprovePaymentTransactionsRequest) -> Optional[
-        PaymentTransactionApprovalListResponse]:
+    def approve_payment_transactions(self,
+                                     request: ApprovePaymentTransactionsRequest) -> PaymentTransactionApprovalListResponse:
         path = "/payment/v1/payment-transactions/approve"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -428,8 +425,8 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentTransactionApprovalListResponse
         )
 
-    def disapprove_payment_transactions(self, request: DisapprovePaymentTransactionsRequest) -> Optional[
-        PaymentTransactionApprovalListResponse]:
+    def disapprove_payment_transactions(self,
+                                        request: DisapprovePaymentTransactionsRequest) -> PaymentTransactionApprovalListResponse:
         path = "/payment/v1/payment-transactions/disapprove"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -440,8 +437,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentTransactionApprovalListResponse
         )
 
-    def update_payment_transaction(self, request: UpdatePaymentTransactionRequest) -> Optional[
-        PaymentTransactionResponse]:
+    def update_payment_transaction(self, request: UpdatePaymentTransactionRequest) -> PaymentTransactionResponse:
         path = "/payment/v1/payment-transactions/{}".format(request.payment_transaction_id)
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -463,7 +459,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=object
         )
 
-    def retrieve_bnpl_payment_offers(self, request: BnplPaymentOfferRequest) -> Optional[BnplPaymentOfferResponse]:
+    def retrieve_bnpl_payment_offers(self, request: BnplPaymentOfferRequest) -> BnplPaymentOfferResponse:
         path = "/payment/v1/bnpl-payments/offers"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -474,7 +470,7 @@ class PaymentAdapter(BaseAdapter):
             response_type=BnplPaymentOfferResponse
         )
 
-    def init_bnpl_payment(self, request: InitBnplPaymentRequest) -> Optional[InitBnplPaymentResponse]:
+    def init_bnpl_payment(self, request: InitBnplPaymentRequest) -> InitBnplPaymentResponse:
         path = "/payment/v1/bnpl-payments/init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -485,54 +481,59 @@ class PaymentAdapter(BaseAdapter):
             response_type=InitBnplPaymentResponse
         )
 
-    def approve_bnpl_payment(self, payment_id: int) -> Optional[PaymentResponse]:
+    def approve_bnpl_payment(self, payment_id: int) -> PaymentResponse:
         path = "/payment/v1/bnpl-payments/{}/approve".format(payment_id)
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,
             headers=headers,
+            body=None,
             response_type=PaymentResponse
         )
 
-    def verify_bnpl_payment(self, payment_id: int) -> Optional[BnplPaymentVerifyResponse]:
+    def verify_bnpl_payment(self, payment_id: int) -> BnplPaymentVerifyResponse:
         path = "/payment/v1/bnpl-payments/{}/verify".format(payment_id)
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,
             headers=headers,
+            body=None,
             response_type=BnplPaymentVerifyResponse
         )
 
-    def retrieve_active_banks(self) -> Optional[InstantTransferBanksResponse]:
+    def retrieve_active_banks(self) -> InstantTransferBanksResponse:
         path = "/payment/v1/instant-transfer-banks"
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
             headers=headers,
+            body=None,
             response_type=InstantTransferBanksResponse
         )
 
-    def retrieve_multi_payment(self, token: str) -> Optional[MultiPaymentResponse]:
+    def retrieve_multi_payment(self, token: str) -> MultiPaymentResponse:
         path = "/payment/v1/multi-payments/{}".format(token)
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
             headers=headers,
+            body=None,
             response_type=MultiPaymentResponse
         )
 
-    def retrieve_provider_cards(self, request: RetrieveProviderCardRequest) -> Optional[StoredCardListResponse]:
+    def retrieve_provider_cards(self, request: RetrieveProviderCardRequest) -> StoredCardListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment/v1/cards/provider-card-mappings{}".format(query)
-        headers = self._create_headers(path)
+        headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
             headers=headers,
+            body=None,
             response_type=StoredCardListResponse
         )
 
@@ -547,5 +548,5 @@ class PaymentAdapter(BaseAdapter):
             params.get("conversationId", ""),
             params.get("callbackStatus", "")
         )
-        hashed_params = HashGenerator.generate_hash(hash_string)
+        hashed_params = HashGenerator.generate_hash_from_string(hash_string)
         return hash_val == hashed_params

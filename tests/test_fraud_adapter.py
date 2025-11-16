@@ -40,7 +40,7 @@ class FraudAdapterSample(unittest.TestCase):
     def test_add_card_fingerprint_to_value_list(self):
         req = FraudAddCardFingerprintToListRequest(
             operation=FraudOperation.PAYMENT,
-            operation_id="12420", #payment_id
+            operation_id="12420",  # payment_id
             label="John Doe's card",
             duration_in_seconds=600
         )

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.complete_bkm_express_request import CompleteBkmExpressRequest
@@ -14,7 +12,7 @@ class BkmExpressPaymentAdapter(BaseAdapter):
         super(BkmExpressPaymentAdapter, self).__init__(request_options)
         self._http_client = BaseHttpClient()
 
-    def init(self, request: InitBkmExpressRequest) -> Optional[InitBkmExpressResponse]:
+    def init(self, request: InitBkmExpressRequest) -> InitBkmExpressResponse:
         path = "/payment/v1/bkm-express/init"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -25,7 +23,7 @@ class BkmExpressPaymentAdapter(BaseAdapter):
             response_type=InitBkmExpressResponse
         )
 
-    def complete(self, request: CompleteBkmExpressRequest) -> Optional[PaymentResponse]:
+    def complete(self, request: CompleteBkmExpressRequest) -> PaymentResponse:
         path = "/payment/v1/bkm-express/complete"
         headers = self._create_headers(request, path)
         return self._http_client.request(
@@ -36,7 +34,7 @@ class BkmExpressPaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def retrieve_payment(self, ticket_id: str) -> Optional[PaymentResponse]:
+    def retrieve_payment(self, ticket_id: str) -> PaymentResponse:
         path = "/payment/v1/bkm-express/payments/{}".format(ticket_id)
         headers = self._create_headers(None, path)
         return self._http_client.request(
@@ -47,7 +45,7 @@ class BkmExpressPaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def retrieve_payment_by_token(self, token: str) -> Optional[PaymentResponse]:
+    def retrieve_payment_by_token(self, token: str) -> PaymentResponse:
         path = "/payment/v1/bkm-express/{}".format(token)
         headers = self._create_headers(None, path)
         return self._http_client.request(

@@ -1,5 +1,3 @@
-from typing import Optional
-
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.search_bank_account_tracking_records_request import SearchBankAccountTrackingRecordsRequest
@@ -17,7 +15,7 @@ class BankAccountTrackingAdapter(BaseAdapter):
 
     def search_records(
             self, request: SearchBankAccountTrackingRecordsRequest
-    ) -> Optional[BankAccountTrackingRecordListResponse]:
+    ) -> BankAccountTrackingRecordListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/bank-account-tracking/v1/merchant-bank-account-trackings/records" + query
         headers = self._create_headers(None, path)
@@ -29,7 +27,7 @@ class BankAccountTrackingAdapter(BaseAdapter):
             response_type=BankAccountTrackingRecordListResponse
         )
 
-    def retrieve_record(self, id: int) -> Optional[BankAccountTrackingRecordResponse]:
+    def retrieve_record(self, id: int) -> BankAccountTrackingRecordResponse:
         path = "/bank-account-tracking/v1/merchant-bank-account-trackings/records/{}".format(id)
         headers = self._create_headers(None, path)
         return self._http_client.request(

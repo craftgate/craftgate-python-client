@@ -16,11 +16,11 @@ class HookAdapter(BaseAdapter):
         if merchant_hook_key is None or incoming_signature is None or webhook_data is None:
             return False
 
-        data = (
-                webhook_data.event_type +
-                str(webhook_data.event_timestamp) +
-                webhook_data.status +
-                webhook_data.payload_id
+        data = "{}{}{}{}".format(
+            webhook_data.event_type,
+            webhook_data.event_timestamp,
+            webhook_data.status,
+            webhook_data.payload_id
         )
 
         signature = self._generate_hash(merchant_hook_key, data)

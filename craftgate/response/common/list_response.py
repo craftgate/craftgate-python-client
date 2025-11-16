@@ -1,21 +1,21 @@
-from typing import Any, ClassVar, Generic, Iterable, List, Mapping, Optional, Type, TypeVar, cast
+from typing import Any, Generic, Iterable, List, Mapping, Optional, Type, TypeVar, cast
 
-from craftgate.utils.converter import Converter
 from craftgate.utils.attribute_dict import AttributeDict
+from craftgate.utils.converter import Converter
 
 TItem = TypeVar("TItem")
 ListResponseType = TypeVar("ListResponseType", bound="ListResponse[Any]")
 
 
 class ListResponse(Generic[TItem]):
-    item_type: ClassVar[Optional[Type[TItem]]] = None
+    item_type: Optional[Type[Any]] = None
 
     def __init__(
-        self,
-        items: Optional[Iterable[TItem]] = None,
-        page: Optional[int] = None,
-        size: Optional[int] = None,
-        total_size: Optional[int] = None
+            self,
+            items: Optional[Iterable[TItem]] = None,
+            page: Optional[int] = None,
+            size: Optional[int] = None,
+            total_size: Optional[int] = None
     ):
         self.items: List[TItem] = self._map_items(items or [])
         self.page = page

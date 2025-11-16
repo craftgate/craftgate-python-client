@@ -19,12 +19,20 @@ class CraftgateException(Exception):
         self.raw = raw
         self.prefer_raw_message = prefer_raw_message
 
-        msg = raw if (prefer_raw_message and raw) else "[{}] {}: {}".format(
-            self.error_group, self.error_code, self.error_description
-        )
-        super(CraftgateException, self).__init__(msg)
+        message = raw if (prefer_raw_message and raw) else self.error_description
+        super(CraftgateException, self).__init__(message)
 
     def __str__(self):
         if self.prefer_raw_message and self.raw:
             return self.raw
-        return "[{}] {}: {}".format(self.error_group, self.error_code, self.error_description)
+        return self._format_details()
+
+    def __repr__(self):
+        return self._format_details()
+
+    def _format_details(self) -> str:
+        return "CraftgateException(errorCode={}, errorDescription={}, errorGroup={})".format(
+            self.error_code,
+            self.error_description,
+            self.error_group
+        )

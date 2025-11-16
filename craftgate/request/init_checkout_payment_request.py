@@ -31,6 +31,7 @@ class InitCheckoutPaymentRequest(object):
             buyer_member_id: Optional[int] = None,
             enabled_installments: Optional[List[int]] = None,
             always_store_card_after_payment: bool = False,
+            allow_delete_stored_card: bool = False,
             allow_only_stored_cards: bool = False,
             allow_only_credit_card: bool = False,
             allow_installment_only_commercial_cards: bool = False,
@@ -62,6 +63,7 @@ class InitCheckoutPaymentRequest(object):
         self.buyer_member_id = buyer_member_id
         self.enabled_installments = enabled_installments
         self.always_store_card_after_payment = always_store_card_after_payment
+        self.allow_delete_stored_card = allow_delete_stored_card
         self.allow_only_stored_cards = allow_only_stored_cards
         self.allow_only_credit_card = allow_only_credit_card
         self.allow_installment_only_commercial_cards = allow_installment_only_commercial_cards
