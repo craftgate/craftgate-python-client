@@ -4,6 +4,8 @@
 
 This repo contains the Python client for Craftgate API.
 
+PyPI package: <https://pypi.org/project/craftgate/>
+
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/craftgate/craftgate-python-client)
 
 ## Requirements
@@ -25,15 +27,14 @@ By default the client connects to production `https://api.craftgate.io`. For tes
 `https://sandbox-api.craftgate.io`.
 
 ~~~python
-from craftgate.request_options import RequestOptions
-from craftgate.adapter.payment_adapter import PaymentAdapter
+from craftgate import Craftgate, RequestOptions
 
 options = RequestOptions(
     api_key="<YOUR API KEY>",
     secret_key="<YOUR SECRET KEY>",
     base_url="https://sandbox-api.craftgate.io"
 )
-payment = PaymentAdapter(options)
+payment = Craftgate(options).payment()
 ~~~
 
 ## Example: Credit Card Payment
@@ -42,16 +43,10 @@ payment = PaymentAdapter(options)
 import uuid
 from decimal import Decimal
 
-from craftgate.adapter.payment_adapter import PaymentAdapter
-from craftgate.request_options import RequestOptions
-
-from craftgate.model.currency import Currency
-from craftgate.model.payment_group import PaymentGroup
-from craftgate.model.payment_phase import PaymentPhase
-
-from craftgate.request.create_payment_request import CreatePaymentRequest
-from craftgate.request.dto.card import Card
-from craftgate.request.dto.payment_item import PaymentItem
+from craftgate import Craftgate, RequestOptions
+from craftgate.model import Currency, PaymentGroup, PaymentPhase
+from craftgate.request import CreatePaymentRequest
+from craftgate.request.dto import Card, PaymentItem
 
 # Configure client (use sandbox for testing)
 options = RequestOptions(
@@ -59,7 +54,8 @@ options = RequestOptions(
     secret_key="<YOUR SECRET KEY>",
     base_url="https://sandbox-api.craftgate.io"
 )
-payment = PaymentAdapter(options)
+craftgate = Craftgate(options)
+payment = craftgate.payment()
 
 # Build basket
 items = []
