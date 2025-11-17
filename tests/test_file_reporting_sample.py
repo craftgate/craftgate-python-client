@@ -23,7 +23,7 @@ class FileReportingSample(unittest.TestCase):
         opts = RequestOptions(api_key=cls.API_KEY, secret_key=cls.SECRET_KEY, base_url=cls.BASE_URL)
         cls.file_reporting = Craftgate(opts).file_reporting()
 
-    def test_retrieve_daily_transaction_report_csv(self):
+    def test_retrieve_daily_transaction_report(self):
         request = RetrieveDailyTransactionReportRequest(
             report_date=date(2025, 11, 15),
             file_type=ReportFileType.CSV
@@ -41,7 +41,7 @@ class FileReportingSample(unittest.TestCase):
         with open(out_path, "wb") as f:
             f.write(blob)
 
-    def test_retrieve_daily_payment_report_csv(self):
+    def test_retrieve_daily_payment_report(self):
         request = RetrieveDailyPaymentReportRequest(
             report_date=date(2025, 11, 15),
             file_type=ReportFileType.XLSX
