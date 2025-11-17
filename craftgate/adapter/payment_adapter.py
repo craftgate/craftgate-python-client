@@ -32,6 +32,7 @@ from craftgate.request.store_card_request import StoreCardRequest
 from craftgate.request.update_card_request import UpdateCardRequest
 from craftgate.request.update_payment_transaction_request import UpdatePaymentTransactionRequest
 from craftgate.request_options import RequestOptions
+from craftgate.request.refund_waiting_payment_request import RefundWaitingPaymentRequest
 from craftgate.response.apm_deposit_payment_response import ApmDepositPaymentResponse
 from craftgate.response.apm_payment_complete_response import ApmPaymentCompleteResponse
 from craftgate.response.apm_payment_init_response import ApmPaymentInitResponse
@@ -57,6 +58,7 @@ from craftgate.response.stored_card_list_response import StoredCardListResponse
 from craftgate.response.stored_card_response import StoredCardResponse
 from craftgate.utils.hash_generator import HashGenerator
 from craftgate.utils.request_query_params_builder import RequestQueryParamsBuilder
+from craftgate.response.waiting_payment_refund_response import WaitingPaymentRefundResponse
 
 
 class PaymentAdapter(BaseAdapter):
@@ -344,6 +346,19 @@ class PaymentAdapter(BaseAdapter):
             headers=headers,
             body=request,
             response_type=PaymentRefundResponse
+        )
+
+    def refund_waiting_payment(
+            self, request: RefundWaitingPaymentRequest
+    ) -> WaitingPaymentRefundResponse:
+        path = "/payment/v1/refund-waiting-payment"
+        headers = self._create_headers(request, path)
+        return self._http_client.request(
+            method="POST",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=request,
+            response_type=WaitingPaymentRefundResponse
         )
 
     def retrieve_payment_refund(self, refund_id: int) -> PaymentRefundResponse:

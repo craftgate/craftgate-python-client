@@ -13,7 +13,7 @@ from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardReques
     CreateFundTransferDepositPaymentRequest, CreatePaymentRequest, DeleteStoredCardRequest, \
     DisapprovePaymentTransactionsRequest, Card, GarantiPayInstallment, PaymentItem, InitApmDepositPaymentRequest, \
     InitApmPaymentRequest, InitCheckoutPaymentRequest, InitGarantiPayPaymentRequest, InitPosApmPaymentRequest, \
-    InitThreeDSPaymentRequest, PostAuthPaymentRequest, RefundPaymentRequest, \
+    InitThreeDSPaymentRequest, PostAuthPaymentRequest, RefundPaymentRequest, RefundWaitingPaymentRequest, \
     RefundPaymentTransactionMarkAsRefundedRequest, RefundPaymentTransactionRequest, RetrieveLoyaltiesRequest, \
     RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
     UpdatePaymentTransactionRequest
@@ -1322,6 +1322,16 @@ class PaymentSample(unittest.TestCase):
         self.assertIsNotNone(resp)
         self.assertEqual(req.payment_id, resp.payment_id)
         self.assertEqual(RefundStatus.SUCCESS, resp.status)
+
+    def test_refund_waiting_payment(self):
+        req = RefundWaitingPaymentRequest()
+        req.payment_id = 1
+
+        resp = self.payment.refund_waiting_payment(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertEqual(RefundStatus.SUCCESS, resp.status)
+
 
     def test_retrieve_payment_refund(self):
         payment_refund_id = 1
