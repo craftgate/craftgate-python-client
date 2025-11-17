@@ -1,6 +1,6 @@
 from typing import Optional
 
-from craftgate import RefundStatus
+from craftgate.model import RefundStatus
 
 
 class WaitingPaymentRefundResponse(object):
