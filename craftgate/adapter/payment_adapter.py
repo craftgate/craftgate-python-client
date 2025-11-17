@@ -351,7 +351,7 @@ class PaymentAdapter(BaseAdapter):
     def refund_waiting_payment(
             self, request: RefundWaitingPaymentRequest
     ) -> WaitingPaymentRefundResponse:
-        path = "/payment/v1/refund-waiting-payment"
+        path = "/payment/v1/refunds/refund-waiting-payment"
         headers = self._create_headers(request, path)
         return self._http_client.request(
             method="POST",
