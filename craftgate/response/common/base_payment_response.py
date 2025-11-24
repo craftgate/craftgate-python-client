@@ -58,6 +58,7 @@ class BasePaymentResponse:
             card_association: Optional[CardAssociation] = None,
             card_brand: Optional[str] = None,
             requested_pos_alias: Optional[str] = None,
+            blockage_resolved_date: Optional[datetime] = None,
             fraud_id: Optional[int] = None,
             fraud_action: Optional[FraudAction] = None,
             fraud_score: Optional[float] = None,
@@ -103,6 +104,7 @@ class BasePaymentResponse:
         self.card_association = card_association
         self.card_brand = card_brand
         self.requested_pos_alias = requested_pos_alias
+        self.blockage_resolved_date = blockage_resolved_date
         self.fraud_id = fraud_id
         self.fraud_action = fraud_action
         self.fraud_score = fraud_score
