@@ -23,7 +23,7 @@ class ProductResponse(object):
             token: Optional[str] = None,
             enabled_installments: Optional[Set[int]] = None,
             url: Optional[str] = None,
-            qr_code_url: Optional[str] = None,
+            multi_payment: Optional[bool] = None,
             channel: Optional[str] = None,
             expires_at: Optional[datetime] = None
     ) -> None:
@@ -41,6 +41,6 @@ class ProductResponse(object):
         self.token = token
         self.enabled_installments = enabled_installments
         self.url = url
-        self.qr_code_url = qr_code_url
+        self.multi_payment = multi_payment
         self.channel = channel
         self.expires_at = expires_at
