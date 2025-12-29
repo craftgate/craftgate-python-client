@@ -89,6 +89,7 @@ class BaseHttpClient:
         error_code = None
         error_description = None
         error_group = None
+        provider_error = None
 
         try:
             response_json = json.loads(raw_text) if raw_text else {}
@@ -97,11 +98,16 @@ class BaseHttpClient:
                 error_code = errors_block.get("errorCode")
                 error_description = errors_block.get("errorDescription")
                 error_group = errors_block.get("errorGroup")
+                
+                provider_error_block = errors_block.get("providerError")
+                if isinstance(provider_error_block, dict):
+                    from craftgate.response.common.provider_error import ProviderError
+                    provider_error = ProviderError.from_dict(provider_error_block)
         except Exception:
             pass
 
         if error_code or error_description or error_group:
-            raise CraftgateException(error_code, error_description, error_group)
+            raise CraftgateException(error_code, error_description, error_group, provider_error)
 
         raise CraftgateException()
 
