@@ -41,3 +41,4 @@ class PosIntegrator(str, Enum):
     AKBANK_VPOS = "AKBANK_VPOS"
     TAP = "TAP"
     RUBIK = "RUBIK"
+    BIN_PAY = "BIN_PAY"
