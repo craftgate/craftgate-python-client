@@ -22,9 +22,9 @@ from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalL
 
 
 class PaymentSample(unittest.TestCase):
-    API_KEY = os.environ.get("CG_API_KEY", "zG5jvjwWQyo3iIDyr6p1tvy1DzTXfnTb")
-    SECRET_KEY = os.environ.get("CG_SECRET_KEY", "yzyiMbQD8cNGh6qHWbP0rLE56LDdmh8J")
-    BASE_URL = os.environ.get("CG_BASE_URL", "http://localhost:8000")
+    API_KEY = os.environ.get("CG_API_KEY", "YOUR_API_KEY")
+    SECRET_KEY = os.environ.get("CG_SECRET_KEY", "YOUR_SECRET_KEY")
+    BASE_URL = os.environ.get("CG_BASE_URL", "https://sandbox-api.craftgate.io")
 
     @classmethod
     def setUpClass(cls):
