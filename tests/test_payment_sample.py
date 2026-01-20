@@ -22,9 +22,9 @@ from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalL
 
 
 class PaymentSample(unittest.TestCase):
-    API_KEY = os.environ.get("CG_API_KEY", "YOUR_API_KEY")
-    SECRET_KEY = os.environ.get("CG_SECRET_KEY", "YOUR_SECRET_KEY")
-    BASE_URL = os.environ.get("CG_BASE_URL", "https://sandbox-api.craftgate.io")
+    API_KEY = os.environ.get("CG_API_KEY", "zG5jvjwWQyo3iIDyr6p1tvy1DzTXfnTb")
+    SECRET_KEY = os.environ.get("CG_SECRET_KEY", "yzyiMbQD8cNGh6qHWbP0rLE56LDdmh8J")
+    BASE_URL = os.environ.get("CG_BASE_URL", "http://localhost:8000")
 
     @classmethod
     def setUpClass(cls):
@@ -1390,6 +1390,17 @@ class PaymentSample(unittest.TestCase):
         self.assertEqual("0001", resp.last_four_digits)
         self.assertEqual("My Other Cards", resp.card_alias)
         self.assertEqual("Haluk Demir", resp.card_holder_name)
+
+    def test_store_card_with_secure_fields(self):
+        req = StoreCardRequest()
+        req.secure_fields_token = "xxXXxx"
+
+        resp = self.payment.store_card(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(resp.card_token)
+        self.assertIsNotNone(resp.card_user_key)
+        self.assertIsNotNone(resp.created_at)
 
     def test_update_stored_card(self):
         req = UpdateCardRequest()
