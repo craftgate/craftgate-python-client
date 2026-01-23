@@ -19,7 +19,8 @@ class CreateProductRequest(object):
             expires_at: Optional[datetime] = None,
             description: Optional[str] = None,
             multi_payment: bool = False,
-            enabled_installments: Optional[Set[int]] = None
+            enabled_installments: Optional[Set[int]] = None,
+            basket_identifier: Optional[str] = None
     ) -> None:
         self.name = name
         self.channel = channel
@@ -33,3 +34,4 @@ class CreateProductRequest(object):
         self.description = description
         self.multi_payment = multi_payment
         self.enabled_installments = enabled_installments
+        self.basket_identifier = basket_identifier
