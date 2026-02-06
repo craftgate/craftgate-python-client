@@ -62,6 +62,7 @@ class BasePaymentResponse:
             fraud_id: Optional[int] = None,
             fraud_action: Optional[FraudAction] = None,
             fraud_score: Optional[float] = None,
+            fraud_rule_id: Optional[int] = None,
             pos: Optional[MerchantPos] = None,
             loyalty: Optional[Loyalty] = None,
             payment_error: Optional[PaymentError] = None
@@ -108,6 +109,7 @@ class BasePaymentResponse:
         self.fraud_id = fraud_id
         self.fraud_action = fraud_action
         self.fraud_score = fraud_score
+        self.fraud_rule_id = fraud_rule_id
         self.pos = pos
         self.loyalty = loyalty
         self.payment_error = payment_error
