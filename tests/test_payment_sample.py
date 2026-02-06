@@ -1391,6 +1391,17 @@ class PaymentSample(unittest.TestCase):
         self.assertEqual("My Other Cards", resp.card_alias)
         self.assertEqual("Haluk Demir", resp.card_holder_name)
 
+    def test_store_card_with_secure_fields(self):
+        req = StoreCardRequest()
+        req.secure_fields_token = "xxXXxx"
+
+        resp = self.payment.store_card(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(resp.card_token)
+        self.assertIsNotNone(resp.card_user_key)
+        self.assertIsNotNone(resp.created_at)
+
     def test_update_stored_card(self):
         req = UpdateCardRequest()
         req.card_user_key = "fac377f2-ab15-4696-88d2-5e71b27ec378"
