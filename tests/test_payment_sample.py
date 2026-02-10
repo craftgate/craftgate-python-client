@@ -5,18 +5,20 @@ import uuid
 from decimal import Decimal
 
 from craftgate import Craftgate, RequestOptions, PaymentTransaction, FraudCheckParameters
-from craftgate.model import AdditionalAction, ApmAdditionalAction, ApmType, CardAssociation, CardProvider, CardType, \
-    Currency, Loyalty, LoyaltyParams, LoyaltyType, PaymentGroup, PaymentPhase, PaymentStatus, PaymentType, \
+from craftgate.model import AdditionalAction, ApmAdditionalAction, ApmType, CardAssociation, CardProvider, \
+    CardType, CardVerificationAuthType, CardVerifyStatus, Currency, Loyalty, LoyaltyParams, LoyaltyType, \
+    PaymentGroup, PaymentPhase, PaymentStatus, PaymentType, \
     PosApmPaymentProvider, RefundDestinationType, RefundStatus, Reward, WalletTransactionType
 from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardRequest, CompleteApmPaymentRequest, \
     CompletePosApmPaymentRequest, CompleteThreeDSPaymentRequest, CreateApmPaymentRequest, CreateDepositPaymentRequest, \
     CreateFundTransferDepositPaymentRequest, CreatePaymentRequest, DeleteStoredCardRequest, \
-    DisapprovePaymentTransactionsRequest, Card, GarantiPayInstallment, PaymentItem, InitApmDepositPaymentRequest, \
-    InitApmPaymentRequest, InitCheckoutPaymentRequest, InitGarantiPayPaymentRequest, InitPosApmPaymentRequest, \
-    InitThreeDSPaymentRequest, PostAuthPaymentRequest, RefundPaymentRequest, \
+    DisapprovePaymentTransactionsRequest, Card, GarantiPayInstallment, InitApmDepositPaymentRequest, \
+    InitApmPaymentRequest, InitCheckoutCardVerifyRequest, InitCheckoutPaymentRequest, \
+    InitGarantiPayPaymentRequest, InitPosApmPaymentRequest, InitThreeDSPaymentRequest, PaymentItem, \
+    PostAuthPaymentRequest, RefundPaymentRequest, \
     RefundPaymentTransactionMarkAsRefundedRequest, RefundPaymentTransactionRequest, RetrieveLoyaltiesRequest, \
     RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
-    UpdatePaymentTransactionRequest
+    UpdatePaymentTransactionRequest, VerifyCard, VerifyCardRequest
 from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalListResponse, PaymentTransactionResponse, \
     StoredCardListResponse
 
@@ -1646,6 +1648,45 @@ class PaymentSample(unittest.TestCase):
 
         is_verified = self.payment.is_3d_secure_callback_verified(merchant_key, params)
         self.assertFalse(is_verified)
+
+    def test_init_checkout_card_verify_with_non_3ds_auth_type(self):
+        req = InitCheckoutCardVerifyRequest()
+        req.callback_url = "https://www.your-website.com/craftgate-checkout-card-verify-callback"
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.payment_authentication_type = CardVerificationAuthType.NON_THREE_DS
+        req.verification_price = Decimal("10")
+        req.currency = Currency.TRY
+
+        resp = self.payment.init_checkout_card_verify(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(getattr(resp, "page_url", None))
+        self.assertIsNotNone(getattr(resp, "token", None))
+        self.assertIsNotNone(getattr(resp, "token_expire_date", None))
+
+    def test_verify_card_with_3ds(self):
+        card = VerifyCard()
+        card.card_holder_name = "Haluk Demir"
+        card.card_number = "5258640000000001"
+        card.expire_year = "2044"
+        card.expire_month = "07"
+        card.cvc = "000"
+        card.card_alias = "My YKB Card"
+
+        req = VerifyCardRequest()
+        req.card = card
+        req.payment_authentication_type = CardVerificationAuthType.THREE_DS
+        req.callback_url = "https://www.your-website.com/craftgate-3DSecure-card-verify-callback"
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.verification_price = Decimal("10")
+        req.currency = Currency.TRY
+        req.client_ip = "127.0.0.1"
+
+        resp = self.payment.verify_card(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertEqual(CardVerifyStatus.THREE_DS_PENDING, resp.card_verify_status)
+        self.assertIsNotNone(getattr(resp, "html_content", None))
 
 
 if __name__ == "__main__":

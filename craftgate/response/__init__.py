@@ -17,6 +17,7 @@ from .fraud_value_list_response import FraudValueListResponse
 from .fund_transfer_deposit_payment_response import FundTransferDepositPaymentResponse
 from .init_bkm_express_response import InitBkmExpressResponse
 from .init_bnpl_payment_response import InitBnplPaymentResponse
+from .init_checkout_card_verify_response import InitCheckoutCardVerifyResponse
 from .init_checkout_payment_response import InitCheckoutPaymentResponse
 from .init_garanti_pay_payment_response import InitGarantiPayPaymentResponse
 from .init_juzdan_payment_response import InitJuzdanPaymentResponse
@@ -70,5 +71,6 @@ from .wallet_response import WalletResponse
 from .wallet_transaction_list_response import WalletTransactionListResponse
 from .wallet_transaction_refundable_amount_response import WalletTransactionRefundableAmountResponse
 from .wallet_transaction_response import WalletTransactionResponse
+from .verify_card_response import VerifyCardResponse
 from .withdraw_list_response import WithdrawListResponse
 from .withdraw_response import WithdrawResponse
