@@ -55,6 +55,7 @@ from craftgate.response.payment_transaction_approval_list_response import Paymen
 from craftgate.response.payment_transaction_refund_list_response import PaymentTransactionRefundListResponse
 from craftgate.response.payment_transaction_refund_response import PaymentTransactionRefundResponse
 from craftgate.response.payment_transaction_response import PaymentTransactionResponse
+from craftgate.response.retrieve_checkout_card_verify_response import RetrieveCheckoutCardVerifyResponse
 from craftgate.response.retrieve_loyalties_response import RetrieveLoyaltiesResponse
 from craftgate.response.stored_card_list_response import StoredCardListResponse
 from craftgate.response.stored_card_response import StoredCardResponse
@@ -143,6 +144,17 @@ class PaymentAdapter(BaseAdapter):
             headers=headers,
             body=request,
             response_type=InitCheckoutCardVerifyResponse
+        )
+
+    def retrieve_checkout_card_verify(self, token: str) -> RetrieveCheckoutCardVerifyResponse:
+        path = "/payment/v1/checkout-card-verify/{}".format(token)
+        headers = self._create_headers(None, path)
+        return self._http_client.request(
+            method="GET",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=None,
+            response_type=RetrieveCheckoutCardVerifyResponse
         )
 
     def retrieve_checkout_payment(self, token: str) -> PaymentResponse:

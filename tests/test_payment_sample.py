@@ -1664,6 +1664,13 @@ class PaymentSample(unittest.TestCase):
         self.assertIsNotNone(getattr(resp, "token", None))
         self.assertIsNotNone(getattr(resp, "token_expire_date", None))
 
+    def test_retrieve_checkout_card_verify(self):
+        token = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        resp = self.payment.retrieve_checkout_card_verify(token)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(getattr(resp, "token", None))
+
     def test_verify_card_with_3ds(self):
         card = VerifyCard()
         card.card_holder_name = "Haluk Demir"
