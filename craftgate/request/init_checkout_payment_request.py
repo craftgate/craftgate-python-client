@@ -38,6 +38,7 @@ class InitCheckoutPaymentRequest(object):
             force_three_ds: bool = False,
             force_auth_for_non_credit_cards: bool = False,
             deposit_payment: bool = False,
+            return_back_url: Optional[str] = None,
             ttl: Optional[int] = None,
             custom_installments: Optional[List[CustomInstallment]] = None,
             items: Optional[List[PaymentItem]] = None,
@@ -70,6 +71,7 @@ class InitCheckoutPaymentRequest(object):
         self.force_three_ds = force_three_ds
         self.force_auth_for_non_credit_cards = force_auth_for_non_credit_cards
         self.deposit_payment = deposit_payment
+        self.return_back_url = return_back_url
         self.ttl = ttl
         self.custom_installments = custom_installments
         self.items = items
