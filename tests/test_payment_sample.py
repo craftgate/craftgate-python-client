@@ -19,6 +19,7 @@ from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardReques
     RefundPaymentTransactionMarkAsRefundedRequest, RefundPaymentTransactionRequest, RetrieveLoyaltiesRequest, \
     RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
     UpdatePaymentTransactionRequest, VerifyCard, VerifyCardRequest
+from craftgate.request.init_multi_payment_request import InitMultiPaymentRequest
 from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalListResponse, PaymentTransactionResponse, \
     StoredCardListResponse
 
@@ -1590,6 +1591,32 @@ class PaymentSample(unittest.TestCase):
         self.assertIsNotNone(resp)
         self.assertEqual(req.sub_merchant_member_id, resp.sub_merchant_member_id)
         self.assertEqual(float(req.sub_merchant_member_price), float(resp.sub_merchant_member_price))
+
+    def test_init_multi_payment(self):
+        items = []
+        for name, price in [("item 1", "30"), ("item 2", "50"), ("item 3", "20")]:
+            pi = PaymentItem()
+            pi.name = name
+            pi.external_id = str(uuid.uuid4())
+            pi.price = Decimal(price)
+            items.append(pi)
+
+        req = InitMultiPaymentRequest()
+        req.price = Decimal("100")
+        req.paid_price = Decimal("100")
+        req.callback_url = "https://www.your-website.com/craftgate-checkout-callback"
+        req.currency = Currency.TRY
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.external_id = "1001"
+        req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+        req.payment_phase = PaymentPhase.AUTH
+        req.items = items
+
+        resp = self.payment.init_multi_payment(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(getattr(resp, "page_url", None))
+        self.assertIsNotNone(getattr(resp, "token", None))
 
     def test_retrieve_multi_payment(self):
         token = "6d7e66b5-9b1c-4c1d-879a-2557b651096e"
