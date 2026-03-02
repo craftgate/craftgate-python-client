@@ -11,3 +11,4 @@ from .pos_apm_installment import PosApmInstallment
 from .tokenized_card import TokenizedCard
 from .update_merchant_pos_commission import UpdateMerchantPosCommission
 from .update_merchant_pos_user import UpdateMerchantPosUser
+from .verify_card import VerifyCard

@@ -8,6 +8,7 @@ from craftgate.model import FraudAction, FraudValueType, FraudCheckStatus
 from craftgate.model.fraud_operation import FraudOperation
 from craftgate.request import FraudValueListRequest, SearchFraudChecksRequest
 from craftgate.request.fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintToListRequest
+from craftgate.request.search_fraud_rule_request import SearchFraudRuleRequest
 
 
 class FraudAdapterSample(unittest.TestCase):
@@ -75,6 +76,18 @@ class FraudAdapterSample(unittest.TestCase):
             check_status=FraudCheckStatus.WAITING
         )
         resp = self.fraud.search_fraud_checks(req)
+        print(resp)
+
+        self.assertIsNotNone(resp)
+        self.assertTrue(resp.items)
+
+    def test_search_fraud_rules(self):
+        now = datetime.now()
+        req = SearchFraudRuleRequest(
+            min_created_date=now - timedelta(days=25),
+            max_created_date=now,
+        )
+        resp = self.fraud.search_fraud_rules(req)
         print(resp)
 
         self.assertIsNotNone(resp)

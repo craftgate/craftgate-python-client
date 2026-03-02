@@ -20,6 +20,7 @@ class UpdateProductRequest(object):
             currency: Optional[Currency] = None,
             description: Optional[str] = None,
             expires_at: Optional[datetime] = None,
+            multi_payment: bool = False,
             enabled_installments: Optional[Set[int]] = None
     ) -> None:
         self.name = name
@@ -33,4 +34,5 @@ class UpdateProductRequest(object):
         self.currency = currency
         self.description = description
         self.expires_at = expires_at
+        self.multi_payment = multi_payment
         self.enabled_installments = enabled_installments

@@ -30,6 +30,7 @@ from .init_apm_deposit_payment_request import InitApmDepositPaymentRequest
 from .init_apm_payment_request import InitApmPaymentRequest
 from .init_bkm_express_request import InitBkmExpressRequest
 from .init_bnpl_payment_request import InitBnplPaymentRequest
+from .init_checkout_card_verify_request import InitCheckoutCardVerifyRequest
 from .init_checkout_payment_request import InitCheckoutPaymentRequest
 from .init_garanti_pay_payment_request import InitGarantiPayPaymentRequest
 from .init_juzdan_payment_request import InitJuzdanPaymentRequest
@@ -77,3 +78,4 @@ from .update_payment_transaction_request import UpdatePaymentTransactionRequest
 from .update_payout_account_request import UpdatePayoutAccountRequest
 from .update_product_request import UpdateProductRequest
 from .update_wallet_request import UpdateWalletRequest
+from .verify_card_request import VerifyCardRequest

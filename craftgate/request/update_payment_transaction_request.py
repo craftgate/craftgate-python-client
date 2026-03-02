@@ -1,3 +1,4 @@
+from datetime import datetime
 from decimal import Decimal
 from typing import Optional
 
@@ -7,8 +8,10 @@ class UpdatePaymentTransactionRequest(object):
             self,
             payment_transaction_id: Optional[int] = None,
             sub_merchant_member_id: Optional[int] = None,
-            sub_merchant_member_price: Optional[Decimal] = None
+            sub_merchant_member_price: Optional[Decimal] = None,
+            blockage_resolved_date: Optional[datetime] = None
     ) -> None:
         self.payment_transaction_id = payment_transaction_id
         self.sub_merchant_member_id = sub_merchant_member_id
         self.sub_merchant_member_price = sub_merchant_member_price
+        self.blockage_resolved_date = blockage_resolved_date

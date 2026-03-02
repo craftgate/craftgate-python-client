@@ -5,10 +5,12 @@ from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintToListRequest
 from craftgate.request.fraud_value_list_request import FraudValueListRequest
 from craftgate.request.search_fraud_checks_request import SearchFraudChecksRequest
+from craftgate.request.search_fraud_rule_request import SearchFraudRuleRequest
 from craftgate.request.update_fraud_check_request import UpdateFraudCheckRequest
 from craftgate.request_options import RequestOptions
 from craftgate.response.fraud_all_value_lists_response import FraudAllValueListsResponse
 from craftgate.response.fraud_check_list_response import FraudCheckListResponse
+from craftgate.response.fraud_rule_response import FraudRuleResponse
 from craftgate.response.fraud_value_list_response import FraudValueListResponse
 from craftgate.utils.request_query_params_builder import RequestQueryParamsBuilder
 
@@ -21,6 +23,18 @@ class FraudAdapter(BaseAdapter):
     def search_fraud_checks(self, request: SearchFraudChecksRequest) -> FraudCheckListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/fraud/v1/fraud-checks" + query
+        headers = self._create_headers(None, path)
+        return self._http_client.request(
+            method="GET",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=None,
+            response_type=FraudCheckListResponse
+        )
+
+    def search_fraud_rules(self, request: SearchFraudRuleRequest) -> FraudRuleResponse:
+        query = RequestQueryParamsBuilder.build_query_params(request)
+        path = "/fraud/v1/rules" + query
         headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
