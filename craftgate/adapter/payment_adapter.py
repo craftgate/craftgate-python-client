@@ -19,6 +19,7 @@ from craftgate.request.init_bnpl_payment_request import InitBnplPaymentRequest
 from craftgate.request.init_checkout_card_verify_request import InitCheckoutCardVerifyRequest
 from craftgate.request.init_checkout_payment_request import InitCheckoutPaymentRequest
 from craftgate.request.init_garanti_pay_payment_request import InitGarantiPayPaymentRequest
+from craftgate.request.init_multi_payment_request import InitMultiPaymentRequest
 from craftgate.request.init_pos_apm_payment_request import InitPosApmPaymentRequest
 from craftgate.request.init_three_ds_payment_request import InitThreeDSPaymentRequest
 from craftgate.request.post_auth_payment_request import PostAuthPaymentRequest
@@ -45,6 +46,7 @@ from craftgate.response.init_bnpl_payment_response import InitBnplPaymentRespons
 from craftgate.response.init_checkout_card_verify_response import InitCheckoutCardVerifyResponse
 from craftgate.response.init_checkout_payment_response import InitCheckoutPaymentResponse
 from craftgate.response.init_garanti_pay_payment_response import InitGarantiPayPaymentResponse
+from craftgate.response.init_multi_payment_response import InitMultiPaymentResponse
 from craftgate.response.init_pos_apm_payment_response import InitPosApmPaymentResponse
 from craftgate.response.init_three_ds_payment_response import InitThreeDSPaymentResponse
 from craftgate.response.instant_transfer_banks_response import InstantTransferBanksResponse
@@ -550,6 +552,17 @@ class PaymentAdapter(BaseAdapter):
             headers=headers,
             body=None,
             response_type=InstantTransferBanksResponse
+        )
+
+    def init_multi_payment(self, request: InitMultiPaymentRequest) -> InitMultiPaymentResponse:
+        path = "/payment/v1/multi-payments/init"
+        headers = self._create_headers(request, path)
+        return self._http_client.request(
+            method="POST",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=request,
+            response_type=InitMultiPaymentResponse
         )
 
     def retrieve_multi_payment(self, token: str) -> MultiPaymentResponse:
