@@ -7,6 +7,7 @@ from craftgate.model.payment_phase import PaymentPhase
 from craftgate.request.dto.card import Card
 from craftgate.request.dto.fraud_check_parameters import FraudCheckParameters
 from craftgate.request.dto.payment_item import PaymentItem
+from craftgate.request.dto.routing_options import RoutingOptions
 
 
 class CreatePaymentRequest(object):
@@ -27,6 +28,7 @@ class CreatePaymentRequest(object):
             buyer_member_id: Optional[int] = None,
             bank_order_id: Optional[str] = None,
             card: Optional[Card] = None,
+            routing_options: Optional[RoutingOptions] = None,
             fraud_params: Optional[FraudCheckParameters] = None,
             items: Optional[List[PaymentItem]] = None,
             additional_params: Optional[Dict[str, Any]] = None,
@@ -47,6 +49,7 @@ class CreatePaymentRequest(object):
         self.buyer_member_id = buyer_member_id
         self.bank_order_id = bank_order_id
         self.card = card
+        self.routing_options = routing_options
         self.fraud_params = fraud_params
         self.items = items
         self.additional_params = additional_params
