@@ -7,7 +7,7 @@ from craftgate.model.payment_group import PaymentGroup
 from craftgate.request.dto.payment_item import PaymentItem
 
 
-class InitBnplL(object):
+class BnplLimitInquiryRequest(object):
     def __init__(
             self,
             apm_type: Optional[ApmType] = None,
