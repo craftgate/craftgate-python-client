@@ -28,6 +28,7 @@ from .dto import *
 from .fraud_value_list_request import FraudValueListRequest
 from .init_apm_deposit_payment_request import InitApmDepositPaymentRequest
 from .init_apm_payment_request import InitApmPaymentRequest
+from .bnpl_limit_inquiry_request import BnplLimitInquiryRequest
 from .init_bkm_express_request import InitBkmExpressRequest
 from .init_bnpl_payment_request import InitBnplPaymentRequest
 from .init_checkout_card_verify_request import InitCheckoutCardVerifyRequest
