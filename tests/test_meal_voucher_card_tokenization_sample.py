@@ -32,8 +32,8 @@ class MealVoucherCardTokenizationSample(unittest.TestCase):
 
         response = self.meal_voucher_card_tokenization.init(request)
 
-        print(response.__dict__)
         self.assertIsNotNone(response.session_id)
+        self.assertIsNotNone(response.html_content)
         self.assertIsNotNone(response)
 
     def test_regenerate_meal_voucher_card_tokenization(self):
@@ -46,7 +46,7 @@ class MealVoucherCardTokenizationSample(unittest.TestCase):
 
         response = self.meal_voucher_card_tokenization.regenerate(session_id, request)
 
-        print(response.__dict__)
+        print(response)
         self.assertIsNotNone(response.session_id)
         self.assertIsNotNone(response)
 
@@ -58,7 +58,7 @@ class MealVoucherCardTokenizationSample(unittest.TestCase):
 
         response = self.meal_voucher_card_tokenization.complete(session_id, request)
 
-        print(response.__dict__)
+        print(response)
         self.assertIsNotNone(response.session_id)
         self.assertIsNotNone(response)
 
