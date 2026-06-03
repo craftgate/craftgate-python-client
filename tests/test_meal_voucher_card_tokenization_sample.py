@@ -9,9 +9,9 @@ from craftgate.request.dto.meal_voucher_card_tokenization_data import MealVouche
 
 
 class MealVoucherCardTokenizationSample(unittest.TestCase):
-    API_KEY = os.environ.get("CG_API_KEY", "api-key-2")
-    SECRET_KEY = os.environ.get("CG_SECRET_KEY", "secret-key")
-    BASE_URL = os.environ.get("CG_BASE_URL", "http://localhost:8000")
+    API_KEY = os.environ.get("CG_API_KEY", "YOUR_API_KEY")
+    SECRET_KEY = os.environ.get("CG_SECRET_KEY", "YOUR_SECRET_KEY")
+    BASE_URL = os.environ.get("CG_BASE_URL", "https://sandbox-api.craftgate.io")
 
     @classmethod
     def setUpClass(cls):
