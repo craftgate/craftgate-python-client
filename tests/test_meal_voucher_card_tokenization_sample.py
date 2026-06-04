@@ -26,7 +26,7 @@ class MealVoucherCardTokenizationSample(unittest.TestCase):
         request = InitMealVoucherCardTokenizationRequest(
             apm_type=ApmType.SETCARD,
             meal_voucher_card_tokenization_data=MealVoucherCardTokenizationData(
-                callback_url="https://webhook.site/e806070a-da76-4d02-a67b-54ba9e8332d3"
+                callback_url="https://www.yourdomain.com/callback"
             )
         )
 
@@ -40,7 +40,7 @@ class MealVoucherCardTokenizationSample(unittest.TestCase):
         session_id = "session-id"
         request = MealVoucherCardTokenizationRegenerateRequest(
             meal_voucher_card_tokenization_data=MealVoucherCardTokenizationData(
-                callback_url="https://webhook.site/e806070a-da76-4d02-a67b-54ba9e8332d3"
+                callback_url="https://www.yourdomain.com/callback"
             )
         )
 
