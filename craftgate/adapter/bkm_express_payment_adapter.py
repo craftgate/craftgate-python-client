@@ -34,17 +34,6 @@ class BkmExpressPaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def retrieve_payment(self, ticket_id: str) -> PaymentResponse:
-        path = "/payment/v1/bkm-express/payments/{}".format(ticket_id)
-        headers = self._create_headers(None, path)
-        return self._http_client.request(
-            method="GET",
-            url=self.request_options.base_url + path,
-            headers=headers,
-            body=None,
-            response_type=PaymentResponse
-        )
-
     def retrieve_payment_by_token(self, token: str) -> PaymentResponse:
         path = "/payment/v1/bkm-express/{}".format(token)
         headers = self._create_headers(None, path)

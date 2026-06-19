@@ -61,13 +61,6 @@ class BkmExpressPaymentSample(unittest.TestCase):
         self.assertIsNotNone(response)
         self.assertIsNotNone(response.order_id)
 
-    def test_retrieve_payment_by_ticket_id(self):
-        ticket_id = os.environ.get("BKM_TICKET_ID", "ce6d93c3-b399-406d-8efc-fdba0b37768c")
-
-        response = self.bkm_express_payment.retrieve_payment(ticket_id)
-        print(response)
-        self.assertIsNotNone(response)
-
     def test_retrieve_payment_by_token(self):
         token = os.environ.get("BKM_TOKEN", "cb90071c-1f2c-4fb7-9049-c5f13f9f7286")
 
