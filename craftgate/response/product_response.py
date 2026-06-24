@@ -25,7 +25,8 @@ class ProductResponse(object):
             url: Optional[str] = None,
             multi_payment: Optional[bool] = None,
             channel: Optional[str] = None,
-            expires_at: Optional[datetime] = None
+            expires_at: Optional[datetime] = None,
+            basket_identifier: Optional[str] = None
     ) -> None:
         self.id = id
         self.name = name
@@ -44,3 +45,4 @@ class ProductResponse(object):
         self.multi_payment = multi_payment
         self.channel = channel
         self.expires_at = expires_at
+        self.basket_identifier = basket_identifier
