@@ -20,8 +20,10 @@ from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardReques
     RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
     UpdatePaymentTransactionRequest, VerifyCard, VerifyCardRequest
 from craftgate.request.init_multi_payment_request import InitMultiPaymentRequest
+from craftgate.request.retrieve_card_from_ivr_request import RetrieveCardFromIvrRequest
 from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalListResponse, PaymentTransactionResponse, \
     StoredCardListResponse
+from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizationResponse
 
 
 class PaymentSample(unittest.TestCase):
@@ -1632,6 +1634,15 @@ class PaymentSample(unittest.TestCase):
         req.card_provider = CardProvider.MEX
 
         resp: StoredCardListResponse = self.payment.retrieve_provider_cards(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+
+    def test_retrieve_card_from_ivr(self):
+        req = RetrieveCardFromIvrRequest()
+        req.card_user_key = "45f12c74-3000-465c-96dc-876850e7dd7a"
+        req.call_token = "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24"
+
+        resp: IVRCardTokenizationResponse = self.payment.retrieve_card_from_ivr(req)
         print(resp)
         self.assertIsNotNone(resp)
 
