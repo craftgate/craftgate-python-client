@@ -8,6 +8,7 @@ class CraftgateException(Exception):
             error_code=None,
             error_description=None,
             error_group=None,
+            provider_error=None,
             cause=None,
             raw=None,
             prefer_raw_message=False
@@ -15,6 +16,7 @@ class CraftgateException(Exception):
         self.error_code = error_code or self.GENERAL_ERROR_CODE
         self.error_description = error_description or self.GENERAL_ERROR_DESCRIPTION
         self.error_group = error_group or self.GENERAL_ERROR_GROUP
+        self.provider_error = provider_error
         self.cause = cause
         self.raw = raw
         self.prefer_raw_message = prefer_raw_message
@@ -31,8 +33,15 @@ class CraftgateException(Exception):
         return self._format_details()
 
     def _format_details(self) -> str:
-        return "CraftgateException(errorCode={}, errorDescription={}, errorGroup={})".format(
+        base_msg = "CraftgateException(errorCode={}, errorDescription={}, errorGroup={})".format(
             self.error_code,
             self.error_description,
             self.error_group
         )
+        if self.provider_error:
+            base_msg += " (Provider: errorCode={}, errorMessage={})".format(
+                self.provider_error.error_code,
+                self.provider_error.error_message
+            )
+        return base_msg
+

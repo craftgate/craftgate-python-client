@@ -12,6 +12,8 @@ from .card_brand import CardBrand
 from .card_expiry_status import CardExpiryStatus
 from .card_provider import CardProvider
 from .card_type import CardType
+from .card_verification_auth_type import CardVerificationAuthType
+from .card_verify_status import CardVerifyStatus
 from .currency import Currency
 from .file_status import FileStatus
 from .fraud_action import FraudAction
