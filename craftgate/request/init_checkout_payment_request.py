@@ -43,6 +43,7 @@ class InitCheckoutPaymentRequest(object):
             ttl: Optional[int] = None,
             custom_installments: Optional[List[CustomInstallment]] = None,
             items: Optional[List[PaymentItem]] = None,
+            use_top_redirection: bool = False,
             routing_options: Optional[RoutingOptions] = None,
             fraud_params: Optional[FraudCheckParameters] = None,
             additional_params: Optional[Dict[str, Any]] = None,
@@ -77,6 +78,7 @@ class InitCheckoutPaymentRequest(object):
         self.ttl = ttl
         self.custom_installments = custom_installments
         self.items = items
+        self.use_top_redirection = use_top_redirection
         self.routing_options = routing_options
         self.fraud_params = fraud_params
         self.additional_params = additional_params
