@@ -1609,7 +1609,6 @@ class PaymentSample(unittest.TestCase):
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
         req.external_id = "1001"
         req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
-        req.payment_phase = PaymentPhase.AUTH
         req.items = items
 
         resp = self.payment.init_multi_payment(req)
