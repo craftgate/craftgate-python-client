@@ -5,7 +5,6 @@ from craftgate.model.payment_source import PaymentSource
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_method import PaymentMethod
-from craftgate.model.payment_phase import PaymentPhase
 from craftgate.request.dto.payment_item import PaymentItem
 
 
@@ -20,9 +19,9 @@ class InitMultiPaymentRequest(object):
             conversation_id: Optional[str] = None,
             external_id: Optional[str] = None,
             callback_url: Optional[str] = None,
-            payment_phase: PaymentPhase = PaymentPhase.AUTH,
             payment_channel: Optional[str] = None,
             enabled_payment_methods: Optional[List[PaymentMethod]] = None,
+            enabled_installments: Optional[List[int]] = None,
             card_user_key: Optional[str] = None,
             buyer_member_id: Optional[int] = None,
             allow_only_credit_card: bool = False,
@@ -48,9 +47,9 @@ class InitMultiPaymentRequest(object):
         self.conversation_id = conversation_id
         self.external_id = external_id
         self.callback_url = callback_url
-        self.payment_phase = payment_phase
         self.payment_channel = payment_channel
         self.enabled_payment_methods = enabled_payment_methods
+        self.enabled_installments = enabled_installments
         self.masterpass_gsm_number = masterpass_gsm_number
         self.masterpass_user_id = masterpass_user_id
         self.apm_user_identity = apm_user_identity
