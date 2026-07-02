@@ -15,7 +15,6 @@ class InitMultiPaymentRequest(object):
             paid_price: Optional[Decimal] = None,
             currency: Optional[Currency] = None,
             payment_group: Optional[PaymentGroup] = None,
-            payment_source: Optional[PaymentSource] = None,
             conversation_id: Optional[str] = None,
             external_id: Optional[str] = None,
             callback_url: Optional[str] = None,
@@ -43,7 +42,6 @@ class InitMultiPaymentRequest(object):
         self.paid_price = paid_price
         self.currency = currency
         self.payment_group = payment_group
-        self.payment_source = payment_source
         self.conversation_id = conversation_id
         self.external_id = external_id
         self.callback_url = callback_url
