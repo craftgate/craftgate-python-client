@@ -12,7 +12,6 @@ class InitMultiPaymentRequest(object):
     def __init__(
             self,
             price: Optional[Decimal] = None,
-            paid_price: Optional[Decimal] = None,
             currency: Optional[Currency] = None,
             payment_group: Optional[PaymentGroup] = None,
             conversation_id: Optional[str] = None,
@@ -39,7 +38,6 @@ class InitMultiPaymentRequest(object):
             additional_params: Optional[Dict[str, Any]] = None,
     ) -> None:
         self.price = price
-        self.paid_price = paid_price
         self.currency = currency
         self.payment_group = payment_group
         self.conversation_id = conversation_id

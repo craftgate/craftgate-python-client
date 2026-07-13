@@ -1603,7 +1603,6 @@ class PaymentSample(unittest.TestCase):
 
         req = InitMultiPaymentRequest()
         req.price = Decimal("100")
-        req.paid_price = Decimal("100")
         req.callback_url = "https://www.your-website.com/craftgate-checkout-callback"
         req.currency = Currency.TRY
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
