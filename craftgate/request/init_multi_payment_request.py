@@ -36,6 +36,7 @@ class InitMultiPaymentRequest(object):
             ttl: Optional[int] = None,
             maximum_split_payment_count: Optional[int] = None,
             additional_params: Optional[Dict[str, Any]] = None,
+            retry: Optional[bool] = None,
     ) -> None:
         self.price = price
         self.currency = currency
@@ -62,3 +63,4 @@ class InitMultiPaymentRequest(object):
         self.maximum_split_payment_count = maximum_split_payment_count
         self.items = items
         self.additional_params = additional_params
+        self.retry = retry
