@@ -76,3 +76,6 @@ class Craftgate:
 
     def wallet(self):
         return WalletAdapter(self.options)
+
+    def meal_voucher_card_tokenization(self):
+        return MealVoucherCardTokenizationAdapter(self.options)

@@ -1,4 +1,5 @@
 from .bank_account_tracking_adapter import BankAccountTrackingAdapter
+from .meal_voucher_card_tokenization_adapter import MealVoucherCardTokenizationAdapter
 from .base_adapter import BaseAdapter
 from .bkm_express_payment_adapter import BkmExpressPaymentAdapter
 from .file_reporting_adapter import FileReportingAdapter

@@ -47,7 +47,8 @@ class InitCheckoutPaymentRequest(object):
             routing_options: Optional[RoutingOptions] = None,
             fraud_params: Optional[FraudCheckParameters] = None,
             additional_params: Optional[Dict[str, Any]] = None,
-            card_brand_installments: Optional[Dict[str, List[CustomInstallment]]] = None
+            card_brand_installments: Optional[Dict[str, List[CustomInstallment]]] = None,
+            retry: Optional[bool] = None
     ) -> None:
         self.price = price
         self.paid_price = paid_price
@@ -83,3 +84,4 @@ class InitCheckoutPaymentRequest(object):
         self.fraud_params = fraud_params
         self.additional_params = additional_params
         self.card_brand_installments = card_brand_installments
+        self.retry = retry
