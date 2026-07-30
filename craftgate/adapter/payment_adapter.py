@@ -28,6 +28,7 @@ from craftgate.request.refund_payment_request import RefundPaymentRequest
 from craftgate.request.refund_payment_transaction_mark_as_refunded_request import \
     RefundPaymentTransactionMarkAsRefundedRequest
 from craftgate.request.refund_payment_transaction_request import RefundPaymentTransactionRequest
+from craftgate.request.retrieve_card_from_ivr_request import RetrieveCardFromIvrRequest
 from craftgate.request.retrieve_loyalties_request import RetrieveLoyaltiesRequest
 from craftgate.request.retrieve_provider_card_request import RetrieveProviderCardRequest
 from craftgate.request.search_stored_cards_request import SearchStoredCardsRequest
@@ -52,6 +53,7 @@ from craftgate.response.init_multi_payment_response import InitMultiPaymentRespo
 from craftgate.response.init_pos_apm_payment_response import InitPosApmPaymentResponse
 from craftgate.response.init_three_ds_payment_response import InitThreeDSPaymentResponse
 from craftgate.response.instant_transfer_banks_response import InstantTransferBanksResponse
+from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizationResponse
 from craftgate.response.multi_payment_response import MultiPaymentResponse
 from craftgate.response.payment_refund_response import PaymentRefundResponse
 from craftgate.response.payment_response import PaymentResponse
@@ -610,6 +612,18 @@ class PaymentAdapter(BaseAdapter):
             headers=headers,
             body=None,
             response_type=StoredCardListResponse
+        )
+
+    def retrieve_card_from_ivr(self, request: RetrieveCardFromIvrRequest) -> IVRCardTokenizationResponse:
+        query = RequestQueryParamsBuilder.build_query_params(request)
+        path = "/payment/v1/ivr-cards{}".format(query)
+        headers = self._create_headers(None, path)
+        return self._http_client.request(
+            method="GET",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=None,
+            response_type=IVRCardTokenizationResponse
         )
 
     def is_3d_secure_callback_verified(self, three_d_secure_callback_key: str, params: dict) -> bool:
