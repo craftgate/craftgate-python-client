@@ -26,18 +26,16 @@ class BaseAdapter:
             request_body: Optional[Any],
             path: str,
             custom_options: Optional[RequestOptions] = None,
-            idempotency_key: Optional[str] = None
+            header_options: Optional[Any] = None
     ) -> Dict[str, str]:
         """Builds the request headers.
 
-        ``request_body`` is hashed into the signature, so body-less calls must pass ``None``
-        and supply the wrapper's key via ``idempotency_key`` instead.
+        ``request_body`` is hashed into the signature, so body-less calls must pass ``None`` and
+        supply the request wrapper via ``header_options`` instead. It defaults to the body, so
+        body-carrying calls need nothing extra.
         """
         options = custom_options or self.request_options
         random_key = self._generate_random_string()
-
-        if idempotency_key is None:
-            idempotency_key = getattr(request_body, "_idempotency_key", None)
 
         signature = HashGenerator.generate_hash(
             base_url=options.base_url,
@@ -59,10 +57,19 @@ class BaseAdapter:
         if options.language:
             headers[self.LANGUAGE_HEADER_NAME] = options.language
 
-        if idempotency_key is not None:
-            headers[self.IDEMPOTENCY_KEY_HEADER_NAME] = idempotency_key
+        self._apply_request_scoped_headers(
+            headers, header_options if header_options is not None else request_body)
 
         return headers
+
+    def _apply_request_scoped_headers(self, headers: Dict[str, str], source: Optional[Any]) -> None:
+        """Applies the options that travel as headers rather than in the payload.
+
+        New request-scoped options are added here and nowhere else.
+        """
+        idempotency_key = getattr(source, "_idempotency_key", None)
+        if idempotency_key is not None:
+            headers[self.IDEMPOTENCY_KEY_HEADER_NAME] = idempotency_key
 
     def _generate_random_string(self) -> str:
         return str(uuid.uuid4())
