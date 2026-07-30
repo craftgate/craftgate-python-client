@@ -1,9 +1,10 @@
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.fraud_check_parameters import FraudCheckParameters
 
 
-class RetrieveLoyaltiesRequest(object):
+class RetrieveLoyaltiesRequest(BaseRequest):
     def __init__(
             self,
             card_number: Optional[str] = None,

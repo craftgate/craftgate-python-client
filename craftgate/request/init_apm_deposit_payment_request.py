@@ -3,9 +3,10 @@ from typing import Optional, Dict, Any
 
 from craftgate.model.apm_type import ApmType
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class InitApmDepositPaymentRequest(object):
+class InitApmDepositPaymentRequest(BaseRequest):
     def __init__(
             self,
             apm_type: Optional[ApmType] = None,

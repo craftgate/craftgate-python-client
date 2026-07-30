@@ -1,5 +1,6 @@
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
+from craftgate.request.cancel_withdraw_request import CancelWithdrawRequest
 from craftgate.request.create_remittance_request import CreateRemittanceRequest
 from craftgate.request.create_wallet_request import CreateWalletRequest
 from craftgate.request.create_withdraw_request import CreateWithdrawRequest
@@ -179,9 +180,9 @@ class WalletAdapter(BaseAdapter):
             response_type=WithdrawResponse
         )
 
-    def cancel_withdraw(self, withdraw_id: int) -> WithdrawResponse:
-        path = "/wallet/v1/withdraws/{}/cancel".format(withdraw_id)
-        headers = self._create_headers(None, path)
+    def cancel_withdraw(self, request: CancelWithdrawRequest) -> WithdrawResponse:
+        path = "/wallet/v1/withdraws/{}/cancel".format(request.withdraw_id)
+        headers = self._create_headers(None, path, idempotency_key=request.idempotency_key)
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,

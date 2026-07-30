@@ -1,9 +1,10 @@
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.encrypted_card import EncryptedCard
 
 
-class StoreCardRequest(object):
+class StoreCardRequest(BaseRequest):
     def __init__(
             self,
             card_holder_name: Optional[str] = None,

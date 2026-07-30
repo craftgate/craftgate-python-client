@@ -1,6 +1,7 @@
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.create_payment_token_request import CreatePaymentTokenRequest
+from craftgate.request.delete_payment_token_request import DeletePaymentTokenRequest
 from craftgate.request_options import RequestOptions
 from craftgate.response.payment_token_response import PaymentTokenResponse
 
@@ -21,9 +22,9 @@ class PaymentTokenAdapter(BaseAdapter):
             response_type=PaymentTokenResponse
         )
 
-    def delete_payment_token(self, token: str) -> None:
-        path = "/payment/v1/payment-tokens/{}".format(token)
-        headers = self._create_headers(None, path)
+    def delete_payment_token(self, request: DeletePaymentTokenRequest) -> None:
+        path = "/payment/v1/payment-tokens/{}".format(request.token)
+        headers = self._create_headers(None, path, idempotency_key=request.idempotency_key)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

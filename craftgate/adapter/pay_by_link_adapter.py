@@ -1,6 +1,7 @@
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.create_product_request import CreateProductRequest
+from craftgate.request.delete_product_request import DeleteProductRequest
 from craftgate.request.search_products_request import SearchProductsRequest
 from craftgate.request.update_product_request import UpdateProductRequest
 from craftgate.request_options import RequestOptions
@@ -47,9 +48,9 @@ class PayByLinkAdapter(BaseAdapter):
             response_type=ProductResponse
         )
 
-    def delete_product(self, product_id: int) -> None:
-        path = "/craftlink/v1/products/{}".format(product_id)
-        headers = self._create_headers(None, path)
+    def delete_product(self, request: DeleteProductRequest) -> None:
+        path = "/craftlink/v1/products/{}".format(request.id)
+        headers = self._create_headers(None, path, idempotency_key=request.idempotency_key)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

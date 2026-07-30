@@ -4,13 +4,14 @@ from typing import Optional, List, Dict, Any
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_phase import PaymentPhase
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.card import Card
 from craftgate.request.dto.fraud_check_parameters import FraudCheckParameters
 from craftgate.request.dto.payment_item import PaymentItem
 from craftgate.request.dto.routing_options import RoutingOptions
 
 
-class CreatePaymentRequest(object):
+class CreatePaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,

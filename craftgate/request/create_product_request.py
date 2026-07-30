@@ -3,9 +3,10 @@ from decimal import Decimal
 from typing import Optional, Set
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreateProductRequest(object):
+class CreateProductRequest(BaseRequest):
     def __init__(
             self,
             name: Optional[str] = None,

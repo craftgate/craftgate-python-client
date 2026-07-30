@@ -4,9 +4,10 @@ from typing import Optional
 
 from craftgate.model.currency import Currency
 from craftgate.model.transaction_payout_status import TransactionPayoutStatus
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchWithdrawsRequest(object):
+class SearchWithdrawsRequest(BaseRequest):
     def __init__(
             self,
             member_id: Optional[int] = None,

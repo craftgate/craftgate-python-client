@@ -12,8 +12,8 @@ from craftgate.model import AdditionalAction, ApmAdditionalAction, ApmType, Card
 from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardRequest, CompleteApmPaymentRequest, \
     CompletePosApmPaymentRequest, CompleteThreeDSPaymentRequest, CreateApmPaymentRequest, CreateDepositPaymentRequest, \
     CreateFundTransferDepositPaymentRequest, CreatePaymentRequest, DeleteStoredCardRequest, \
-    DisapprovePaymentTransactionsRequest, Card, GarantiPayInstallment, InitApmDepositPaymentRequest, \
-    InitApmPaymentRequest, InitCheckoutCardVerifyRequest, InitCheckoutPaymentRequest, \
+    DisapprovePaymentTransactionsRequest, Card, ExpireCheckoutPaymentRequest, GarantiPayInstallment, \
+    InitApmDepositPaymentRequest, InitApmPaymentRequest, InitCheckoutCardVerifyRequest, InitCheckoutPaymentRequest, \
     InitGarantiPayPaymentRequest, InitPosApmPaymentRequest, InitThreeDSPaymentRequest, PaymentItem, \
     PostAuthPaymentRequest, RefundPaymentRequest, \
     RefundPaymentTransactionMarkAsRefundedRequest, RefundPaymentTransactionRequest, RetrieveLoyaltiesRequest, \
@@ -559,7 +559,7 @@ class PaymentSample(unittest.TestCase):
 
     def test_expire_checkout_payment(self):
         token = "a768c57c-5052-4038-857f-1e2cf54253bc"
-        self.payment.expire_checkout_payment(token)
+        self.payment.expire_checkout_payment(ExpireCheckoutPaymentRequest(token=token))
 
     def test_create_deposit_payment(self):
         card = Card()

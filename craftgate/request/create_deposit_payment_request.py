@@ -2,11 +2,12 @@ from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.card import Card
 from craftgate.request.dto.routing_options import RoutingOptions
 
 
-class CreateDepositPaymentRequest(object):
+class CreateDepositPaymentRequest(BaseRequest):
     def __init__(
             self,
             buyer_member_id: Optional[int] = None,

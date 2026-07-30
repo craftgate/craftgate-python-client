@@ -4,9 +4,10 @@ from typing import Optional
 from craftgate.model.fraud_action import FraudAction
 from craftgate.model.fraud_check_status import FraudCheckStatus
 from craftgate.model.payment_status import PaymentStatus
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchFraudChecksRequest(object):
+class SearchFraudChecksRequest(BaseRequest):
     def __init__(
             self,
             page: Optional[int] = None,

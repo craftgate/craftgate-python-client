@@ -1,7 +1,9 @@
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class UpdateCardRequest(object):
+
+class UpdateCardRequest(BaseRequest):
     def __init__(
         self,
         card_user_key: Optional[str] = None,

@@ -16,6 +16,7 @@ class BaseAdapter:
     CLIENT_VERSION_HEADER_NAME = "x-client-version"
     SIGNATURE_HEADER_NAME = "x-signature"
     LANGUAGE_HEADER_NAME = "lang"
+    IDEMPOTENCY_KEY_HEADER_NAME = "x-idempotency-key"
 
     def __init__(self, request_options: RequestOptions) -> None:
         self.request_options = request_options
@@ -24,10 +25,19 @@ class BaseAdapter:
             self,
             request_body: Optional[Any],
             path: str,
-            custom_options: Optional[RequestOptions] = None
+            custom_options: Optional[RequestOptions] = None,
+            idempotency_key: Optional[str] = None
     ) -> Dict[str, str]:
+        """Builds the request headers.
+
+        ``request_body`` is hashed into the signature, so body-less calls must pass ``None``
+        and supply the wrapper's key via ``idempotency_key`` instead.
+        """
         options = custom_options or self.request_options
         random_key = self._generate_random_string()
+
+        if idempotency_key is None:
+            idempotency_key = getattr(request_body, "_idempotency_key", None)
 
         signature = HashGenerator.generate_hash(
             base_url=options.base_url,
@@ -48,6 +58,9 @@ class BaseAdapter:
 
         if options.language:
             headers[self.LANGUAGE_HEADER_NAME] = options.language
+
+        if idempotency_key is not None:
+            headers[self.IDEMPOTENCY_KEY_HEADER_NAME] = idempotency_key
 
         return headers
 

@@ -2,9 +2,10 @@ from datetime import datetime
 from typing import Optional
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchBankAccountTrackingRecordsRequest(object):
+class SearchBankAccountTrackingRecordsRequest(BaseRequest):
     def __init__(
             self,
             currency: Optional[Currency] = None,

@@ -3,9 +3,10 @@ from typing import Optional
 from craftgate.model.payout_account_type import PayoutAccountType
 from craftgate.model.currency import Currency
 from craftgate.model.account_owner import AccountOwner
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreatePayoutAccountRequest(object):
+class CreatePayoutAccountRequest(BaseRequest):
     def __init__(
             self,
             type: Optional[PayoutAccountType] = None,

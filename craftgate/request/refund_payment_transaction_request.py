@@ -2,9 +2,10 @@ from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.refund_destination_type import RefundDestinationType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class RefundPaymentTransactionRequest(object):
+class RefundPaymentTransactionRequest(BaseRequest):
     def __init__(
             self,
             payment_transaction_id: Optional[int] = None,

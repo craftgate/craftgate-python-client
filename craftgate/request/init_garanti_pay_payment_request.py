@@ -3,11 +3,12 @@ from typing import List, Optional
 
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.garanti_pay_installment import GarantiPayInstallment
 from craftgate.request.dto.payment_item import PaymentItem
 
 
-class InitGarantiPayPaymentRequest(object):
+class InitGarantiPayPaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,

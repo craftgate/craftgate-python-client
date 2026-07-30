@@ -6,7 +6,8 @@ from datetime import datetime, timedelta
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import FraudAction, FraudValueType, FraudCheckStatus
 from craftgate.model.fraud_operation import FraudOperation
-from craftgate.request import FraudValueListRequest, SearchFraudChecksRequest
+from craftgate.request import DeleteValueListRequest, FraudValueListRequest, RemoveValueFromValueListRequest, \
+    SearchFraudChecksRequest, UpdateFraudCheckStatusRequest
 from craftgate.request.fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintToListRequest
 from craftgate.request.search_fraud_rule_request import SearchFraudRuleRequest
 
@@ -62,10 +63,11 @@ class FraudAdapterSample(unittest.TestCase):
         self.assertTrue(resp.items)
 
     def test_remove_value_from_value_list(self):
-        self.fraud.remove_value_from_value_list(list_name="test", value_id="e9bca836-6933-4ca1-a323-cb7e02ae4981")
+        self.fraud.remove_value_from_value_list(RemoveValueFromValueListRequest(
+            list_name="test", value_id="e9bca836-6933-4ca1-a323-cb7e02ae4981"))
 
     def test_delete_value_list(self):
-        self.fraud.delete_value_list("ipList")
+        self.fraud.delete_value_list(DeleteValueListRequest(list_name="ipList"))
 
     def test_search_fraud_checks(self):
         now = datetime.now()
@@ -94,7 +96,8 @@ class FraudAdapterSample(unittest.TestCase):
         self.assertTrue(resp.items)
 
     def test_update_fraud_check_status(self):
-        self.fraud.update_fraud_check_status(int(2613), FraudCheckStatus.FRAUD)
+        self.fraud.update_fraud_check_status(UpdateFraudCheckStatusRequest(
+            id=int(2613), check_status=FraudCheckStatus.FRAUD))
 
 
 if __name__ == "__main__":

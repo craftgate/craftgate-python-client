@@ -2,9 +2,10 @@ from typing import Optional
 
 from craftgate.model.account_owner import AccountOwner
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchPayoutAccountRequest(object):
+class SearchPayoutAccountRequest(BaseRequest):
     def __init__(
             self,
             currency: Optional[Currency] = None,

@@ -2,10 +2,11 @@ from typing import Optional
 
 from craftgate.model.loyalty import Loyalty
 from craftgate.model.masterpass_validation_type import MasterpassValidationType
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.masterpass_create_payment import MasterpassCreatePayment
 
 
-class MasterpassPaymentTokenGenerateRequest(object):
+class MasterpassPaymentTokenGenerateRequest(BaseRequest):
     def __init__(
             self,
             msisdn: Optional[str] = None,

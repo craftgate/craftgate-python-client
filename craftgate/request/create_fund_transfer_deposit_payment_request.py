@@ -1,8 +1,10 @@
 from decimal import Decimal
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class CreateFundTransferDepositPaymentRequest(object):
+
+class CreateFundTransferDepositPaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,

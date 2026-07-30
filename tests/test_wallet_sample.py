@@ -6,9 +6,9 @@ from decimal import Decimal
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import Currency, RefundStatus, RemittanceReasonType, RemittanceType, Status, \
     TransactionPayoutStatus, WalletTransactionRefundCardTransactionType
-from craftgate.request import CreateRemittanceRequest, CreateWalletRequest, CreateWithdrawRequest, \
-    RefundWalletTransactionToCardRequest, ResetMerchantMemberWalletBalanceRequest, SearchWalletTransactionsRequest, \
-    SearchWithdrawsRequest, UpdateWalletRequest
+from craftgate.request import CancelWithdrawRequest, CreateRemittanceRequest, CreateWalletRequest, \
+    CreateWithdrawRequest, RefundWalletTransactionToCardRequest, ResetMerchantMemberWalletBalanceRequest, \
+    SearchWalletTransactionsRequest, SearchWithdrawsRequest, UpdateWalletRequest
 
 
 class WalletSample(unittest.TestCase):
@@ -166,7 +166,7 @@ class WalletSample(unittest.TestCase):
 
     def test_cancel_withdraw(self):
         withdraw_id = 1136
-        response = self.wallet.cancel_withdraw(withdraw_id)
+        response = self.wallet.cancel_withdraw(CancelWithdrawRequest(withdraw_id=withdraw_id))
         print(response)
 
         self.assertIsNotNone(response.id)

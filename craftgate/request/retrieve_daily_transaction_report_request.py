@@ -2,9 +2,10 @@ from datetime import date
 from typing import Optional
 
 from craftgate.model.report_file_type import ReportFileType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class RetrieveDailyTransactionReportRequest(object):
+class RetrieveDailyTransactionReportRequest(BaseRequest):
     def __init__(
             self,
             report_date: Optional[date] = None,

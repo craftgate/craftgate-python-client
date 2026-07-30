@@ -91,6 +91,41 @@ resp = payment.create_payment(req)
 print(f"Create Payment Result: {resp}")
 ~~~
 
+## Idempotency
+
+Mutating operations (`POST`/`PUT`/`DELETE`) accept an optional idempotency key. Set it on the request object and the
+client sends it as the `x-idempotency-key` header, so a request can be safely retried (e.g. after a timeout) without the
+operation being performed twice — the server returns the result of the first request when it sees a repeated key.
+
+Every request extends `BaseRequest`, so the key is available on any request:
+
+~~~python
+import uuid
+
+req = CreatePaymentRequest()
+req.price = Decimal("100")
+req.paid_price = Decimal("100")
+req.currency = Currency.TRY
+req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+req.idempotency_key = str(uuid.uuid4())
+# ... other fields
+
+resp = payment.create_payment(req)
+~~~
+
+`with_idempotency_key()` sets it inline and returns the request, which is handy for operations whose parameters live in
+the URL path:
+
+~~~python
+payment.expire_checkout_payment(
+    ExpireCheckoutPaymentRequest(token="456d1297-908e-4bd6-a13b-4be31a6e47d5")
+    .with_idempotency_key(str(uuid.uuid4())))
+~~~
+
+> Use a fresh key per distinct operation, and reuse the same key when retrying that operation.
+
+The key is sent as a header only — it never appears in the request body, the query string, or the request signature.
+
 ## Examples
 
 A variety of end-to-end samples (3DS, Checkout, APM, refunds, stored cards, marketplace, pre/post-auth) live under the
