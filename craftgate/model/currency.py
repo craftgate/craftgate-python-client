@@ -20,3 +20,4 @@ class Currency(str, Enum):
     JPY = "JPY"
     EGP = "EGP"
     MXN = "MXN"
+    RON = "RON"
