@@ -15,6 +15,7 @@ from craftgate.request.delete_stored_card_request import DeleteStoredCardRequest
 from craftgate.request.disapprove_payment_transactions_request import DisapprovePaymentTransactionsRequest
 from craftgate.request.init_apm_deposit_payment_request import InitApmDepositPaymentRequest
 from craftgate.request.init_apm_payment_request import InitApmPaymentRequest
+from craftgate.request.bnpl_limit_inquiry_request import BnplLimitInquiryRequest
 from craftgate.request.init_bnpl_payment_request import InitBnplPaymentRequest
 from craftgate.request.init_checkout_card_verify_request import InitCheckoutCardVerifyRequest
 from craftgate.request.init_checkout_payment_request import InitCheckoutPaymentRequest
@@ -38,6 +39,7 @@ from craftgate.request_options import RequestOptions
 from craftgate.response.apm_deposit_payment_response import ApmDepositPaymentResponse
 from craftgate.response.apm_payment_complete_response import ApmPaymentCompleteResponse
 from craftgate.response.apm_payment_init_response import ApmPaymentInitResponse
+from craftgate.response.bnpl_limit_inquiry_response import BnplLimitInquiryResponse
 from craftgate.response.bnpl_payment_offer_response import BnplPaymentOfferResponse
 from craftgate.response.bnpl_payment_verify_response import BnplPaymentVerifyResponse
 from craftgate.response.deposit_payment_response import DepositPaymentResponse
@@ -541,6 +543,28 @@ class PaymentAdapter(BaseAdapter):
             headers=headers,
             body=None,
             response_type=BnplPaymentVerifyResponse
+        )
+
+    def bnpl_limit_inquiry_init(self, request: BnplLimitInquiryRequest) -> BnplLimitInquiryResponse:
+        path = "/payment/v1/bnpl-payments/limit-inquiry/init"
+        headers = self._create_headers(request, path)
+        return self._http_client.request(
+            method="POST",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=request,
+            response_type=BnplLimitInquiryResponse
+        )
+
+    def bnpl_limit_inquiry(self, request: BnplLimitInquiryRequest) -> BnplLimitInquiryResponse:
+        path = "/payment/v1/bnpl-payments/limit-inquiry"
+        headers = self._create_headers(request, path)
+        return self._http_client.request(
+            method="POST",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=request,
+            response_type=BnplLimitInquiryResponse
         )
 
     def retrieve_active_banks(self) -> InstantTransferBanksResponse:

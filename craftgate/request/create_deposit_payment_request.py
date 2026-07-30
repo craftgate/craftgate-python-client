@@ -3,6 +3,7 @@ from typing import Optional
 
 from craftgate.model.currency import Currency
 from craftgate.request.dto.card import Card
+from craftgate.request.dto.routing_options import RoutingOptions
 
 
 class CreateDepositPaymentRequest(object):
@@ -15,7 +16,8 @@ class CreateDepositPaymentRequest(object):
             callback_url: Optional[str] = None,
             pos_alias: Optional[str] = None,
             client_ip: Optional[str] = None,
-            card: Optional[Card] = None
+            card: Optional[Card] = None,
+            routing_options: Optional[RoutingOptions] = None
     ) -> None:
         self.buyer_member_id = buyer_member_id
         self.price = price
@@ -25,3 +27,4 @@ class CreateDepositPaymentRequest(object):
         self.pos_alias = pos_alias
         self.client_ip = client_ip
         self.card = card
+        self.routing_options = routing_options

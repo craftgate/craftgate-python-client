@@ -104,8 +104,12 @@ python -m unittest tests/test_payment_sample.py::PaymentSample::test_create_paym
 
 ## Contributions
 
-For all contributions to this client please see the contribution guide at `CONTRIBUTING.md`.
+For all contributions to this client please see the contribution guide at [CONTRIBUTING.md](CONTRIBUTING.md). By participating in this project, you agree to abide by our [Code of Conduct](CODE_OF_CONDUCT.md).
+
+## Security
+
+If you discover a security vulnerability, please review our [Security Policy](SECURITY.md) for how to report it responsibly.
 
 ## License
 
-MIT
+This project is licensed under the Apache License, Version 2.0 — see the [LICENSE](LICENSE) and [NOTICE](NOTICE.md) files for details.
