@@ -42,4 +42,5 @@ class PaymentProvider(str, Enum):
     SETCARD = "SETCARD"
     PAPEL = "PAPEL"
     BKM_EXPRESS = "BKM_EXPRESS"
+    ALBARAKA = "ALBARAKA"
     OFFLINE = "OFFLINE"

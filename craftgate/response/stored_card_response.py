@@ -20,6 +20,8 @@ class StoredCardResponse(object):
             card_brand: Optional[str] = None,
             card_bank_name: Optional[str] = None,
             card_bank_id: Optional[int] = None,
+            expire_year: Optional[str] = None,
+            expire_month: Optional[str] = None,
             is_commercial: Optional[bool] = None,
             card_expiry_status: Optional[CardExpiryStatus] = None,
             created_at: Optional[datetime] = None
@@ -35,6 +37,8 @@ class StoredCardResponse(object):
         self.card_brand = card_brand
         self.card_bank_name = card_bank_name
         self.card_bank_id = card_bank_id
+        self.expire_year = expire_year
+        self.expire_month = expire_month
         self.is_commercial = is_commercial
         self.card_expiry_status = card_expiry_status
         self.created_at = created_at

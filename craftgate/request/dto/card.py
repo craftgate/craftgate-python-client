@@ -2,6 +2,7 @@ from typing import Optional
 
 from craftgate.model.loyalty import Loyalty
 from craftgate.request.dto.tokenized_card import TokenizedCard
+from craftgate.request.dto.encrypted_card import EncryptedCard
 
 
 class Card(object):
@@ -21,6 +22,7 @@ class Card(object):
             card_holder_identity_number: Optional[str] = None,
             loyalty: Optional[Loyalty] = None,
             tokenized_card: Optional[TokenizedCard] = None,
+            encrypted_card: Optional[EncryptedCard] = None,
             store_card_after_success_payment: bool = False
     ) -> None:
         self.card_holder_name = card_holder_name
@@ -37,4 +39,5 @@ class Card(object):
         self.card_holder_identity_number = card_holder_identity_number
         self.loyalty = loyalty
         self.tokenized_card = tokenized_card
+        self.encrypted_card = encrypted_card
         self.store_card_after_success_payment = store_card_after_success_payment
