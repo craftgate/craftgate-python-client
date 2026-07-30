@@ -2,6 +2,7 @@ import uuid
 from typing import Any, Dict, Optional
 
 from _version import VERSION
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request_options import RequestOptions
 from craftgate.utils.hash_generator import HashGenerator
 
@@ -67,9 +68,11 @@ class BaseAdapter:
 
         New request-scoped options are added here and nowhere else.
         """
-        idempotency_key = getattr(source, "_idempotency_key", None)
-        if idempotency_key is not None:
-            headers[self.IDEMPOTENCY_KEY_HEADER_NAME] = idempotency_key
+        if not isinstance(source, BaseRequest):
+            return
+
+        if source.idempotency_key is not None:
+            headers[self.IDEMPOTENCY_KEY_HEADER_NAME] = source.idempotency_key
 
     def _generate_random_string(self) -> str:
         return str(uuid.uuid4())
