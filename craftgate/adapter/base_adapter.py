@@ -7,7 +7,6 @@ from craftgate.request.common.header_options import HeaderOptions
 from craftgate.request_options import RequestOptions
 from craftgate.utils.hash_generator import HashGenerator
 
-
 class BaseAdapter:
     API_VERSION_HEADER_VALUE = "v1"
     CLIENT_NAME = "craftgate-python-client"
@@ -30,12 +29,6 @@ class BaseAdapter:
             custom_options: Optional[RequestOptions] = None,
             header_options: Optional[HeaderOptions] = None
     ) -> Dict[str, str]:
-        """Builds the request headers.
-
-        ``request_body`` is hashed into the signature, so body-less calls must pass ``None`` and
-        supply ``header_options`` instead. It defaults to the body's own options, so body-carrying
-        calls need nothing extra.
-        """
         options = custom_options or self.request_options
         random_key = self._generate_random_string()
 
@@ -68,10 +61,6 @@ class BaseAdapter:
     def _apply_request_scoped_headers(
             self, headers: Dict[str, str], header_options: Optional[HeaderOptions]
     ) -> None:
-        """Applies the options that travel as headers rather than in the payload.
-
-        New request-scoped options are added here and nowhere else.
-        """
         if header_options is None:
             return
 

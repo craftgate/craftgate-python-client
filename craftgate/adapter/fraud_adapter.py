@@ -16,7 +16,6 @@ from craftgate.response.fraud_rule_response import FraudRuleResponse
 from craftgate.response.fraud_value_list_response import FraudValueListResponse
 from craftgate.utils.request_query_params_builder import RequestQueryParamsBuilder
 
-
 class FraudAdapter(BaseAdapter):
     def __init__(self, request_options: RequestOptions) -> None:
         super(FraudAdapter, self).__init__(request_options)
@@ -48,7 +47,6 @@ class FraudAdapter(BaseAdapter):
 
     def update_fraud_check_status(self, request: UpdateFraudCheckStatusRequest) -> None:
         path = "/fraud/v1/fraud-checks/{}/check-status".format(request.id)
-        # The id belongs in the path, so only the status is sent as the body.
         body = UpdateFraudCheckRequest(check_status=request.check_status)
         headers = self._create_headers(body, path, header_options=request.to_header_options())
         self._http_client.request(

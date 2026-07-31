@@ -1,5 +1,3 @@
-# tests/test_idempotency.py
-"""Idempotency key tests. No live credentials needed."""
 import unittest
 
 from craftgate import RequestOptions
@@ -22,13 +20,10 @@ IDEMPOTENCY_KEY_HEADER_NAME = "x-idempotency-key"
 SIGNATURE_HEADER_NAME = "x-signature"
 FIXED_RANDOM_KEY = "fixed-random-key"
 
-
 class FixedRandomAdapter(BaseAdapter):
-    """Pins the random key so signatures are comparable across calls."""
 
     def _generate_random_string(self) -> str:
         return FIXED_RANDOM_KEY
-
 
 class IdempotencyTest(unittest.TestCase):
     @classmethod
@@ -104,7 +99,6 @@ class IdempotencyTest(unittest.TestCase):
         self.assertNotIn(IDEMPOTENCY_KEY_HEADER_NAME, headers)
 
     def test_bodyless_signature_is_unchanged_by_the_key(self):
-        """A regression here rejects every delete/approve/cancel call at the API."""
         path = "/payment/v1/checkout-payments/token-1"
         expected = HashGenerator.generate_hash(
             base_url=self.options.base_url,
@@ -158,7 +152,6 @@ class IdempotencyTest(unittest.TestCase):
 
         self.assertEqual(42, request.id)
         self.assertEqual("idempotency-key-1", request.idempotency_key)
-
 
 if __name__ == "__main__":
     unittest.main()
