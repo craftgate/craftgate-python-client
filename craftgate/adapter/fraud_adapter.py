@@ -50,7 +50,7 @@ class FraudAdapter(BaseAdapter):
         path = "/fraud/v1/fraud-checks/{}/check-status".format(request.id)
         # The id belongs in the path, so only the status is sent as the body.
         body = UpdateFraudCheckRequest(check_status=request.check_status)
-        headers = self._create_headers(body, path, header_options=request)
+        headers = self._create_headers(body, path, header_options=request.to_header_options())
         self._http_client.request(
             method="PUT",
             url=self.request_options.base_url + path,
@@ -92,7 +92,7 @@ class FraudAdapter(BaseAdapter):
 
     def delete_value_list(self, request: DeleteValueListRequest) -> None:
         path = "/fraud/v1/value-lists/{}".format(request.list_name)
-        headers = self._create_headers(None, path, header_options=request)
+        headers = self._create_headers(None, path, header_options=request.to_header_options())
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,
@@ -133,7 +133,7 @@ class FraudAdapter(BaseAdapter):
 
     def remove_value_from_value_list(self, request: RemoveValueFromValueListRequest) -> None:
         path = "/fraud/v1/value-lists/{}/values/{}".format(request.list_name, request.value_id)
-        headers = self._create_headers(None, path, header_options=request)
+        headers = self._create_headers(None, path, header_options=request.to_header_options())
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

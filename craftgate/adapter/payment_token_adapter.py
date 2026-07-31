@@ -24,7 +24,7 @@ class PaymentTokenAdapter(BaseAdapter):
 
     def delete_payment_token(self, request: DeletePaymentTokenRequest) -> None:
         path = "/payment/v1/payment-tokens/{}".format(request.token)
-        headers = self._create_headers(None, path, header_options=request)
+        headers = self._create_headers(None, path, header_options=request.to_header_options())
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

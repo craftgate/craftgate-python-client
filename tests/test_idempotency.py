@@ -91,7 +91,7 @@ class IdempotencyTest(unittest.TestCase):
         request = ExpireCheckoutPaymentRequest(token="token-1").with_idempotency_key("idempotency-key-1")
 
         headers = self.adapter._create_headers(
-            None, "/payment/v1/checkout-payments/token-1", header_options=request)
+            None, "/payment/v1/checkout-payments/token-1", header_options=request.to_header_options())
 
         self.assertEqual("idempotency-key-1", headers.get(IDEMPOTENCY_KEY_HEADER_NAME))
 
@@ -99,7 +99,7 @@ class IdempotencyTest(unittest.TestCase):
         request = ExpireCheckoutPaymentRequest(token="token-1")
 
         headers = self.adapter._create_headers(
-            None, "/payment/v1/checkout-payments/token-1", header_options=request)
+            None, "/payment/v1/checkout-payments/token-1", header_options=request.to_header_options())
 
         self.assertNotIn(IDEMPOTENCY_KEY_HEADER_NAME, headers)
 
@@ -116,7 +116,7 @@ class IdempotencyTest(unittest.TestCase):
         )
 
         wrapper = ExpireCheckoutPaymentRequest(token="token-1").with_idempotency_key("idempotency-key-1")
-        with_key = self.adapter._create_headers(None, path, header_options=wrapper)
+        with_key = self.adapter._create_headers(None, path, header_options=wrapper.to_header_options())
         without_key = self.adapter._create_headers(None, path)
 
         self.assertEqual(expected, with_key[SIGNATURE_HEADER_NAME])

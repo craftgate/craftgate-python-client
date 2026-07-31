@@ -177,7 +177,7 @@ class PaymentAdapter(BaseAdapter):
 
     def expire_checkout_payment(self, request: ExpireCheckoutPaymentRequest) -> None:
         path = "/payment/v1/checkout-payments/{}".format(request.token)
-        headers = self._create_headers(None, path, header_options=request)
+        headers = self._create_headers(None, path, header_options=request.to_header_options())
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,
@@ -528,7 +528,7 @@ class PaymentAdapter(BaseAdapter):
 
     def approve_bnpl_payment(self, request: ApproveBnplPaymentRequest) -> PaymentResponse:
         path = "/payment/v1/bnpl-payments/{}/approve".format(request.payment_id)
-        headers = self._create_headers(None, path, header_options=request)
+        headers = self._create_headers(None, path, header_options=request.to_header_options())
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,
@@ -539,7 +539,7 @@ class PaymentAdapter(BaseAdapter):
 
     def verify_bnpl_payment(self, request: VerifyBnplPaymentRequest) -> BnplPaymentVerifyResponse:
         path = "/payment/v1/bnpl-payments/{}/verify".format(request.payment_id)
-        headers = self._create_headers(None, path, header_options=request)
+        headers = self._create_headers(None, path, header_options=request.to_header_options())
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,

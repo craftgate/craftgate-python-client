@@ -50,7 +50,7 @@ class PayByLinkAdapter(BaseAdapter):
 
     def delete_product(self, request: DeleteProductRequest) -> None:
         path = "/craftlink/v1/products/{}".format(request.id)
-        headers = self._create_headers(None, path, header_options=request)
+        headers = self._create_headers(None, path, header_options=request.to_header_options())
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

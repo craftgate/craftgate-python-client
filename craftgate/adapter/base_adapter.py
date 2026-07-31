@@ -3,6 +3,7 @@ from typing import Any, Dict, Optional
 
 from _version import VERSION
 from craftgate.request.common.base_request import BaseRequest
+from craftgate.request.common.header_options import HeaderOptions
 from craftgate.request_options import RequestOptions
 from craftgate.utils.hash_generator import HashGenerator
 
@@ -27,13 +28,13 @@ class BaseAdapter:
             request_body: Optional[Any],
             path: str,
             custom_options: Optional[RequestOptions] = None,
-            header_options: Optional[Any] = None
+            header_options: Optional[HeaderOptions] = None
     ) -> Dict[str, str]:
         """Builds the request headers.
 
         ``request_body`` is hashed into the signature, so body-less calls must pass ``None`` and
-        supply the request wrapper via ``header_options`` instead. It defaults to the body, so
-        body-carrying calls need nothing extra.
+        supply ``header_options`` instead. It defaults to the body's own options, so body-carrying
+        calls need nothing extra.
         """
         options = custom_options or self.request_options
         random_key = self._generate_random_string()
@@ -58,21 +59,24 @@ class BaseAdapter:
         if options.language:
             headers[self.LANGUAGE_HEADER_NAME] = options.language
 
-        self._apply_request_scoped_headers(
-            headers, header_options if header_options is not None else request_body)
+        if header_options is None and isinstance(request_body, BaseRequest):
+            header_options = request_body.to_header_options()
+        self._apply_request_scoped_headers(headers, header_options)
 
         return headers
 
-    def _apply_request_scoped_headers(self, headers: Dict[str, str], source: Optional[Any]) -> None:
+    def _apply_request_scoped_headers(
+            self, headers: Dict[str, str], header_options: Optional[HeaderOptions]
+    ) -> None:
         """Applies the options that travel as headers rather than in the payload.
 
         New request-scoped options are added here and nowhere else.
         """
-        if not isinstance(source, BaseRequest):
+        if header_options is None:
             return
 
-        if source.idempotency_key is not None:
-            headers[self.IDEMPOTENCY_KEY_HEADER_NAME] = source.idempotency_key
+        if header_options.idempotency_key is not None:
+            headers[self.IDEMPOTENCY_KEY_HEADER_NAME] = header_options.idempotency_key
 
     def _generate_random_string(self) -> str:
         return str(uuid.uuid4())
