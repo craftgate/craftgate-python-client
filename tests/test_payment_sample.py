@@ -20,8 +20,10 @@ from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardReques
     RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
     UpdatePaymentTransactionRequest, VerifyCard, VerifyCardRequest
 from craftgate.request.init_multi_payment_request import InitMultiPaymentRequest
+from craftgate.request.retrieve_card_from_ivr_request import RetrieveCardFromIvrRequest
 from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalListResponse, PaymentTransactionResponse, \
     StoredCardListResponse
+from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizationResponse
 
 
 class PaymentSample(unittest.TestCase):
@@ -772,6 +774,82 @@ class PaymentSample(unittest.TestCase):
         self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
 
     def test_complete_edenred_apm_payment(self):
+        req = CompleteApmPaymentRequest()
+        req.payment_id = 1
+        req.additional_params = {"otpCode": "784294"}
+
+        resp = self.payment.complete_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
+
+    def test_init_tokenflex_apm_payment(self):
+        items = []
+        for name, price in [("item 1", "0.60"), ("item 2", "0.40")]:
+            pi = PaymentItem()
+            pi.name = name
+            pi.external_id = str(uuid.uuid4())
+            pi.price = Decimal(price)
+            items.append(pi)
+
+        req = InitApmPaymentRequest()
+        req.apm_type = ApmType.TOKENFLEX
+        req.price = Decimal("1")
+        req.paid_price = Decimal("1")
+        req.currency = Currency.TRY
+        req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.external_id = "optional-externalId"
+        req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
+        req.additional_params = {"paymentCode": "123456"}
+        req.items = items
+
+        resp = self.payment.init_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertIsNone(getattr(resp, "redirect_url", None))
+        self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
+        self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
+
+    def test_complete_tokenflex_apm_payment(self):
+        req = CompleteApmPaymentRequest()
+        req.payment_id = 1
+        req.additional_params = {"otpCode": "784294"}
+
+        resp = self.payment.complete_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
+
+    def test_init_tokenflex_gift_apm_payment(self):
+        items = []
+        for name, price in [("item 1", "0.60"), ("item 2", "0.40")]:
+            pi = PaymentItem()
+            pi.name = name
+            pi.external_id = str(uuid.uuid4())
+            pi.price = Decimal(price)
+            items.append(pi)
+
+        req = InitApmPaymentRequest()
+        req.apm_type = ApmType.TOKENFLEX_GIFT
+        req.price = Decimal("1")
+        req.paid_price = Decimal("1")
+        req.currency = Currency.TRY
+        req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.external_id = "optional-externalId"
+        req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
+        req.additional_params = {"paymentCode": "123456"}
+        req.items = items
+
+        resp = self.payment.init_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertIsNone(getattr(resp, "redirect_url", None))
+        self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
+        self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
+
+    def test_complete_tokenflex_gift_apm_payment(self):
         req = CompleteApmPaymentRequest()
         req.payment_id = 1
         req.additional_params = {"otpCode": "784294"}
@@ -1630,6 +1708,15 @@ class PaymentSample(unittest.TestCase):
         req.card_provider = CardProvider.MEX
 
         resp: StoredCardListResponse = self.payment.retrieve_provider_cards(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+
+    def test_retrieve_card_from_ivr(self):
+        req = RetrieveCardFromIvrRequest()
+        req.card_user_key = "45f12c74-3000-465c-96dc-876850e7dd7a"
+        req.call_token = "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24"
+
+        resp: IVRCardTokenizationResponse = self.payment.retrieve_card_from_ivr(req)
         print(resp)
         self.assertIsNotNone(resp)
 

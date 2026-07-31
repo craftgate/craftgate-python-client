@@ -11,6 +11,7 @@ class PaymentProvider(str, Enum):
     PAYONEER = "PAYONEER"
     SODEXO = "SODEXO"
     EDENRED = "EDENRED"
+    TOKENFLEX = "TOKENFLEX"
     INSTANT_TRANSFER = "INSTANT_TRANSFER"
     ALIPAY = "ALIPAY"
     PAYPAL = "PAYPAL"
@@ -41,4 +42,5 @@ class PaymentProvider(str, Enum):
     SETCARD = "SETCARD"
     PAPEL = "PAPEL"
     BKM_EXPRESS = "BKM_EXPRESS"
+    ALBARAKA = "ALBARAKA"
     OFFLINE = "OFFLINE"
