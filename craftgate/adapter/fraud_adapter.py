@@ -23,7 +23,7 @@ class FraudAdapter(BaseAdapter):
     def search_fraud_checks(self, request: SearchFraudChecksRequest) -> FraudCheckListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/fraud/v1/fraud-checks" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -35,7 +35,7 @@ class FraudAdapter(BaseAdapter):
     def search_fraud_rules(self, request: SearchFraudRuleRequest) -> FraudRuleResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/fraud/v1/rules" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

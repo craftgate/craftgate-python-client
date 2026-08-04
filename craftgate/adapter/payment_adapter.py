@@ -429,7 +429,7 @@ class PaymentAdapter(BaseAdapter):
     def search_stored_cards(self, request: SearchStoredCardsRequest) -> StoredCardListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment/v1/cards" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -608,7 +608,7 @@ class PaymentAdapter(BaseAdapter):
     def retrieve_provider_cards(self, request: RetrieveProviderCardRequest) -> StoredCardListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment/v1/cards/provider-card-mappings{}".format(query)
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -620,7 +620,7 @@ class PaymentAdapter(BaseAdapter):
     def retrieve_card_from_ivr(self, request: RetrieveCardFromIvrRequest) -> IVRCardTokenizationResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment/v1/ivr-cards{}".format(query)
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

@@ -22,7 +22,7 @@ class PaymentReportingAdapter(BaseAdapter):
     def search_payments(self, request: SearchPaymentsRequest) -> ReportingPaymentListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment-reporting/v1/payments" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -80,7 +80,7 @@ class PaymentReportingAdapter(BaseAdapter):
     def search_payment_refunds(self, request: SearchPaymentRefundsRequest) -> ReportingPaymentRefundListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment-reporting/v1/refunds" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -94,7 +94,7 @@ class PaymentReportingAdapter(BaseAdapter):
     ) -> ReportingPaymentTransactionRefundListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment-reporting/v1/refund-transactions" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

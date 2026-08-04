@@ -53,7 +53,7 @@ class WalletAdapter(BaseAdapter):
     ) -> WalletTransactionListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/wallet/v1/wallets/{}/wallet-transactions{}".format(wallet_id, query)
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -205,7 +205,7 @@ class WalletAdapter(BaseAdapter):
     def search_withdraws(self, request: SearchWithdrawsRequest) -> WithdrawListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/wallet/v1/withdraws" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

@@ -62,7 +62,7 @@ class PayByLinkAdapter(BaseAdapter):
     def search_products(self, request: SearchProductsRequest) -> ProductListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/craftlink/v1/products{}".format(query)
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

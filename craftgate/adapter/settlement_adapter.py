@@ -64,7 +64,7 @@ class SettlementAdapter(BaseAdapter):
     def search_payout_account(self, request: SearchPayoutAccountRequest) -> PayoutAccountListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/settlement/v1/payout-accounts" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

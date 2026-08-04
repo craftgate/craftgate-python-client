@@ -109,6 +109,27 @@ class IdempotencyTest(unittest.TestCase):
 
         self.assertNotIn(IDEMPOTENCY_KEY_HEADER_NAME, headers)
 
+    def test_read_request_sends_the_key_as_a_header_and_stays_body_less(self):
+        request = SearchProductsRequest(name="A new Product").with_header_options(
+            idempotency_key("idempotency-key-1"))
+        path = "/craftlink/v1/products" + RequestQueryParamsBuilder.build_query_params(request)
+
+        headers = self.adapter._create_headers_without_body(request, path)
+
+        self.assertEqual("idempotency-key-1", headers.get(IDEMPOTENCY_KEY_HEADER_NAME))
+        self.assertNotIn("headerOptions", path)
+        self.assertNotIn("idempotencyKey", path)
+
+        body_less = HashGenerator.generate_hash(
+            base_url=self.options.base_url,
+            api_key=self.options.api_key,
+            secret_key=self.options.secret_key,
+            random_string=FIXED_RANDOM_KEY,
+            request=None,
+            path=path,
+        )
+        self.assertEqual(body_less, headers[SIGNATURE_HEADER_NAME])
+
     def test_bodyless_request_sends_the_key_as_a_header(self):
         request = ExpireCheckoutPaymentRequest(token="token-1").with_header_options(
             idempotency_key("idempotency-key-1"))

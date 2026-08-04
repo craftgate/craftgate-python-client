@@ -54,7 +54,7 @@ class MerchantAdapter(BaseAdapter):
     def search_merchant_pos(self, request: SearchMerchantPosRequest) -> MerchantPosListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/merchant/v1/merchant-poses" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

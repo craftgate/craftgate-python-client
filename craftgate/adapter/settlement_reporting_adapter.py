@@ -21,7 +21,7 @@ class SettlementReportingAdapter(BaseAdapter):
     ) -> PayoutCompletedTransactionListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/settlement-reporting/v2/settlement-file/payout-completed-transactions" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -35,7 +35,7 @@ class SettlementReportingAdapter(BaseAdapter):
     ) -> PayoutBouncedTransactionListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/settlement-reporting/v1/settlement-file/bounced-sub-merchant-rows" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -58,7 +58,7 @@ class SettlementReportingAdapter(BaseAdapter):
     def search_payout_rows(self, request: SearchPayoutRowsRequest) -> PayoutRowListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/settlement-reporting/v1/settlement-file-rows" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
