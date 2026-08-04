@@ -7,7 +7,6 @@ from craftgate.request.fraud_value_list_request import FraudValueListRequest
 from craftgate.request.remove_value_from_value_list_request import RemoveValueFromValueListRequest
 from craftgate.request.search_fraud_checks_request import SearchFraudChecksRequest
 from craftgate.request.search_fraud_rule_request import SearchFraudRuleRequest
-from craftgate.request.update_fraud_check_request import UpdateFraudCheckRequest
 from craftgate.request.update_fraud_check_status_request import UpdateFraudCheckStatusRequest
 from craftgate.request_options import RequestOptions
 from craftgate.response.fraud_all_value_lists_response import FraudAllValueListsResponse
@@ -47,13 +46,12 @@ class FraudAdapter(BaseAdapter):
 
     def update_fraud_check_status(self, request: UpdateFraudCheckStatusRequest) -> None:
         path = "/fraud/v1/fraud-checks/{}/check-status".format(request.id)
-        body = UpdateFraudCheckRequest(check_status=request.check_status)
-        headers = self._create_headers(body, path, header_options=request.to_header_options())
+        headers = self._create_headers(request, path)
         self._http_client.request(
             method="PUT",
             url=self.request_options.base_url + path,
             headers=headers,
-            body=body,
+            body=request,
             response_type=None
         )
 
@@ -90,7 +88,7 @@ class FraudAdapter(BaseAdapter):
 
     def delete_value_list(self, request: DeleteValueListRequest) -> None:
         path = "/fraud/v1/value-lists/{}".format(request.list_name)
-        headers = self._create_headers(None, path, header_options=request.to_header_options())
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,
@@ -131,7 +129,7 @@ class FraudAdapter(BaseAdapter):
 
     def remove_value_from_value_list(self, request: RemoveValueFromValueListRequest) -> None:
         path = "/fraud/v1/value-lists/{}/values/{}".format(request.list_name, request.value_id)
-        headers = self._create_headers(None, path, header_options=request.to_header_options())
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

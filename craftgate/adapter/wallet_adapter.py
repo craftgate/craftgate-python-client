@@ -182,7 +182,7 @@ class WalletAdapter(BaseAdapter):
 
     def cancel_withdraw(self, request: CancelWithdrawRequest) -> WithdrawResponse:
         path = "/wallet/v1/withdraws/{}/cancel".format(request.withdraw_id)
-        headers = self._create_headers(None, path, header_options=request.to_header_options())
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,

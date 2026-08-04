@@ -6,7 +6,7 @@ from .bnpl_limit_inquiry_request import BnplLimitInquiryRequest
 from .cancel_withdraw_request import CancelWithdrawRequest
 from .check_masterpass_user_request import CheckMasterpassUserRequest
 from .clone_card_request import CloneCardRequest
-from .common import BaseRequest
+from .common import BaseRequest, HeaderOptions
 from .complete_apm_payment_request import CompleteApmPaymentRequest
 from .complete_bkm_express_request import CompleteBkmExpressRequest
 from .complete_pos_apm_payment_request import CompletePosApmPaymentRequest

@@ -52,7 +52,7 @@ class SettlementAdapter(BaseAdapter):
 
     def delete_payout_account(self, request: DeletePayoutAccountRequest) -> None:
         path = "/settlement/v1/payout-accounts/{}".format(request.id)
-        headers = self._create_headers(None, path, header_options=request.to_header_options())
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

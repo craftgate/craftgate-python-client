@@ -42,7 +42,7 @@ class MerchantAdapter(BaseAdapter):
 
     def update_merchant_pos_status(self, request: UpdateMerchantPosStatusRequest) -> None:
         path = "/merchant/v1/merchant-poses/{}/status/{}".format(request.merchant_pos_id, request.pos_status.name)
-        headers = self._create_headers(None, path, header_options=request.to_header_options())
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="PUT",
             url=self.request_options.base_url + path,
@@ -76,7 +76,7 @@ class MerchantAdapter(BaseAdapter):
 
     def delete_merchant_pos(self, request: DeleteMerchantPosRequest) -> None:
         path = "/merchant/v1/merchant-poses/{}".format(request.merchant_pos_id)
-        headers = self._create_headers(None, path, header_options=request.to_header_options())
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

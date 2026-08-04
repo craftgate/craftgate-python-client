@@ -1,5 +1,5 @@
 import uuid
-from typing import Any, Dict, Optional
+from typing import Dict, Optional
 
 from _version import VERSION
 from craftgate.request.common.base_request import BaseRequest
@@ -24,10 +24,28 @@ class BaseAdapter:
 
     def _create_headers(
             self,
-            request_body: Optional[Any],
+            request_body: Optional[BaseRequest],
             path: str,
-            custom_options: Optional[RequestOptions] = None,
-            header_options: Optional[HeaderOptions] = None
+            custom_options: Optional[RequestOptions] = None
+    ) -> Dict[str, str]:
+        return self._create_http_headers(
+            request_body, path, custom_options, self._header_options_of(request_body))
+
+    def _create_headers_without_body(
+            self,
+            request: Optional[BaseRequest],
+            path: str,
+            custom_options: Optional[RequestOptions] = None
+    ) -> Dict[str, str]:
+        return self._create_http_headers(
+            None, path, custom_options, self._header_options_of(request))
+
+    def _create_http_headers(
+            self,
+            request_body: Optional[BaseRequest],
+            path: str,
+            custom_options: Optional[RequestOptions],
+            header_options: Optional[HeaderOptions]
     ) -> Dict[str, str]:
         options = custom_options or self.request_options
         random_key = self._generate_random_string()
@@ -52,11 +70,13 @@ class BaseAdapter:
         if options.language:
             headers[self.LANGUAGE_HEADER_NAME] = options.language
 
-        if header_options is None and isinstance(request_body, BaseRequest):
-            header_options = request_body.to_header_options()
         self._apply_request_scoped_headers(headers, header_options)
 
         return headers
+
+    @staticmethod
+    def _header_options_of(request: Optional[BaseRequest]) -> Optional[HeaderOptions]:
+        return request.header_options if request is not None else None
 
     def _apply_request_scoped_headers(
             self, headers: Dict[str, str], header_options: Optional[HeaderOptions]

@@ -10,5 +10,13 @@ class UpdateFraudCheckStatusRequest(BaseRequest):
             id: Optional[int] = None,
             check_status: Optional[FraudCheckStatus] = None
     ) -> None:
-        self.id = id
+        self._id = id
         self.check_status = check_status
+
+    @property
+    def id(self) -> Optional[int]:
+        return self._id
+
+    @id.setter
+    def id(self, value: Optional[int]) -> None:
+        self._id = value

@@ -97,36 +97,39 @@ Mutating operations accept an optional idempotency key. Set it on the request ob
 client sends it as the `x-idempotency-key` header, so a request can be safely retried (e.g. after a timeout) without the
 operation being performed twice — the server returns the result of the first request when it sees a repeated key.
 
-Every request extends `BaseRequest`, so the key is available on any request:
+Every request extends `BaseRequest`, which carries a `HeaderOptions` object, so the key is available on any request:
 
 ~~~python
 import uuid
+
+from craftgate import HeaderOptions
 
 req = CreatePaymentRequest()
 req.price = Decimal("100")
 req.paid_price = Decimal("100")
 req.currency = Currency.TRY
 req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
-req.idempotency_key = str(uuid.uuid4())
+req.header_options = HeaderOptions(idempotency_key=str(uuid.uuid4()))
 # ... other fields
 
 resp = payment.create_payment(req)
 ~~~
 
-`with_idempotency_key()` sets it inline and returns the request, which is handy for operations whose parameters live in
+`with_header_options()` sets it inline and returns the request, which is handy for operations whose parameters live in
 the URL path:
 
 ~~~python
 payment.expire_checkout_payment(
     ExpireCheckoutPaymentRequest(token="456d1297-908e-4bd6-a13b-4be31a6e47d5")
-    .with_idempotency_key(str(uuid.uuid4())))
+    .with_header_options(HeaderOptions(idempotency_key=str(uuid.uuid4()))))
 ~~~
 
 > Use a fresh key per distinct operation, and reuse the same key when retrying that operation.
 
 > The API honours the key on `POST`, `PATCH` and `DELETE` only. It is ignored on `PUT` endpoints, so retrying one of those is not de-duplicated.
 
-The key is sent as a header only — it never appears in the request body, the query string, or the request signature.
+`HeaderOptions` is sent as headers only — it never appears in the request body, the query string, or the request
+signature.
 
 ## Examples
 
