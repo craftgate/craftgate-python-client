@@ -1,6 +1,7 @@
 from .bnpl_bank_offer import BnplBankOffer
 from .bnpl_bank_offer_term import BnplBankOfferTerm
 from .fraud_check import FraudCheck
+from .fraud_rule import FraudRule
 from .installment import Installment
 from .installment_price import InstallmentPrice
 from .merchant_api_credential import MerchantApiCredential

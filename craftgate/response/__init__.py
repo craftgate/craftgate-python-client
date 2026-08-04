@@ -13,6 +13,7 @@ from .deposit_payment_response import DepositPaymentResponse
 from .dto import *
 from .fraud_all_value_lists_response import FraudAllValueListsResponse
 from .fraud_check_list_response import FraudCheckListResponse
+from .fraud_rule_response import FraudRuleResponse
 from .fraud_value_list_response import FraudValueListResponse
 from .fund_transfer_deposit_payment_response import FundTransferDepositPaymentResponse
 from .init_bkm_express_response import InitBkmExpressResponse
@@ -24,6 +25,8 @@ from .init_garanti_pay_payment_response import InitGarantiPayPaymentResponse
 from .init_juzdan_payment_response import InitJuzdanPaymentResponse
 from .init_meal_voucher_card_tokenization_response import InitMealVoucherCardTokenizationResponse
 MealVoucherCardTokenizationInitResponse = InitMealVoucherCardTokenizationResponse
+from .init_multi_payment_response import InitMultiPaymentResponse
+from .ivr_card_tokenization_response import IVRCardTokenizationResponse
 from .meal_voucher_card_tokenization_complete_response import MealVoucherCardTokenizationCompleteResponse
 from .init_pos_apm_payment_response import InitPosApmPaymentResponse
 from .init_three_ds_payment_response import InitThreeDSPaymentResponse

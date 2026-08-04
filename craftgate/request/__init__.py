@@ -35,6 +35,7 @@ from .delete_value_list_request import DeleteValueListRequest
 from .disapprove_payment_transactions_request import DisapprovePaymentTransactionsRequest
 from .dto import *
 from .expire_checkout_payment_request import ExpireCheckoutPaymentRequest
+from .fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintToListRequest
 from .fraud_value_list_request import FraudValueListRequest
 from .init_apm_deposit_payment_request import InitApmDepositPaymentRequest
 from .init_apm_payment_request import InitApmPaymentRequest
@@ -45,6 +46,7 @@ from .init_checkout_payment_request import InitCheckoutPaymentRequest
 from .init_garanti_pay_payment_request import InitGarantiPayPaymentRequest
 from .init_meal_voucher_card_tokenization_request import InitMealVoucherCardTokenizationRequest
 from .init_juzdan_payment_request import InitJuzdanPaymentRequest
+from .init_multi_payment_request import InitMultiPaymentRequest
 from .init_pos_apm_payment_request import InitPosApmPaymentRequest
 from .init_three_ds_payment_request import InitThreeDSPaymentRequest
 from .masterpass_payment_complete_request import MasterpassPaymentCompleteRequest
@@ -69,6 +71,7 @@ from .retrieve_provider_card_request import RetrieveProviderCardRequest
 from .retrieve_report_request import RetrieveReportRequest
 from .search_bank_account_tracking_records_request import SearchBankAccountTrackingRecordsRequest
 from .search_fraud_checks_request import SearchFraudChecksRequest
+from .search_fraud_rule_request import SearchFraudRuleRequest
 from .search_installments_request import SearchInstallmentsRequest
 from .search_members_request import SearchMembersRequest
 from .search_merchant_pos_request import SearchMerchantPosRequest

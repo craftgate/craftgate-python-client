@@ -18,6 +18,8 @@ from .currency import Currency
 from .file_status import FileStatus
 from .fraud_action import FraudAction
 from .fraud_check_status import FraudCheckStatus
+from .fraud_operation import FraudOperation
+from .fraud_result import FraudResult
 from .fraud_value import FraudValue
 from .fraud_value_type import FraudValueType
 from .loyalty import Loyalty
