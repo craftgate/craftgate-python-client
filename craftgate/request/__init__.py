@@ -85,7 +85,6 @@ from .search_wallet_transactions_request import SearchWalletTransactionsRequest
 from .search_withdraws_request import SearchWithdrawsRequest
 from .store_card_request import StoreCardRequest
 from .update_card_request import UpdateCardRequest
-from .update_fraud_check_request import UpdateFraudCheckRequest
 from .update_fraud_check_status_request import UpdateFraudCheckStatusRequest
 from .update_member_request import UpdateMemberRequest
 from .update_merchant_pos_commissions_request import UpdateMerchantPosCommissionsRequest
