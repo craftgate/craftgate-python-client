@@ -4,9 +4,10 @@ from typing import Optional, Set
 
 from craftgate.model.currency import Currency
 from craftgate.model.status import Status
+from craftgate.request.common.base_request import BaseRequest
 
 
-class UpdateProductRequest(object):
+class UpdateProductRequest(BaseRequest):
     def __init__(
             self,
             name: Optional[str] = None,

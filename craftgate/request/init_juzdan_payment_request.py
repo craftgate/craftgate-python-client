@@ -4,10 +4,11 @@ from typing import List, Optional
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_phase import PaymentPhase
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.payment_item import PaymentItem
 
 
-class InitJuzdanPaymentRequest(object):
+class InitJuzdanPaymentRequest(BaseRequest):
     class ClientType:
         M = "M"
         W = "W"

@@ -3,9 +3,10 @@ from typing import Optional
 
 from craftgate.model.currency import Currency
 from craftgate.model.remittance_reason_type import RemittanceReasonType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreateRemittanceRequest(object):
+class CreateRemittanceRequest(BaseRequest):
     def __init__(
             self,
             member_id: Optional[int] = None,

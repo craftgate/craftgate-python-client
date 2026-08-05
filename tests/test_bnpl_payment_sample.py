@@ -6,7 +6,8 @@ from decimal import Decimal
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import ApmType, BnplCartItemType, Currency, PaymentGroup
-from craftgate.request import BnplPaymentOfferRequest, InitBnplPaymentRequest
+from craftgate.request import ApproveBnplPaymentRequest, BnplPaymentOfferRequest, InitBnplPaymentRequest, \
+    VerifyBnplPaymentRequest
 from craftgate.request.dto import BnplPaymentCartItem, PaymentItem
 
 
@@ -151,7 +152,7 @@ class BnplPaymentSample(unittest.TestCase):
     def test_approve_bnpl_payment(self):
         payment_id = 1
 
-        response = self.payment.approve_bnpl_payment(payment_id)
+        response = self.payment.approve_bnpl_payment(ApproveBnplPaymentRequest(payment_id=payment_id))
         print(response)
 
         self.assertIsNotNone(response.id)
@@ -159,7 +160,7 @@ class BnplPaymentSample(unittest.TestCase):
     def test_verify_bnpl_payment(self):
         payment_id = 1
 
-        response = self.payment.verify_bnpl_payment(payment_id)
+        response = self.payment.verify_bnpl_payment(VerifyBnplPaymentRequest(payment_id=payment_id))
         print(response)
 
         self.assertIsNotNone(response.payment_status)

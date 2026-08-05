@@ -3,8 +3,9 @@ from typing import Optional
 
 from craftgate.model.fraud_action import FraudAction
 from craftgate.model.fraud_operation import FraudOperation
+from craftgate.request.common.base_request import BaseRequest
 
-class SearchFraudRuleRequest(object):
+class SearchFraudRuleRequest(BaseRequest):
     def __init__(
             self,
             name: Optional[str] = None,

@@ -4,7 +4,7 @@ import unittest
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import ApmType
-from craftgate.request import CreatePaymentTokenRequest
+from craftgate.request import CreatePaymentTokenRequest, DeletePaymentTokenRequest
 
 
 class PaymentTokenSample(unittest.TestCase):
@@ -37,7 +37,7 @@ class PaymentTokenSample(unittest.TestCase):
 
     def test_delete_payment_token(self):
         token = "token-to-be-deleted"
-        self.payment_token.delete_payment_token(token)
+        self.payment_token.delete_payment_token(DeletePaymentTokenRequest(token=token))
         self.assertTrue(True)
 
 

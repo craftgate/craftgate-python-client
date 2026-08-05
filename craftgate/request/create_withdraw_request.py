@@ -2,9 +2,10 @@ from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreateWithdrawRequest(object):
+class CreateWithdrawRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,

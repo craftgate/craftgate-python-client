@@ -3,6 +3,8 @@ from datetime import date, datetime
 from decimal import Decimal
 from enum import Enum
 
+from craftgate.request.common.header_options import HeaderOptions
+
 
 def _to_camel(s):
     if not isinstance(s, str):
@@ -61,7 +63,7 @@ def _convert(obj):
         return _convert(obj.to_dict())
     if hasattr(obj, "__dict__"):
         d = dict((k, v) for k, v in obj.__dict__.items()
-                 if not k.startswith('_') and v is not None)
+                 if not k.startswith('_') and v is not None and not isinstance(v, HeaderOptions))
         return _convert(d)
 
     return obj

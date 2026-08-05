@@ -1,19 +1,19 @@
 from craftgate.adapter.base_adapter import BaseAdapter
-from craftgate.model.fraud_check_status import FraudCheckStatus
 from craftgate.model.fraud_value_type import FraudValueType
 from craftgate.net.base_http_client import BaseHttpClient
+from craftgate.request.delete_value_list_request import DeleteValueListRequest
 from craftgate.request.fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintToListRequest
 from craftgate.request.fraud_value_list_request import FraudValueListRequest
+from craftgate.request.remove_value_from_value_list_request import RemoveValueFromValueListRequest
 from craftgate.request.search_fraud_checks_request import SearchFraudChecksRequest
 from craftgate.request.search_fraud_rule_request import SearchFraudRuleRequest
-from craftgate.request.update_fraud_check_request import UpdateFraudCheckRequest
+from craftgate.request.update_fraud_check_status_request import UpdateFraudCheckStatusRequest
 from craftgate.request_options import RequestOptions
 from craftgate.response.fraud_all_value_lists_response import FraudAllValueListsResponse
 from craftgate.response.fraud_check_list_response import FraudCheckListResponse
 from craftgate.response.fraud_rule_response import FraudRuleResponse
 from craftgate.response.fraud_value_list_response import FraudValueListResponse
 from craftgate.utils.request_query_params_builder import RequestQueryParamsBuilder
-
 
 class FraudAdapter(BaseAdapter):
     def __init__(self, request_options: RequestOptions) -> None:
@@ -23,7 +23,7 @@ class FraudAdapter(BaseAdapter):
     def search_fraud_checks(self, request: SearchFraudChecksRequest) -> FraudCheckListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/fraud/v1/fraud-checks" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -35,7 +35,7 @@ class FraudAdapter(BaseAdapter):
     def search_fraud_rules(self, request: SearchFraudRuleRequest) -> FraudRuleResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/fraud/v1/rules" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -44,15 +44,14 @@ class FraudAdapter(BaseAdapter):
             response_type=FraudCheckListResponse
         )
 
-    def update_fraud_check_status(self, id: int, fraud_check_status: FraudCheckStatus) -> None:
-        path = "/fraud/v1/fraud-checks/{}/check-status".format(id)
-        body = UpdateFraudCheckRequest(check_status=fraud_check_status)
-        headers = self._create_headers(body, path)
+    def update_fraud_check_status(self, request: UpdateFraudCheckStatusRequest) -> None:
+        path = "/fraud/v1/fraud-checks/{}/check-status".format(request.id)
+        headers = self._create_headers(request, path)
         self._http_client.request(
             method="PUT",
             url=self.request_options.base_url + path,
             headers=headers,
-            body=body,
+            body=request,
             response_type=None
         )
 
@@ -87,9 +86,9 @@ class FraudAdapter(BaseAdapter):
         )
         self.add_value_to_value_list(body)
 
-    def delete_value_list(self, list_name: str) -> None:
-        path = "/fraud/v1/value-lists/{}".format(list_name)
-        headers = self._create_headers(None, path)
+    def delete_value_list(self, request: DeleteValueListRequest) -> None:
+        path = "/fraud/v1/value-lists/{}".format(request.list_name)
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,
@@ -128,9 +127,9 @@ class FraudAdapter(BaseAdapter):
         """
         self.add_card_fingerprint(request=request, list_name=list_name)
 
-    def remove_value_from_value_list(self, list_name: str, value_id: str) -> None:
-        path = "/fraud/v1/value-lists/{}/values/{}".format(list_name, value_id)
-        headers = self._create_headers(None, path)
+    def remove_value_from_value_list(self, request: RemoveValueFromValueListRequest) -> None:
+        path = "/fraud/v1/value-lists/{}/values/{}".format(request.list_name, request.value_id)
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,

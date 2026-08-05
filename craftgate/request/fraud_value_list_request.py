@@ -1,9 +1,10 @@
 from typing import Optional
 
 from craftgate.model.fraud_value_type import FraudValueType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class FraudValueListRequest(object):
+class FraudValueListRequest(BaseRequest):
     def __init__(
             self,
             list_name: Optional[str] = None,

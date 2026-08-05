@@ -1,6 +1,9 @@
 from typing import Optional
 
-class RetrieveCardFromIvrRequest(object):
+from craftgate.request.common.base_request import BaseRequest
+
+
+class RetrieveCardFromIvrRequest(BaseRequest):
     def __init__(
             self,
             card_user_key: Optional[str] = None,

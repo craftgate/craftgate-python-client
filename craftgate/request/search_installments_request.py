@@ -2,9 +2,10 @@ from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchInstallmentsRequest(object):
+class SearchInstallmentsRequest(BaseRequest):
     def __init__(
             self,
             bin_number: Optional[str] = None,

@@ -4,10 +4,11 @@ from craftgate.model.currency import Currency
 from craftgate.model.payment_authentication_type import PaymentAuthenticationType
 from craftgate.model.pos_integrator import PosIntegrator
 from craftgate.model.pos_status import PosStatus
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.create_merchant_pos_user import CreateMerchantPosUser
 
 
-class CreateMerchantPosRequest(object):
+class CreateMerchantPosRequest(BaseRequest):
     def __init__(
             self,
             status: PosStatus = PosStatus.AUTOPILOT,

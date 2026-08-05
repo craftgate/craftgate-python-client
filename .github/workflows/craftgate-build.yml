@@ -38,6 +38,9 @@ jobs:
       - name: Compile sources
         run: python -m compileall craftgate
 
+      - name: Run unit tests
+        run: python -m unittest tests.test_idempotency -v
+
       - name: Build distribution and verify metadata
         if: matrix.python-version == '3.12'
         run: |

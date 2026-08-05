@@ -3,6 +3,8 @@ from datetime import date, datetime
 from enum import Enum
 from typing import Any, Iterable, Mapping, Tuple
 
+from craftgate.request.common.header_options import HeaderOptions
+
 
 class RequestQueryParamsBuilder:
 
@@ -13,7 +15,7 @@ class RequestQueryParamsBuilder:
 
         params = []
         for attr, value in RequestQueryParamsBuilder._iterate_fields(request):
-            if value is None:
+            if value is None or isinstance(value, HeaderOptions):
                 continue
 
             key = RequestQueryParamsBuilder._to_camel(attr)

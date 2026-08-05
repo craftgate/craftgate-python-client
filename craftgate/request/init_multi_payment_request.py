@@ -5,10 +5,11 @@ from craftgate.model.payment_source import PaymentSource
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_method import PaymentMethod
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.payment_item import PaymentItem
 
 
-class InitMultiPaymentRequest(object):
+class InitMultiPaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,

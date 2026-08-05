@@ -5,13 +5,14 @@ from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_method import PaymentMethod
 from craftgate.model.payment_phase import PaymentPhase
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.custom_installment import CustomInstallment
 from craftgate.request.dto.fraud_check_parameters import FraudCheckParameters
 from craftgate.request.dto.payment_item import PaymentItem
 from craftgate.request.dto.routing_options import RoutingOptions
 
 
-class InitCheckoutPaymentRequest(object):
+class InitCheckoutPaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,

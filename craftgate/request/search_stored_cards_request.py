@@ -4,9 +4,10 @@ from typing import Optional
 from craftgate.model.card_association import CardAssociation
 from craftgate.model.card_expiry_status import CardExpiryStatus
 from craftgate.model.card_type import CardType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchStoredCardsRequest(object):
+class SearchStoredCardsRequest(BaseRequest):
     def __init__(
             self,
             card_alias: Optional[str] = None,

@@ -1,7 +1,9 @@
 from typing import List, Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class CreateInstantWalletSettlementRequest(object):
+
+class CreateInstantWalletSettlementRequest(BaseRequest):
     def __init__(
             self,
             excluded_sub_merchant_member_ids: Optional[List[int]] = None
