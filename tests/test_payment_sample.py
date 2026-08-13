@@ -1393,6 +1393,31 @@ class PaymentSample(unittest.TestCase):
         self.assertEqual(Decimal("12.35"), resp.loyalties[0].reward.card_reward_money)
         self.assertEqual(Decimal("5.20"), resp.loyalties[0].reward.firm_reward_money)
 
+    def test_retrieve_loyalties_by_installment(self):
+        req = RetrieveLoyaltiesRequest()
+        req.card_number = "5482370000000003"
+        req.expire_year = "2044"
+        req.expire_month = "07"
+        req.cvc = "000"
+
+        req.client_ip = "127.0.0.1"
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.fraud_params = FraudCheckParameters()
+        req.fraud_params.buyer_email = "buyer@email.com"
+        req.fraud_params.buyer_phone_number = "905555555555"
+        req.fraud_params.buyer_external_id = "buyerExternalId444"
+        req.fraud_params.custom_fraud_variable = "sessionId213123"
+
+        resp = self.payment.retrieve_loyalties(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertEqual("Maximum", resp.card_brand)
+        self.assertIsNotNone(resp.loyalties)
+        self.assertGreater(len(resp.loyalties), 0)
+        self.assertEqual(LoyaltyType.ADDITIONAL_INSTALLMENT, resp.loyalties[0].type)
+        self.assertEqual("+5 taksit", resp.loyalties[0].message)
+        self.assertEqual("installment5", resp.loyalties[0].loyalty_data.code)
+
     def test_refund_payment(self):
         req = RefundPaymentRequest()
         req.payment_id = 1
