@@ -23,8 +23,10 @@ class InstallmentAdapter(BaseAdapter):
             response_type=InstallmentListResponse
         )
 
-    def retrieve_bin_number(self, bin_number: str) -> BinNumberResponse:
+    def retrieve_bin_number(self, bin_number: str, include_global_bins: bool = False) -> BinNumberResponse:
         path = "/installment/v1/bins/{}".format(bin_number)
+        if include_global_bins:
+            path += "?includeGlobalBins=true"
         headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
