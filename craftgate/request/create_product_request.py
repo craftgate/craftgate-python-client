@@ -21,7 +21,8 @@ class CreateProductRequest(BaseRequest):
             description: Optional[str] = None,
             multi_payment: bool = False,
             enabled_installments: Optional[Set[int]] = None,
-            basket_identifier: Optional[str] = None
+            basket_identifier: Optional[str] = None,
+            force_three_ds: bool = False
     ) -> None:
         self.name = name
         self.channel = channel
@@ -34,5 +35,6 @@ class CreateProductRequest(BaseRequest):
         self.expires_at = expires_at
         self.description = description
         self.multi_payment = multi_payment
+        self.force_three_ds = force_three_ds
         self.enabled_installments = enabled_installments
         self.basket_identifier = basket_identifier

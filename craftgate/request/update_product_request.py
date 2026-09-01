@@ -22,6 +22,7 @@ class UpdateProductRequest(BaseRequest):
             description: Optional[str] = None,
             expires_at: Optional[datetime] = None,
             multi_payment: bool = False,
+            force_three_ds: bool = False,
             enabled_installments: Optional[Set[int]] = None,
             basket_identifier: Optional[str] = None
     ) -> None:
@@ -37,5 +38,6 @@ class UpdateProductRequest(BaseRequest):
         self.description = description
         self.expires_at = expires_at
         self.multi_payment = multi_payment
+        self.force_three_ds = force_three_ds
         self.enabled_installments = enabled_installments
         self.basket_identifier = basket_identifier
