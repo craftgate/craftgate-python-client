@@ -1393,6 +1393,16 @@ class PaymentSample(unittest.TestCase):
         self.assertEqual(Decimal("12.35"), resp.loyalties[0].reward.card_reward_money)
         self.assertEqual(Decimal("5.20"), resp.loyalties[0].reward.firm_reward_money)
 
+    def test_retrieve_loyalties_with_secure_fields(self):
+        req = RetrieveLoyaltiesRequest()
+        req.secure_fields_token = "xxXXxx"
+
+        resp = self.payment.retrieve_loyalties(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(resp.card_brand)
+        self.assertIsNotNone(resp.loyalties)
+
     def test_refund_payment(self):
         req = RefundPaymentRequest()
         req.payment_id = 1
