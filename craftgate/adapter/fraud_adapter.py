@@ -41,7 +41,7 @@ class FraudAdapter(BaseAdapter):
             url=self.request_options.base_url + path,
             headers=headers,
             body=None,
-            response_type=FraudCheckListResponse
+            response_type=FraudRuleResponse
         )
 
     def update_fraud_check_status(self, request: UpdateFraudCheckStatusRequest) -> None:
