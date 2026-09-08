@@ -1,6 +1,7 @@
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.check_masterpass_user_request import CheckMasterpassUserRequest
+from craftgate.request.masterpass_account_token_generate_request import MasterpassAccountTokenGenerateRequest
 from craftgate.request.masterpass_payment_complete_request import MasterpassPaymentCompleteRequest
 from craftgate.request.masterpass_payment_threeds_complete_request import MasterpassPaymentThreeDSCompleteRequest
 from craftgate.request.masterpass_payment_threeds_init_request import MasterpassPaymentThreeDSInitRequest
@@ -8,6 +9,7 @@ from craftgate.request.masterpass_payment_token_generate_request import Masterpa
 from craftgate.request.masterpass_retrieve_loyalties_request import MasterpassRetrieveLoyaltiesRequest
 from craftgate.request_options import RequestOptions
 from craftgate.response.check_masterpass_user_response import CheckMasterpassUserResponse
+from craftgate.response.masterpass_account_token_generate_response import MasterpassAccountTokenGenerateResponse
 from craftgate.response.masterpass_payment_threeds_init_response import MasterpassPaymentThreeDSInitResponse
 from craftgate.response.masterpass_payment_token_generate_response import MasterpassPaymentTokenGenerateResponse
 from craftgate.response.payment_response import PaymentResponse
@@ -41,6 +43,19 @@ class MasterpassPaymentAdapter(BaseAdapter):
             headers=headers,
             body=request,
             response_type=MasterpassPaymentTokenGenerateResponse
+        )
+
+    def generate_masterpass_account_token(
+            self, request: MasterpassAccountTokenGenerateRequest
+    ) -> MasterpassAccountTokenGenerateResponse:
+        path = "/payment/v2/masterpass-accounts/generate-token"
+        headers = self._create_headers(request, path)
+        return self._http_client.request(
+            method="POST",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=request,
+            response_type=MasterpassAccountTokenGenerateResponse
         )
 
     def complete_masterpass_payment(self, request: MasterpassPaymentCompleteRequest) -> PaymentResponse:
