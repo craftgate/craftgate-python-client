@@ -22,6 +22,7 @@ class InitCheckoutPaymentRequest(BaseRequest):
             conversation_id: Optional[str] = None,
             external_id: Optional[str] = None,
             order_id: Optional[str] = None,
+            basket_identifier: Optional[str] = None,
             callback_url: Optional[str] = None,
             client_ip: Optional[str] = None,
             payment_phase: PaymentPhase = PaymentPhase.AUTH,
@@ -58,6 +59,7 @@ class InitCheckoutPaymentRequest(BaseRequest):
         self.conversation_id = conversation_id
         self.external_id = external_id
         self.order_id = order_id
+        self.basket_identifier = basket_identifier
         self.callback_url = callback_url
         self.client_ip = client_ip
         self.payment_phase = payment_phase
