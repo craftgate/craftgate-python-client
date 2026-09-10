@@ -27,7 +27,6 @@ class MerchantPosResponse(object):
             terminal_id: Optional[str] = None,
             threeds_posnet_id: Optional[str] = None,
             threeds_terminal_id: Optional[str] = None,
-            threeds_key_exists: Optional[bool] = None,
             threeds_path: Optional[str] = None,
             enable_foreign_card: Optional[bool] = None,
             enable_installment: Optional[bool] = None,
@@ -59,7 +58,6 @@ class MerchantPosResponse(object):
         self.terminal_id = terminal_id
         self.threeds_posnet_id = threeds_posnet_id
         self.threeds_terminal_id = threeds_terminal_id
-        self.threeds_key_exists = threeds_key_exists
         self.threeds_path = threeds_path
         self.enable_foreign_card = enable_foreign_card
         self.enable_installment = enable_installment
