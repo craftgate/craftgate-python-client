@@ -19,6 +19,7 @@ class MasterpassCreatePayment(object):
             conversation_id: Optional[str] = None,
             external_id: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             payment_phase: PaymentPhase = PaymentPhase.AUTH,
             payment_channel: Optional[str] = None,
             buyer_member_id: Optional[int] = None,
@@ -35,6 +36,7 @@ class MasterpassCreatePayment(object):
         self.conversation_id = conversation_id
         self.external_id = external_id
         self.client_ip = client_ip
+        self.client_port = client_port
         self.payment_phase = payment_phase
         self.payment_channel = payment_channel
         self.buyer_member_id = buyer_member_id

@@ -26,6 +26,7 @@ class InitPosApmPaymentRequest(BaseRequest):
             buyer_member_id: Optional[int] = None,
             bank_order_id: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             items: Optional[List[PaymentItem]] = None,
             additional_params: Optional[Dict[str, Any]] = None,
             installments: Optional[List[PosApmInstallment]] = None,
@@ -46,6 +47,7 @@ class InitPosApmPaymentRequest(BaseRequest):
         self.buyer_member_id = buyer_member_id
         self.bank_order_id = bank_order_id
         self.client_ip = client_ip
+        self.client_port = client_port
         self.items = items or []
         self.additional_params = additional_params or {}
         self.installments = installments or []
