@@ -644,6 +644,7 @@ class PaymentSample(unittest.TestCase):
         req.external_id = "optional-externalId"
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
 
         resp = self.payment.init_apm_deposit_payment(req)
         print(resp)
@@ -1375,6 +1376,7 @@ class PaymentSample(unittest.TestCase):
         req.cvc = "000"
 
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
         req.fraud_params = FraudCheckParameters()
         req.fraud_params.buyer_email = "buyer@email.com"
@@ -1810,6 +1812,7 @@ class PaymentSample(unittest.TestCase):
         req.verification_price = Decimal("10")
         req.currency = Currency.TRY
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
 
         resp = self.payment.verify_card(req)
         print(resp)
