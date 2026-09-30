@@ -13,7 +13,9 @@ class RetrieveLoyaltiesRequest(BaseRequest):
             cvc: Optional[str] = None,
             card_user_key: Optional[str] = None,
             card_token: Optional[str] = None,
+            secure_fields_token: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             conversation_id: Optional[str] = None,
             fraud_params: Optional[FraudCheckParameters] = None,
     ) -> None:
@@ -23,6 +25,8 @@ class RetrieveLoyaltiesRequest(BaseRequest):
         self.cvc = cvc
         self.card_user_key = card_user_key
         self.card_token = card_token
+        self.secure_fields_token = secure_fields_token
         self.client_ip = client_ip
+        self.client_port = client_port
         self.conversation_id = conversation_id
         self.fraud_params = fraud_params

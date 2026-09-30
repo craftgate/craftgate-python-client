@@ -22,6 +22,7 @@ class CreateApmPaymentRequest(BaseRequest):
             buyer_member_id: Optional[int] = None,
             apm_order_id: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             items: Optional[List[PaymentItem]] = None
     ) -> None:
         self.apm_type = apm_type
@@ -35,4 +36,5 @@ class CreateApmPaymentRequest(BaseRequest):
         self.buyer_member_id = buyer_member_id
         self.apm_order_id = apm_order_id
         self.client_ip = client_ip
+        self.client_port = client_port
         self.items = items

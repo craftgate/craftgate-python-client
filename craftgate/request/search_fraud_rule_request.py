@@ -3,6 +3,7 @@ from typing import Optional
 
 from craftgate.model.fraud_action import FraudAction
 from craftgate.model.fraud_operation import FraudOperation
+from craftgate.model.fraud_rule_scope import FraudRuleScope
 from craftgate.request.common.base_request import BaseRequest
 
 class SearchFraudRuleRequest(BaseRequest):
@@ -13,6 +14,7 @@ class SearchFraudRuleRequest(BaseRequest):
             max_created_date: Optional[datetime] = None,
             action: Optional[FraudAction] = None,
             operation: Optional[FraudOperation] = None,
+            scope: Optional[FraudRuleScope] = None,
             page: Optional[int] = None,
             size: Optional[int] = None,
     ) -> None:
@@ -20,6 +22,7 @@ class SearchFraudRuleRequest(BaseRequest):
         self.size = size
         self.action = action
         self.operation = operation
+        self.scope = scope
         self.name = name
         self.min_created_date = min_created_date
         self.max_created_date = max_created_date

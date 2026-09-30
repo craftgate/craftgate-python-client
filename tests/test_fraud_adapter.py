@@ -4,7 +4,7 @@ import unittest
 from datetime import datetime, timedelta
 
 from craftgate import Craftgate, RequestOptions
-from craftgate.model import FraudAction, FraudValueType, FraudCheckStatus
+from craftgate.model import FraudAction, FraudValueType, FraudCheckStatus, FraudRuleScope
 from craftgate.model.fraud_operation import FraudOperation
 from craftgate.request import DeleteValueListRequest, FraudValueListRequest, RemoveValueFromValueListRequest, \
     SearchFraudChecksRequest, UpdateFraudCheckStatusRequest
@@ -94,6 +94,15 @@ class FraudAdapterSample(unittest.TestCase):
 
         self.assertIsNotNone(resp)
         self.assertTrue(resp.items)
+
+    def test_search_global_fraud_rules(self):
+        req = SearchFraudRuleRequest(scope=FraudRuleScope.GLOBAL)
+        resp = self.fraud.search_fraud_rules(req)
+        print(resp)
+
+        self.assertIsNotNone(resp)
+        self.assertTrue(resp.items)
+        self.assertTrue(all(item.is_global for item in resp.items))
 
     def test_update_fraud_check_status(self):
         self.fraud.update_fraud_check_status(UpdateFraudCheckStatusRequest(

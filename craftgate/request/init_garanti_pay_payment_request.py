@@ -20,6 +20,7 @@ class InitGarantiPayPaymentRequest(BaseRequest):
             external_id: Optional[str] = None,
             callback_url: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             payment_channel: Optional[str] = None,
             buyer_member_id: Optional[int] = None,
             bank_order_id: Optional[str] = None,
@@ -36,6 +37,7 @@ class InitGarantiPayPaymentRequest(BaseRequest):
         self.external_id = external_id
         self.callback_url = callback_url
         self.client_ip = client_ip
+        self.client_port = client_port
         self.payment_channel = payment_channel
         self.buyer_member_id = buyer_member_id
         self.bank_order_id = bank_order_id
