@@ -47,6 +47,30 @@ class HookSample(unittest.TestCase):
         is_verified = self.hook.is_webhook_verified(merchant_hook_key, incoming_signature, webhook_data)
         self.assertFalse(is_verified)
 
+    def test_should_verify_webhook_signature_with_string_values(self):
+        merchant_hook_key = "Aoh7tReTybO6wOjBmOJFFsOR53SBojEp"
+        incoming_signature = "0wRB5XqWJxwwPbn5Z9TcbHh8EGYFufSYTsRMB74N094="
+        webhook_data = WebhookData(
+            event_type="API_VERIFY_AND_AUTH",
+            event_time=datetime(2025, 7, 21, 16, 40, 21, 395655),
+            event_timestamp=1661521221,
+            status="SUCCESS",
+            payload_id="584"
+        )
+        is_verified = self.hook.is_webhook_verified(merchant_hook_key, incoming_signature, webhook_data)
+        self.assertTrue(is_verified)
+
+    def test_should_return_false_when_arguments_are_none(self):
+        webhook_data = WebhookData(
+            event_type=WebhookEventType.API_VERIFY_AND_AUTH,
+            event_timestamp=1661521221,
+            status=WebhookStatus.SUCCESS,
+            payload_id="584"
+        )
+        self.assertFalse(self.hook.is_webhook_verified(None, "sig", webhook_data))
+        self.assertFalse(self.hook.is_webhook_verified("key", None, webhook_data))
+        self.assertFalse(self.hook.is_webhook_verified("key", "sig", None))
+
 
 if __name__ == "__main__":
     unittest.main()
