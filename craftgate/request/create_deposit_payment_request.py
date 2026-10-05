@@ -17,6 +17,7 @@ class CreateDepositPaymentRequest(BaseRequest):
             callback_url: Optional[str] = None,
             pos_alias: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             card: Optional[Card] = None,
             routing_options: Optional[RoutingOptions] = None
     ) -> None:
@@ -27,5 +28,6 @@ class CreateDepositPaymentRequest(BaseRequest):
         self.callback_url = callback_url
         self.pos_alias = pos_alias
         self.client_ip = client_ip
+        self.client_port = client_port
         self.card = card
         self.routing_options = routing_options
