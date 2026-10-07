@@ -1,9 +1,10 @@
 from typing import Optional
 
 from craftgate.model.card_provider import CardProvider
+from craftgate.request.common.base_request import BaseRequest
 
 
-class RetrieveProviderCardRequest(object):
+class RetrieveProviderCardRequest(BaseRequest):
     def __init__(
             self,
             provider_card_token: Optional[str] = None,

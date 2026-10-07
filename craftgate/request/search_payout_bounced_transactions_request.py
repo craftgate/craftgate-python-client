@@ -1,8 +1,10 @@
 from datetime import datetime
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class SearchPayoutBouncedTransactionsRequest(object):
+
+class SearchPayoutBouncedTransactionsRequest(BaseRequest):
     def __init__(
             self,
             start_date: Optional[datetime] = None,

@@ -2,6 +2,7 @@ from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.create_instant_wallet_settlement_request import CreateInstantWalletSettlementRequest
 from craftgate.request.create_payout_account_request import CreatePayoutAccountRequest
+from craftgate.request.delete_payout_account_request import DeletePayoutAccountRequest
 from craftgate.request.search_payout_account_request import SearchPayoutAccountRequest
 from craftgate.request.update_payout_account_request import UpdatePayoutAccountRequest
 from craftgate.request_options import RequestOptions
@@ -49,9 +50,9 @@ class SettlementAdapter(BaseAdapter):
             response_type=None
         )
 
-    def delete_payout_account(self, id: int) -> None:
-        path = "/settlement/v1/payout-accounts/{}".format(id)
-        headers = self._create_headers(None, path)
+    def delete_payout_account(self, request: DeletePayoutAccountRequest) -> None:
+        path = "/settlement/v1/payout-accounts/{}".format(request.id)
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,
@@ -63,7 +64,7 @@ class SettlementAdapter(BaseAdapter):
     def search_payout_account(self, request: SearchPayoutAccountRequest) -> PayoutAccountListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/settlement/v1/payout-accounts" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

@@ -1,7 +1,9 @@
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class CreateMerchantRequest(object):
+
+class CreateMerchantRequest(BaseRequest):
     def __init__(
             self,
             name: Optional[str] = None,

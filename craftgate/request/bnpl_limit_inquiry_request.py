@@ -4,10 +4,11 @@ from typing import Dict, List, Optional
 from craftgate.model.apm_type import ApmType
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.payment_item import PaymentItem
 
 
-class BnplLimitInquiryRequest(object):
+class BnplLimitInquiryRequest(BaseRequest):
     def __init__(
             self,
             apm_type: Optional[ApmType] = None,

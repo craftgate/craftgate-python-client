@@ -6,8 +6,8 @@ from decimal import Decimal
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import CardAssociation, CardBrand, Currency, PaymentAuthenticationType, \
     PaymentPhase, PosIntegrator, PosOperationType, PosStatus, PosUserType, Status
-from craftgate.request import CreateMerchantPosRequest, SearchMerchantPosRequest, UpdateMerchantPosCommissionsRequest, \
-    UpdateMerchantPosRequest
+from craftgate.request import CreateMerchantPosRequest, DeleteMerchantPosRequest, SearchMerchantPosRequest, \
+    UpdateMerchantPosCommissionsRequest, UpdateMerchantPosRequest, UpdateMerchantPosStatusRequest
 from craftgate.request.dto import CreateMerchantPosUser, UpdateMerchantPosCommission, UpdateMerchantPosUser
 
 
@@ -149,7 +149,8 @@ class MerchantSample(unittest.TestCase):
 
     def test_update_merchant_pos_status(self):
         merchant_pos_id = 3353325
-        self.merchant.update_merchant_pos_status(merchant_pos_id, PosStatus.PASSIVE)
+        self.merchant.update_merchant_pos_status(UpdateMerchantPosStatusRequest(
+            merchant_pos_id=merchant_pos_id, pos_status=PosStatus.PASSIVE))
         self.assertTrue(True)
 
     def test_retrieve_merchant_pos(self):
@@ -162,7 +163,7 @@ class MerchantSample(unittest.TestCase):
 
     def test_delete_merchant_pos(self):
         merchant_pos_id = 3353325
-        self.merchant.delete_merchant_pos(merchant_pos_id)
+        self.merchant.delete_merchant_pos(DeleteMerchantPosRequest(merchant_pos_id=merchant_pos_id))
         self.assertTrue(True)
 
     def test_search_merchant_poses(self):

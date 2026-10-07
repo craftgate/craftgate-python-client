@@ -3,9 +3,10 @@ from typing import Optional, Dict, Any
 
 from craftgate.model.apm_type import ApmType
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class InitApmDepositPaymentRequest(object):
+class InitApmDepositPaymentRequest(BaseRequest):
     def __init__(
             self,
             apm_type: Optional[ApmType] = None,
@@ -20,7 +21,8 @@ class InitApmDepositPaymentRequest(object):
             apm_order_id: Optional[str] = None,
             apm_user_identity: Optional[str] = None,
             additional_params: Optional[Dict[str, Any]] = None,
-            client_ip: Optional[str] = None
+            client_ip: Optional[str] = None,
+            client_port: Optional[int] = None
     ) -> None:
         self.apm_type = apm_type
         self.merchant_apm_id = merchant_apm_id
@@ -35,3 +37,4 @@ class InitApmDepositPaymentRequest(object):
         self.apm_user_identity = apm_user_identity
         self.additional_params = additional_params
         self.client_ip = client_ip
+        self.client_port = client_port

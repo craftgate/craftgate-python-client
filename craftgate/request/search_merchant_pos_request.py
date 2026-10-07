@@ -1,9 +1,10 @@
 from typing import Optional
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchMerchantPosRequest(object):
+class SearchMerchantPosRequest(BaseRequest):
     def __init__(
             self,
             name: Optional[str] = None,

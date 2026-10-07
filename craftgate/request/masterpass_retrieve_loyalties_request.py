@@ -1,7 +1,9 @@
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class MasterpassRetrieveLoyaltiesRequest(object):
+
+class MasterpassRetrieveLoyaltiesRequest(BaseRequest):
     def __init__(
             self,
             msisdn: Optional[str] = None,

@@ -1,9 +1,10 @@
 from typing import Optional
 
 from craftgate.model.payout_account_type import PayoutAccountType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class UpdatePayoutAccountRequest(object):
+class UpdatePayoutAccountRequest(BaseRequest):
     def __init__(
             self,
             type: Optional[PayoutAccountType] = None,

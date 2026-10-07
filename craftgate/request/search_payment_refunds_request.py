@@ -4,9 +4,10 @@ from typing import Optional
 
 from craftgate.model.currency import Currency
 from craftgate.model.refund_status import RefundStatus
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchPaymentRefundsRequest(object):
+class SearchPaymentRefundsRequest(BaseRequest):
     def __init__(
             self,
             page: Optional[int] = None,

@@ -2,11 +2,12 @@ from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.card import Card
 from craftgate.request.dto.routing_options import RoutingOptions
 
 
-class CreateDepositPaymentRequest(object):
+class CreateDepositPaymentRequest(BaseRequest):
     def __init__(
             self,
             buyer_member_id: Optional[int] = None,
@@ -16,6 +17,7 @@ class CreateDepositPaymentRequest(object):
             callback_url: Optional[str] = None,
             pos_alias: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             card: Optional[Card] = None,
             routing_options: Optional[RoutingOptions] = None
     ) -> None:
@@ -26,5 +28,6 @@ class CreateDepositPaymentRequest(object):
         self.callback_url = callback_url
         self.pos_alias = pos_alias
         self.client_ip = client_ip
+        self.client_port = client_port
         self.card = card
         self.routing_options = routing_options

@@ -13,7 +13,7 @@ class MultiPaymentResponse(object):
             token: Optional[str] = None,
             conversation_id: Optional[str] = None,
             external_id: Optional[str] = None,
-            paid_price: Optional[Decimal] = None,
+            price: Optional[Decimal] = None,
             remaining_amount: Optional[Decimal] = None,
             token_expire_date: Optional[datetime] = None,
             payment_ids: Optional[List[int]] = None
@@ -23,7 +23,7 @@ class MultiPaymentResponse(object):
         self.token = token
         self.conversation_id = conversation_id
         self.external_id = external_id
-        self.paid_price = paid_price
+        self.price = price
         self.remaining_amount = remaining_amount
         self.token_expire_date = token_expire_date
         self.payment_ids = payment_ids

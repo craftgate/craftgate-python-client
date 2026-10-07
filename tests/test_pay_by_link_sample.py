@@ -6,7 +6,7 @@ from decimal import Decimal
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import Currency, Status
-from craftgate.request import CreateProductRequest, SearchProductsRequest, UpdateProductRequest
+from craftgate.request import CreateProductRequest, DeleteProductRequest, SearchProductsRequest, UpdateProductRequest
 
 
 class PayByLinkSample(unittest.TestCase):
@@ -92,7 +92,7 @@ class PayByLinkSample(unittest.TestCase):
 
     def test_delete_product(self):
         product_id = 6807
-        self.pay_by_link.delete_product(product_id)
+        self.pay_by_link.delete_product(DeleteProductRequest(id=product_id))
         self.assertTrue(True)
 
     def test_search_products(self):

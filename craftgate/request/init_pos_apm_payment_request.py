@@ -4,12 +4,13 @@ from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_phase import PaymentPhase
 from craftgate.model.pos_apm_payment_provider import PosApmPaymentProvider
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.fraud_check_parameters import FraudCheckParameters
 from craftgate.request.dto.payment_item import PaymentItem
 from craftgate.request.dto.pos_apm_installment import PosApmInstallment
 
 
-class InitPosApmPaymentRequest(object):
+class InitPosApmPaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,
@@ -25,6 +26,7 @@ class InitPosApmPaymentRequest(object):
             buyer_member_id: Optional[int] = None,
             bank_order_id: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             items: Optional[List[PaymentItem]] = None,
             additional_params: Optional[Dict[str, Any]] = None,
             installments: Optional[List[PosApmInstallment]] = None,
@@ -45,6 +47,7 @@ class InitPosApmPaymentRequest(object):
         self.buyer_member_id = buyer_member_id
         self.bank_order_id = bank_order_id
         self.client_ip = client_ip
+        self.client_port = client_port
         self.items = items or []
         self.additional_params = additional_params or {}
         self.installments = installments or []

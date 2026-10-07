@@ -5,13 +5,14 @@ from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_method import PaymentMethod
 from craftgate.model.payment_phase import PaymentPhase
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.custom_installment import CustomInstallment
 from craftgate.request.dto.fraud_check_parameters import FraudCheckParameters
 from craftgate.request.dto.payment_item import PaymentItem
 from craftgate.request.dto.routing_options import RoutingOptions
 
 
-class InitCheckoutPaymentRequest(object):
+class InitCheckoutPaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,
@@ -49,7 +50,8 @@ class InitCheckoutPaymentRequest(object):
             routing_options: Optional[RoutingOptions] = None,
             fraud_params: Optional[FraudCheckParameters] = None,
             additional_params: Optional[Dict[str, Any]] = None,
-            card_brand_installments: Optional[Dict[str, List[CustomInstallment]]] = None
+            card_brand_installments: Optional[Dict[str, List[CustomInstallment]]] = None,
+            retry: Optional[bool] = None
     ) -> None:
         self.price = price
         self.paid_price = paid_price
@@ -87,3 +89,4 @@ class InitCheckoutPaymentRequest(object):
         self.fraud_params = fraud_params
         self.additional_params = additional_params
         self.card_brand_installments = card_brand_installments
+        self.retry = retry

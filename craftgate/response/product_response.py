@@ -24,6 +24,7 @@ class ProductResponse(object):
             enabled_installments: Optional[Set[int]] = None,
             url: Optional[str] = None,
             multi_payment: Optional[bool] = None,
+            force_three_ds: Optional[bool] = None,
             channel: Optional[str] = None,
             expires_at: Optional[datetime] = None,
             basket_identifier: Optional[str] = None
@@ -43,6 +44,7 @@ class ProductResponse(object):
         self.enabled_installments = enabled_installments
         self.url = url
         self.multi_payment = multi_payment
+        self.force_three_ds = force_three_ds
         self.channel = channel
         self.expires_at = expires_at
         self.basket_identifier = basket_identifier

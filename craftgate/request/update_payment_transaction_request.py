@@ -2,8 +2,10 @@ from datetime import datetime
 from decimal import Decimal
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class UpdatePaymentTransactionRequest(object):
+
+class UpdatePaymentTransactionRequest(BaseRequest):
     def __init__(
             self,
             payment_transaction_id: Optional[int] = None,

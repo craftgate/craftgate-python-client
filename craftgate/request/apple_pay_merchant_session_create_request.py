@@ -1,4 +1,7 @@
-class ApplePayMerchantSessionCreateRequest(object):
+from craftgate.request.common.base_request import BaseRequest
+
+
+class ApplePayMerchantSessionCreateRequest(BaseRequest):
     def __init__(
             self,
             merchant_identifier: str,

@@ -3,9 +3,10 @@ from typing import Optional
 
 from craftgate.model.report_period import ReportPeriod
 from craftgate.model.report_type import ReportType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreateReportRequest:
+class CreateReportRequest(BaseRequest):
     def __init__(
             self,
             start_date: Optional[datetime] = None,

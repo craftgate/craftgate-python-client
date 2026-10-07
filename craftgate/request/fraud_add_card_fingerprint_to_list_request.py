@@ -1,9 +1,10 @@
 from typing import Optional
 
 from craftgate.model.fraud_operation import FraudOperation
+from craftgate.request.common.base_request import BaseRequest
 
 
-class FraudAddCardFingerprintToListRequest(object):
+class FraudAddCardFingerprintToListRequest(BaseRequest):
     def __init__(
             self,
             label: Optional[str] = None,

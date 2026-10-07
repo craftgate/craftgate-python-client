@@ -3,9 +3,10 @@ from typing import Optional
 
 from craftgate.model.card_verification_auth_type import CardVerificationAuthType
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class InitCheckoutCardVerifyRequest(object):
+class InitCheckoutCardVerifyRequest(BaseRequest):
     def __init__(
             self,
             verification_price: Optional[Decimal] = None,

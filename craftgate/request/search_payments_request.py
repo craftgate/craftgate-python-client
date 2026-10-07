@@ -7,9 +7,10 @@ from craftgate.model.payment_provider import PaymentProvider
 from craftgate.model.payment_source import PaymentSource
 from craftgate.model.payment_status import PaymentStatus
 from craftgate.model.payment_type import PaymentType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchPaymentsRequest(object):
+class SearchPaymentsRequest(BaseRequest):
     def __init__(
             self,
             page: Optional[int] = None,

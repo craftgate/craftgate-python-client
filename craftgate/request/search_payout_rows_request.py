@@ -2,9 +2,10 @@ from datetime import datetime
 from typing import Optional
 
 from craftgate.model.file_status import FileStatus
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchPayoutRowsRequest(object):
+class SearchPayoutRowsRequest(BaseRequest):
     def __init__(
             self,
             page: int = 0,

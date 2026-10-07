@@ -4,10 +4,11 @@ from typing import Dict, List, Optional
 from craftgate.model.apm_type import ApmType
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.payment_item import PaymentItem
 
 
-class InitApmPaymentRequest(object):
+class InitApmPaymentRequest(BaseRequest):
     def __init__(
             self,
             apm_type: Optional[ApmType] = None,
@@ -25,6 +26,7 @@ class InitApmPaymentRequest(object):
             apm_user_identity: Optional[str] = None,
             additional_params: Optional[Dict[str, str]] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             items: Optional[List[PaymentItem]] = None
     ) -> None:
         self.apm_type = apm_type
@@ -42,4 +44,5 @@ class InitApmPaymentRequest(object):
         self.apm_user_identity = apm_user_identity
         self.additional_params = additional_params
         self.client_ip = client_ip
+        self.client_port = client_port
         self.items = items

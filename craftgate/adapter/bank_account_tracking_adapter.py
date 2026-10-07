@@ -18,7 +18,7 @@ class BankAccountTrackingAdapter(BaseAdapter):
     ) -> BankAccountTrackingRecordListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/bank-account-tracking/v1/merchant-bank-account-trackings/records" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,

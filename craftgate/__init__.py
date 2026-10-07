@@ -23,59 +23,59 @@ class Craftgate:
 
         self.options = options
 
-    def payment(self):
+    def payment(self) -> PaymentAdapter:
         return PaymentAdapter(self.options)
 
-    def bank_account_tracking(self):
+    def bank_account_tracking(self) -> BankAccountTrackingAdapter:
         return BankAccountTrackingAdapter(self.options)
 
-    def bkm_express_payment(self):
+    def bkm_express_payment(self) -> BkmExpressPaymentAdapter:
         return BkmExpressPaymentAdapter(self.options)
 
-    def file_reporting(self):
+    def file_reporting(self) -> FileReportingAdapter:
         return FileReportingAdapter(self.options)
 
-    def fraud(self):
+    def fraud(self) -> FraudAdapter:
         return FraudAdapter(self.options)
 
-    def hook(self):
+    def hook(self) -> HookAdapter:
         return HookAdapter(self.options)
 
-    def installment(self):
+    def installment(self) -> InstallmentAdapter:
         return InstallmentAdapter(self.options)
 
-    def juzdan_payment(self):
+    def juzdan_payment(self) -> JuzdanPaymentAdapter:
         return JuzdanPaymentAdapter(self.options)
 
-    def masterpass_payment(self):
+    def masterpass_payment(self) -> MasterpassPaymentAdapter:
         return MasterpassPaymentAdapter(self.options)
 
-    def merchant(self):
+    def merchant(self) -> MerchantAdapter:
         return MerchantAdapter(self.options)
 
-    def merchant_apm(self):
+    def merchant_apm(self) -> MerchantApmAdapter:
         return MerchantApmAdapter(self.options)
 
-    def onboarding(self):
+    def onboarding(self) -> OnboardingAdapter:
         return OnboardingAdapter(self.options)
 
-    def pay_by_link(self):
+    def pay_by_link(self) -> PayByLinkAdapter:
         return PayByLinkAdapter(self.options)
 
-    def payment_reporting(self):
+    def payment_reporting(self) -> PaymentReportingAdapter:
         return PaymentReportingAdapter(self.options)
 
-    def payment_token(self):
+    def payment_token(self) -> PaymentTokenAdapter:
         return PaymentTokenAdapter(self.options)
 
-    def settlement(self):
+    def settlement(self) -> SettlementAdapter:
         return SettlementAdapter(self.options)
 
-    def settlement_reporting(self):
+    def settlement_reporting(self) -> SettlementReportingAdapter:
         return SettlementReportingAdapter(self.options)
 
-    def wallet(self):
+    def wallet(self) -> WalletAdapter:
         return WalletAdapter(self.options)
 
-    def meal_voucher_card_tokenization(self):
+    def meal_voucher_card_tokenization(self) -> MealVoucherCardTokenizationAdapter:
         return MealVoucherCardTokenizationAdapter(self.options)

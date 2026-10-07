@@ -3,9 +3,10 @@ from typing import Optional
 
 from craftgate.model.member_type import MemberType
 from craftgate.model.settlement_earnings_destination import SettlementEarningsDestination
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreateMemberRequest(object):
+class CreateMemberRequest(BaseRequest):
     def __init__(
             self,
             member_external_id: Optional[str] = None,

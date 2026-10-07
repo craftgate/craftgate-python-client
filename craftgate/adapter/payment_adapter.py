@@ -1,6 +1,7 @@
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.apple_pay_merchant_session_create_request import ApplePayMerchantSessionCreateRequest
+from craftgate.request.approve_bnpl_payment_request import ApproveBnplPaymentRequest
 from craftgate.request.approve_payment_transactions_request import ApprovePaymentTransactionsRequest
 from craftgate.request.bnpl_payment_offer_request import BnplPaymentOfferRequest
 from craftgate.request.clone_card_request import CloneCardRequest
@@ -13,6 +14,7 @@ from craftgate.request.create_fund_transfer_deposit_payment_request import Creat
 from craftgate.request.create_payment_request import CreatePaymentRequest
 from craftgate.request.delete_stored_card_request import DeleteStoredCardRequest
 from craftgate.request.disapprove_payment_transactions_request import DisapprovePaymentTransactionsRequest
+from craftgate.request.expire_checkout_payment_request import ExpireCheckoutPaymentRequest
 from craftgate.request.init_apm_deposit_payment_request import InitApmDepositPaymentRequest
 from craftgate.request.init_apm_payment_request import InitApmPaymentRequest
 from craftgate.request.bnpl_limit_inquiry_request import BnplLimitInquiryRequest
@@ -28,12 +30,14 @@ from craftgate.request.refund_payment_request import RefundPaymentRequest
 from craftgate.request.refund_payment_transaction_mark_as_refunded_request import \
     RefundPaymentTransactionMarkAsRefundedRequest
 from craftgate.request.refund_payment_transaction_request import RefundPaymentTransactionRequest
+from craftgate.request.retrieve_card_from_ivr_request import RetrieveCardFromIvrRequest
 from craftgate.request.retrieve_loyalties_request import RetrieveLoyaltiesRequest
 from craftgate.request.retrieve_provider_card_request import RetrieveProviderCardRequest
 from craftgate.request.search_stored_cards_request import SearchStoredCardsRequest
 from craftgate.request.store_card_request import StoreCardRequest
 from craftgate.request.update_card_request import UpdateCardRequest
 from craftgate.request.update_payment_transaction_request import UpdatePaymentTransactionRequest
+from craftgate.request.verify_bnpl_payment_request import VerifyBnplPaymentRequest
 from craftgate.request.verify_card_request import VerifyCardRequest
 from craftgate.request_options import RequestOptions
 from craftgate.response.apm_deposit_payment_response import ApmDepositPaymentResponse
@@ -52,6 +56,7 @@ from craftgate.response.init_multi_payment_response import InitMultiPaymentRespo
 from craftgate.response.init_pos_apm_payment_response import InitPosApmPaymentResponse
 from craftgate.response.init_three_ds_payment_response import InitThreeDSPaymentResponse
 from craftgate.response.instant_transfer_banks_response import InstantTransferBanksResponse
+from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizationResponse
 from craftgate.response.multi_payment_response import MultiPaymentResponse
 from craftgate.response.payment_refund_response import PaymentRefundResponse
 from craftgate.response.payment_response import PaymentResponse
@@ -172,9 +177,9 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def expire_checkout_payment(self, token: str) -> None:
-        path = "/payment/v1/checkout-payments/{}".format(token)
-        headers = self._create_headers(None, path)
+    def expire_checkout_payment(self, request: ExpireCheckoutPaymentRequest) -> None:
+        path = "/payment/v1/checkout-payments/{}".format(request.token)
+        headers = self._create_headers_without_body(request, path)
         self._http_client.request(
             method="DELETE",
             url=self.request_options.base_url + path,
@@ -424,7 +429,7 @@ class PaymentAdapter(BaseAdapter):
     def search_stored_cards(self, request: SearchStoredCardsRequest) -> StoredCardListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment/v1/cards" + query
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
@@ -523,9 +528,9 @@ class PaymentAdapter(BaseAdapter):
             response_type=InitBnplPaymentResponse
         )
 
-    def approve_bnpl_payment(self, payment_id: int) -> PaymentResponse:
-        path = "/payment/v1/bnpl-payments/{}/approve".format(payment_id)
-        headers = self._create_headers(None, path)
+    def approve_bnpl_payment(self, request: ApproveBnplPaymentRequest) -> PaymentResponse:
+        path = "/payment/v1/bnpl-payments/{}/approve".format(request.payment_id)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,
@@ -534,9 +539,9 @@ class PaymentAdapter(BaseAdapter):
             response_type=PaymentResponse
         )
 
-    def verify_bnpl_payment(self, payment_id: int) -> BnplPaymentVerifyResponse:
-        path = "/payment/v1/bnpl-payments/{}/verify".format(payment_id)
-        headers = self._create_headers(None, path)
+    def verify_bnpl_payment(self, request: VerifyBnplPaymentRequest) -> BnplPaymentVerifyResponse:
+        path = "/payment/v1/bnpl-payments/{}/verify".format(request.payment_id)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="POST",
             url=self.request_options.base_url + path,
@@ -603,13 +608,25 @@ class PaymentAdapter(BaseAdapter):
     def retrieve_provider_cards(self, request: RetrieveProviderCardRequest) -> StoredCardListResponse:
         query = RequestQueryParamsBuilder.build_query_params(request)
         path = "/payment/v1/cards/provider-card-mappings{}".format(query)
-        headers = self._create_headers(None, path)
+        headers = self._create_headers_without_body(request, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
             headers=headers,
             body=None,
             response_type=StoredCardListResponse
+        )
+
+    def retrieve_card_from_ivr(self, request: RetrieveCardFromIvrRequest) -> IVRCardTokenizationResponse:
+        query = RequestQueryParamsBuilder.build_query_params(request)
+        path = "/payment/v1/ivr-cards{}".format(query)
+        headers = self._create_headers_without_body(request, path)
+        return self._http_client.request(
+            method="GET",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=None,
+            response_type=IVRCardTokenizationResponse
         )
 
     def is_3d_secure_callback_verified(self, three_d_secure_callback_key: str, params: dict) -> bool:
