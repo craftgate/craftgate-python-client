@@ -1,4 +1,4 @@
-# tests/test_instant_transfer_payment_sample.py
+# tests/test_compay_payment_sample.py
 import os
 import unittest
 import uuid
@@ -10,7 +10,7 @@ from craftgate.request import InitApmPaymentRequest
 from craftgate.request.dto import PaymentItem
 
 
-class InstantTransferPaymentSample(unittest.TestCase):
+class CompayPaymentSample(unittest.TestCase):
     API_KEY = os.environ.get("CG_API_KEY", "YOUR_API_KEY")
     SECRET_KEY = os.environ.get("CG_SECRET_KEY", "YOUR_SECRET_KEY")
     BASE_URL = os.environ.get("CG_BASE_URL", "https://sandbox-api.craftgate.io")
@@ -32,14 +32,14 @@ class InstantTransferPaymentSample(unittest.TestCase):
         self.assertTrue(len(response.items) > 0)
         self.assertIsNotNone(response.items[0])
 
-    def test_init_instant_transfer_apm_payment(self):
+    def test_init_compay_apm_payment(self):
         items = [
             PaymentItem(name="item 1", external_id=str(uuid.uuid4()), price=Decimal("0.60")),
             PaymentItem(name="item 2", external_id=str(uuid.uuid4()), price=Decimal("0.40"))
         ]
 
         request = InitApmPaymentRequest(
-            apm_type=ApmType.INSTANT_TRANSFER,
+            apm_type=ApmType.COMPAY,
             price=Decimal("1"),
             paid_price=Decimal("1"),
             currency=Currency.TRY,
@@ -47,7 +47,7 @@ class InstantTransferPaymentSample(unittest.TestCase):
             conversation_id="456d1297-908e-4bd6-a13b-4be31a6e47d5",
             external_id="optional-externalId",
             callback_url="https://www.your-website.com/craftgate-apm-callback",
-            additional_params={"bankCode": "0"},
+            additional_params={"bankCode": "0", "shopUrl": "your-website.com", "receiptDescription": "Your receipt description"},
             items=items
         )
 
