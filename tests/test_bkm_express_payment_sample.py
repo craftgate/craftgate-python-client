@@ -7,6 +7,7 @@ from craftgate import Craftgate, RequestOptions
 from craftgate.model import Currency, PaymentGroup
 from craftgate.request import CompleteBkmExpressRequest, InitBkmExpressRequest
 from craftgate.request.dto import PaymentItem
+from craftgate.request.generate_bkm_express_token import BkmExpressGenerateTokenRequest
 
 
 class BkmExpressPaymentSample(unittest.TestCase):
@@ -65,6 +66,16 @@ class BkmExpressPaymentSample(unittest.TestCase):
         token = os.environ.get("BKM_TOKEN", "cb90071c-1f2c-4fb7-9049-c5f13f9f7286")
 
         response = self.bkm_express_payment.retrieve_payment_by_token(token)
+        print(response)
+        self.assertIsNotNone(response)
+
+    def test_generate_token(self):
+        request = BkmExpressGenerateTokenRequest(
+            gsm_number="5350000000",
+            user_id="1234567890"
+        )
+
+        response = self.bkm_express_payment.generate_token(request)
         print(response)
         self.assertIsNotNone(response)
 

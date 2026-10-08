@@ -29,6 +29,8 @@ class InitCheckoutPaymentRequest(BaseRequest):
             enabled_payment_methods: Optional[List[PaymentMethod]] = None,
             masterpass_gsm_number: Optional[str] = None,
             masterpass_user_id: Optional[str] = None,
+            bex_gsm_number: Optional[str] = None,
+            bex_user_id: Optional[str] = None,
             card_user_key: Optional[str] = None,
             buyer_member_id: Optional[int] = None,
             enabled_installments: Optional[List[int]] = None,
@@ -65,6 +67,8 @@ class InitCheckoutPaymentRequest(BaseRequest):
         self.enabled_payment_methods = enabled_payment_methods
         self.masterpass_gsm_number = masterpass_gsm_number
         self.masterpass_user_id = masterpass_user_id
+        self.bex_gsm_number = bex_gsm_number
+        self.bex_user_id = bex_user_id
         self.card_user_key = card_user_key
         self.buyer_member_id = buyer_member_id
         self.enabled_installments = enabled_installments
