@@ -43,3 +43,4 @@ class PosIntegrator(str, Enum):
     RUBIK = "RUBIK"
     BIN_PAY = "BIN_PAY"
     TURKONAY = "TURKONAY"
+    ENPARA = "ENPARA"
