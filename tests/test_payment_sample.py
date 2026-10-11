@@ -644,6 +644,7 @@ class PaymentSample(unittest.TestCase):
         req.external_id = "optional-externalId"
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
 
         resp = self.payment.init_apm_deposit_payment(req)
         print(resp)
@@ -1296,6 +1297,43 @@ class PaymentSample(unittest.TestCase):
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
 
+    def test_init_setcard_gift_apm_payment(self):
+        items = []
+        for name, price in [("item 1", "0.6"), ("item 2", "0.4")]:
+            pi = PaymentItem()
+            pi.name = name
+            pi.external_id = str(uuid.uuid4())
+            pi.price = Decimal(price)
+            items.append(pi)
+
+        req = InitApmPaymentRequest()
+        req.apm_type = ApmType.SETCARD_GIFT
+        req.price = Decimal("1")
+        req.paid_price = Decimal("1")
+        req.currency = Currency.TRY
+        req.callback_url = "https://www.your-website.com/craftgate-3DSecure-callback"
+        req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+        req.conversation_id = "conversationId"
+        req.external_id = "externalId"
+        req.additional_params = {"cardNumber": "7599640961180814"}
+        req.items = items
+
+        resp = self.payment.init_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
+        self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
+
+    def test_complete_setcard_gift_pos_apm_payment(self):
+        req = CompleteApmPaymentRequest()
+        req.payment_id = 1
+        req.additional_params = {"otpCode": "123456"}
+
+        resp = self.payment.complete_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
+
     def test_complete_pos_apm_payment(self):
         req = CompletePosApmPaymentRequest()
         req.payment_id = 1
@@ -1375,6 +1413,7 @@ class PaymentSample(unittest.TestCase):
         req.cvc = "000"
 
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
         req.fraud_params = FraudCheckParameters()
         req.fraud_params.buyer_email = "buyer@email.com"
@@ -1392,6 +1431,16 @@ class PaymentSample(unittest.TestCase):
         self.assertIsNotNone(resp.loyalties[0].reward)
         self.assertEqual(Decimal("12.35"), resp.loyalties[0].reward.card_reward_money)
         self.assertEqual(Decimal("5.20"), resp.loyalties[0].reward.firm_reward_money)
+
+    def test_retrieve_loyalties_with_secure_fields(self):
+        req = RetrieveLoyaltiesRequest()
+        req.secure_fields_token = "xxXXxx"
+
+        resp = self.payment.retrieve_loyalties(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(resp.card_brand)
+        self.assertIsNotNone(resp.loyalties)
 
     def test_refund_payment(self):
         req = RefundPaymentRequest()
@@ -1800,6 +1849,7 @@ class PaymentSample(unittest.TestCase):
         req.verification_price = Decimal("10")
         req.currency = Currency.TRY
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
 
         resp = self.payment.verify_card(req)
         print(resp)

@@ -12,7 +12,8 @@ class FraudRule(object):
             name: Optional[str] = None,
             action: Optional[FraudAction] = None,
             conditions: Optional[str] = None,
-            operations: Optional[List[FraudOperation]] = None
+            operations: Optional[List[FraudOperation]] = None,
+            is_global: Optional[bool] = None
     ) -> None:
         self.id = id
         self.status = status
@@ -20,3 +21,4 @@ class FraudRule(object):
         self.name = name
         self.conditions = conditions
         self.operations = operations
+        self.is_global = is_global
