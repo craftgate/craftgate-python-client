@@ -26,6 +26,7 @@ class InitApmPaymentRequest(BaseRequest):
             apm_user_identity: Optional[str] = None,
             additional_params: Optional[Dict[str, str]] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             items: Optional[List[PaymentItem]] = None
     ) -> None:
         self.apm_type = apm_type
@@ -43,4 +44,5 @@ class InitApmPaymentRequest(BaseRequest):
         self.apm_user_identity = apm_user_identity
         self.additional_params = additional_params
         self.client_ip = client_ip
+        self.client_port = client_port
         self.items = items

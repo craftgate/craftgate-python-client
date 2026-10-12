@@ -22,6 +22,7 @@ class InitCheckoutPaymentRequest(BaseRequest):
             conversation_id: Optional[str] = None,
             external_id: Optional[str] = None,
             order_id: Optional[str] = None,
+            basket_identifier: Optional[str] = None,
             callback_url: Optional[str] = None,
             client_ip: Optional[str] = None,
             payment_phase: PaymentPhase = PaymentPhase.AUTH,
@@ -29,6 +30,8 @@ class InitCheckoutPaymentRequest(BaseRequest):
             enabled_payment_methods: Optional[List[PaymentMethod]] = None,
             masterpass_gsm_number: Optional[str] = None,
             masterpass_user_id: Optional[str] = None,
+            bex_gsm_number: Optional[str] = None,
+            bex_user_id: Optional[str] = None,
             card_user_key: Optional[str] = None,
             buyer_member_id: Optional[int] = None,
             enabled_installments: Optional[List[int]] = None,
@@ -58,6 +61,7 @@ class InitCheckoutPaymentRequest(BaseRequest):
         self.conversation_id = conversation_id
         self.external_id = external_id
         self.order_id = order_id
+        self.basket_identifier = basket_identifier
         self.callback_url = callback_url
         self.client_ip = client_ip
         self.payment_phase = payment_phase
@@ -65,6 +69,8 @@ class InitCheckoutPaymentRequest(BaseRequest):
         self.enabled_payment_methods = enabled_payment_methods
         self.masterpass_gsm_number = masterpass_gsm_number
         self.masterpass_user_id = masterpass_user_id
+        self.bex_gsm_number = bex_gsm_number
+        self.bex_user_id = bex_user_id
         self.card_user_key = card_user_key
         self.buyer_member_id = buyer_member_id
         self.enabled_installments = enabled_installments
