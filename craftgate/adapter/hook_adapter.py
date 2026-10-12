@@ -16,10 +16,13 @@ class HookAdapter(BaseAdapter):
         if merchant_hook_key is None or incoming_signature is None or webhook_data is None:
             return False
 
+        event_type = getattr(webhook_data.event_type, "value", webhook_data.event_type)
+        status = getattr(webhook_data.status, "value", webhook_data.status)
+
         data = "{}{}{}{}".format(
-            webhook_data.event_type,
+            event_type,
             webhook_data.event_timestamp,
-            webhook_data.status,
+            status,
             webhook_data.payload_id
         )
 
