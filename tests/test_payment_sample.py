@@ -12,16 +12,18 @@ from craftgate.model import AdditionalAction, ApmAdditionalAction, ApmType, Card
 from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardRequest, CompleteApmPaymentRequest, \
     CompletePosApmPaymentRequest, CompleteThreeDSPaymentRequest, CreateApmPaymentRequest, CreateDepositPaymentRequest, \
     CreateFundTransferDepositPaymentRequest, CreatePaymentRequest, DeleteStoredCardRequest, \
-    DisapprovePaymentTransactionsRequest, Card, GarantiPayInstallment, InitApmDepositPaymentRequest, \
-    InitApmPaymentRequest, InitCheckoutCardVerifyRequest, InitCheckoutPaymentRequest, \
+    DisapprovePaymentTransactionsRequest, Card, ExpireCheckoutPaymentRequest, GarantiPayInstallment, \
+    InitApmDepositPaymentRequest, InitApmPaymentRequest, InitCheckoutCardVerifyRequest, InitCheckoutPaymentRequest, \
     InitGarantiPayPaymentRequest, InitPosApmPaymentRequest, InitThreeDSPaymentRequest, PaymentItem, \
     PostAuthPaymentRequest, RefundPaymentRequest, \
     RefundPaymentTransactionMarkAsRefundedRequest, RefundPaymentTransactionRequest, RetrieveLoyaltiesRequest, \
     RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
     UpdatePaymentTransactionRequest, VerifyCard, VerifyCardRequest
 from craftgate.request.init_multi_payment_request import InitMultiPaymentRequest
+from craftgate.request.retrieve_card_from_ivr_request import RetrieveCardFromIvrRequest
 from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalListResponse, PaymentTransactionResponse, \
     StoredCardListResponse
+from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizationResponse
 
 
 class PaymentSample(unittest.TestCase):
@@ -559,7 +561,7 @@ class PaymentSample(unittest.TestCase):
 
     def test_expire_checkout_payment(self):
         token = "a768c57c-5052-4038-857f-1e2cf54253bc"
-        self.payment.expire_checkout_payment(token)
+        self.payment.expire_checkout_payment(ExpireCheckoutPaymentRequest(token=token))
 
     def test_create_deposit_payment(self):
         card = Card()
@@ -642,6 +644,7 @@ class PaymentSample(unittest.TestCase):
         req.external_id = "optional-externalId"
         req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
 
         resp = self.payment.init_apm_deposit_payment(req)
         print(resp)
@@ -772,6 +775,82 @@ class PaymentSample(unittest.TestCase):
         self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
 
     def test_complete_edenred_apm_payment(self):
+        req = CompleteApmPaymentRequest()
+        req.payment_id = 1
+        req.additional_params = {"otpCode": "784294"}
+
+        resp = self.payment.complete_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
+
+    def test_init_tokenflex_apm_payment(self):
+        items = []
+        for name, price in [("item 1", "0.60"), ("item 2", "0.40")]:
+            pi = PaymentItem()
+            pi.name = name
+            pi.external_id = str(uuid.uuid4())
+            pi.price = Decimal(price)
+            items.append(pi)
+
+        req = InitApmPaymentRequest()
+        req.apm_type = ApmType.TOKENFLEX
+        req.price = Decimal("1")
+        req.paid_price = Decimal("1")
+        req.currency = Currency.TRY
+        req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.external_id = "optional-externalId"
+        req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
+        req.additional_params = {"paymentCode": "123456"}
+        req.items = items
+
+        resp = self.payment.init_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertIsNone(getattr(resp, "redirect_url", None))
+        self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
+        self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
+
+    def test_complete_tokenflex_apm_payment(self):
+        req = CompleteApmPaymentRequest()
+        req.payment_id = 1
+        req.additional_params = {"otpCode": "784294"}
+
+        resp = self.payment.complete_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
+
+    def test_init_tokenflex_gift_apm_payment(self):
+        items = []
+        for name, price in [("item 1", "0.60"), ("item 2", "0.40")]:
+            pi = PaymentItem()
+            pi.name = name
+            pi.external_id = str(uuid.uuid4())
+            pi.price = Decimal(price)
+            items.append(pi)
+
+        req = InitApmPaymentRequest()
+        req.apm_type = ApmType.TOKENFLEX_GIFT
+        req.price = Decimal("1")
+        req.paid_price = Decimal("1")
+        req.currency = Currency.TRY
+        req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+        req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
+        req.external_id = "optional-externalId"
+        req.callback_url = "https://www.your-website.com/craftgate-apm-callback"
+        req.additional_params = {"paymentCode": "123456"}
+        req.items = items
+
+        resp = self.payment.init_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertIsNone(getattr(resp, "redirect_url", None))
+        self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
+        self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
+
+    def test_complete_tokenflex_gift_apm_payment(self):
         req = CompleteApmPaymentRequest()
         req.payment_id = 1
         req.additional_params = {"otpCode": "784294"}
@@ -1218,6 +1297,43 @@ class PaymentSample(unittest.TestCase):
         self.assertIsNotNone(getattr(resp, "payment_id", None))
         self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
 
+    def test_init_setcard_gift_apm_payment(self):
+        items = []
+        for name, price in [("item 1", "0.6"), ("item 2", "0.4")]:
+            pi = PaymentItem()
+            pi.name = name
+            pi.external_id = str(uuid.uuid4())
+            pi.price = Decimal(price)
+            items.append(pi)
+
+        req = InitApmPaymentRequest()
+        req.apm_type = ApmType.SETCARD_GIFT
+        req.price = Decimal("1")
+        req.paid_price = Decimal("1")
+        req.currency = Currency.TRY
+        req.callback_url = "https://www.your-website.com/craftgate-3DSecure-callback"
+        req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
+        req.conversation_id = "conversationId"
+        req.external_id = "externalId"
+        req.additional_params = {"cardNumber": "7599640961180814"}
+        req.items = items
+
+        resp = self.payment.init_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.WAITING, resp.payment_status)
+        self.assertEqual(ApmAdditionalAction.OTP_REQUIRED, resp.additional_action)
+
+    def test_complete_setcard_gift_pos_apm_payment(self):
+        req = CompleteApmPaymentRequest()
+        req.payment_id = 1
+        req.additional_params = {"otpCode": "123456"}
+
+        resp = self.payment.complete_apm_payment(req)
+        print(resp)
+        self.assertIsNotNone(getattr(resp, "payment_id", None))
+        self.assertEqual(PaymentStatus.SUCCESS, resp.payment_status)
+
     def test_complete_pos_apm_payment(self):
         req = CompletePosApmPaymentRequest()
         req.payment_id = 1
@@ -1297,6 +1413,7 @@ class PaymentSample(unittest.TestCase):
         req.cvc = "000"
 
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
         req.fraud_params = FraudCheckParameters()
         req.fraud_params.buyer_email = "buyer@email.com"
@@ -1314,6 +1431,16 @@ class PaymentSample(unittest.TestCase):
         self.assertIsNotNone(resp.loyalties[0].reward)
         self.assertEqual(Decimal("12.35"), resp.loyalties[0].reward.card_reward_money)
         self.assertEqual(Decimal("5.20"), resp.loyalties[0].reward.firm_reward_money)
+
+    def test_retrieve_loyalties_with_secure_fields(self):
+        req = RetrieveLoyaltiesRequest()
+        req.secure_fields_token = "xxXXxx"
+
+        resp = self.payment.retrieve_loyalties(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsNotNone(resp.card_brand)
+        self.assertIsNotNone(resp.loyalties)
 
     def test_refund_payment(self):
         req = RefundPaymentRequest()
@@ -1603,13 +1730,11 @@ class PaymentSample(unittest.TestCase):
 
         req = InitMultiPaymentRequest()
         req.price = Decimal("100")
-        req.paid_price = Decimal("100")
         req.callback_url = "https://www.your-website.com/craftgate-checkout-callback"
         req.currency = Currency.TRY
         req.conversation_id = "456d1297-908e-4bd6-a13b-4be31a6e47d5"
         req.external_id = "1001"
         req.payment_group = PaymentGroup.LISTING_OR_SUBSCRIPTION
-        req.payment_phase = PaymentPhase.AUTH
         req.items = items
 
         resp = self.payment.init_multi_payment(req)
@@ -1632,6 +1757,15 @@ class PaymentSample(unittest.TestCase):
         req.card_provider = CardProvider.MEX
 
         resp: StoredCardListResponse = self.payment.retrieve_provider_cards(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+
+    def test_retrieve_card_from_ivr(self):
+        req = RetrieveCardFromIvrRequest()
+        req.card_user_key = "45f12c74-3000-465c-96dc-876850e7dd7a"
+        req.call_token = "0309ac2d-c5a5-4b4f-a91f-5c444ba07b24"
+
+        resp: IVRCardTokenizationResponse = self.payment.retrieve_card_from_ivr(req)
         print(resp)
         self.assertIsNotNone(resp)
 
@@ -1715,6 +1849,7 @@ class PaymentSample(unittest.TestCase):
         req.verification_price = Decimal("10")
         req.currency = Currency.TRY
         req.client_ip = "127.0.0.1"
+        req.client_port = 51520
 
         resp = self.payment.verify_card(req)
         print(resp)

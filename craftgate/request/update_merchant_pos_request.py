@@ -3,10 +3,11 @@ from typing import List, Optional
 from craftgate.model.card_association import CardAssociation
 from craftgate.model.payment_authentication_type import PaymentAuthenticationType
 from craftgate.model.payment_phase import PaymentPhase
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.update_merchant_pos_user import UpdateMerchantPosUser
 
 
-class UpdateMerchantPosRequest(object):
+class UpdateMerchantPosRequest(BaseRequest):
     def __init__(
             self,
             name: Optional[str] = None,

@@ -1,7 +1,9 @@
 from typing import Dict, Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class CompleteApmPaymentRequest(object):
+
+class CompleteApmPaymentRequest(BaseRequest):
     def __init__(
             self,
             payment_id: Optional[int] = None,

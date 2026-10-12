@@ -3,11 +3,12 @@ from typing import List, Optional
 
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.garanti_pay_installment import GarantiPayInstallment
 from craftgate.request.dto.payment_item import PaymentItem
 
 
-class InitGarantiPayPaymentRequest(object):
+class InitGarantiPayPaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,
@@ -19,6 +20,7 @@ class InitGarantiPayPaymentRequest(object):
             external_id: Optional[str] = None,
             callback_url: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             payment_channel: Optional[str] = None,
             buyer_member_id: Optional[int] = None,
             bank_order_id: Optional[str] = None,
@@ -35,6 +37,7 @@ class InitGarantiPayPaymentRequest(object):
         self.external_id = external_id
         self.callback_url = callback_url
         self.client_ip = client_ip
+        self.client_port = client_port
         self.payment_channel = payment_channel
         self.buyer_member_id = buyer_member_id
         self.bank_order_id = bank_order_id

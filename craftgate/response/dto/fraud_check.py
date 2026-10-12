@@ -18,6 +18,7 @@ class FraudCheck(object):
             rule_id: Optional[int] = None,
             rule_name: Optional[str] = None,
             rule_conditions: Optional[str] = None,
+            is_global_rule: Optional[bool] = None,
             payment_id: Optional[int] = None,
             payment_status: Optional[PaymentStatus] = None
     ) -> None:
@@ -29,5 +30,6 @@ class FraudCheck(object):
         self.rule_id = rule_id
         self.rule_name = rule_name
         self.rule_conditions = rule_conditions
+        self.is_global_rule = is_global_rule
         self.payment_id = payment_id
         self.payment_status = payment_status

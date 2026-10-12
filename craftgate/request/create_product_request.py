@@ -3,9 +3,10 @@ from decimal import Decimal
 from typing import Optional, Set
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreateProductRequest(object):
+class CreateProductRequest(BaseRequest):
     def __init__(
             self,
             name: Optional[str] = None,
@@ -20,7 +21,8 @@ class CreateProductRequest(object):
             description: Optional[str] = None,
             multi_payment: bool = False,
             enabled_installments: Optional[Set[int]] = None,
-            basket_identifier: Optional[str] = None
+            basket_identifier: Optional[str] = None,
+            force_three_ds: bool = False
     ) -> None:
         self.name = name
         self.channel = channel
@@ -33,5 +35,6 @@ class CreateProductRequest(object):
         self.expires_at = expires_at
         self.description = description
         self.multi_payment = multi_payment
+        self.force_three_ds = force_three_ds
         self.enabled_installments = enabled_installments
         self.basket_identifier = basket_identifier

@@ -2,9 +2,10 @@ from decimal import Decimal
 from typing import Optional
 
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 
 
-class CreateWalletRequest(object):
+class CreateWalletRequest(BaseRequest):
     def __init__(
             self,
             negative_amount_limit: Optional[Decimal] = None,

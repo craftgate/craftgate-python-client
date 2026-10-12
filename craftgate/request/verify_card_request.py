@@ -3,10 +3,11 @@ from typing import Optional
 
 from craftgate.model.card_verification_auth_type import CardVerificationAuthType
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.verify_card import VerifyCard
 
 
-class VerifyCardRequest(object):
+class VerifyCardRequest(BaseRequest):
     def __init__(
             self,
             card: Optional[VerifyCard] = None,
@@ -14,6 +15,7 @@ class VerifyCardRequest(object):
             verification_price: Optional[Decimal] = None,
             currency: Optional[Currency] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             conversation_id: Optional[str] = None,
             callback_url: Optional[str] = None
     ) -> None:
@@ -22,5 +24,6 @@ class VerifyCardRequest(object):
         self.verification_price = verification_price
         self.currency = currency
         self.client_ip = client_ip
+        self.client_port = client_port
         self.conversation_id = conversation_id
         self.callback_url = callback_url

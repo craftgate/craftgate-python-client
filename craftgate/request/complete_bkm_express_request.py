@@ -1,7 +1,9 @@
 from typing import Optional
 
+from craftgate.request.common.base_request import BaseRequest
 
-class CompleteBkmExpressRequest:
+
+class CompleteBkmExpressRequest(BaseRequest):
     def __init__(
             self,
             status: bool = False,

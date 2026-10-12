@@ -1,7 +1,9 @@
 from typing import List
 
+from craftgate.request.common.base_request import BaseRequest
 
-class ApprovePaymentTransactionsRequest(object):
+
+class ApprovePaymentTransactionsRequest(BaseRequest):
     def __init__(
             self,
             payment_transaction_ids: List[int],

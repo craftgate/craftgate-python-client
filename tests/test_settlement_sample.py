@@ -5,7 +5,7 @@ import unittest
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import AccountOwner, Currency, PayoutAccountType
 from craftgate.request import CreateInstantWalletSettlementRequest, CreatePayoutAccountRequest, \
-    SearchPayoutAccountRequest, UpdatePayoutAccountRequest
+    DeletePayoutAccountRequest, SearchPayoutAccountRequest, UpdatePayoutAccountRequest
 
 
 class SettlementSample(unittest.TestCase):
@@ -75,7 +75,7 @@ class SettlementSample(unittest.TestCase):
         self.assertIsNotNone(response.items)
 
     def test_delete_payout_account(self):
-        self.settlement.delete_payout_account(10)
+        self.settlement.delete_payout_account(DeletePayoutAccountRequest(id=10))
         self.assertTrue(True)
 
 

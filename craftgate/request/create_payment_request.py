@@ -4,13 +4,14 @@ from typing import Optional, List, Dict, Any
 from craftgate.model.currency import Currency
 from craftgate.model.payment_group import PaymentGroup
 from craftgate.model.payment_phase import PaymentPhase
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.card import Card
 from craftgate.request.dto.fraud_check_parameters import FraudCheckParameters
 from craftgate.request.dto.payment_item import PaymentItem
 from craftgate.request.dto.routing_options import RoutingOptions
 
 
-class CreatePaymentRequest(object):
+class CreatePaymentRequest(BaseRequest):
     def __init__(
             self,
             price: Optional[Decimal] = None,
@@ -23,6 +24,7 @@ class CreatePaymentRequest(object):
             conversation_id: Optional[str] = None,
             external_id: Optional[str] = None,
             client_ip: Optional[str] = None,
+            client_port: Optional[int] = None,
             payment_phase: PaymentPhase = PaymentPhase.AUTH,
             payment_channel: Optional[str] = None,
             buyer_member_id: Optional[int] = None,
@@ -44,6 +46,7 @@ class CreatePaymentRequest(object):
         self.conversation_id = conversation_id
         self.external_id = external_id
         self.client_ip = client_ip
+        self.client_port = client_port
         self.payment_phase = payment_phase
         self.payment_channel = payment_channel
         self.buyer_member_id = buyer_member_id

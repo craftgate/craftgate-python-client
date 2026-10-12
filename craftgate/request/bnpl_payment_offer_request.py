@@ -3,10 +3,11 @@ from typing import List, Dict, Any, Optional
 
 from craftgate.model.apm_type import ApmType
 from craftgate.model.currency import Currency
+from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.dto.bnpl_payment_cart_item import BnplPaymentCartItem
 
 
-class BnplPaymentOfferRequest(object):
+class BnplPaymentOfferRequest(BaseRequest):
     def __init__(
             self,
             apm_type: Optional[ApmType] = None,

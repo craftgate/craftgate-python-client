@@ -3,9 +3,10 @@ from decimal import Decimal
 from typing import Optional, Set
 
 from craftgate.model.wallet_transaction_type import WalletTransactionType
+from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchWalletTransactionsRequest(object):
+class SearchWalletTransactionsRequest(BaseRequest):
     def __init__(
             self,
             page: int = 0,
