@@ -5,3 +5,4 @@ class SettlementSource(str, Enum):
     COLLECTION = "COLLECTION"
     WITHDRAW = "WITHDRAW"
     BOUNCED = "BOUNCED"
+    MONEY_TRANSFER = "MONEY_TRANSFER"

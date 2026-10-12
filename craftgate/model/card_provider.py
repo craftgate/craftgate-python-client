@@ -6,3 +6,4 @@ class CardProvider(str, Enum):
     IPARA = "IPARA"
     BIRLESIK_ODEME = "BIRLESIK_ODEME"
     MEX = "MEX"
+    PARAM = "PARAM"

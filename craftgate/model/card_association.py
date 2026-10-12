@@ -8,6 +8,5 @@ class CardAssociation(str, Enum):
     TROY = "TROY"
     JCB = "JCB"
     UNION_PAY = "UNION_PAY"
-    MAESTRO = "MAESTRO"
     DISCOVER = "DISCOVER"
     DINERS_CLUB = "DINERS_CLUB"

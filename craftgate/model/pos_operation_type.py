@@ -8,3 +8,4 @@ class PosOperationType(str, Enum):
     PAYMENT = "PAYMENT"
     REFUND = "REFUND"
     INQUIRY = "INQUIRY"
+    POS_APM = "POS_APM"

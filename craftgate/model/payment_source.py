@@ -8,3 +8,4 @@ class PaymentSource(str, Enum):
     JUZDAN = "JUZDAN"
     HEPSIPAY = "HEPSIPAY"
     MONO = "MONO"
+    MASTERPASS = "MASTERPASS"

@@ -9,3 +9,4 @@ class ApmAdditionalAction(str, Enum):
     APPROVAL_REQUIRED = "APPROVAL_REQUIRED"
     SHOW_QR_CODE = "SHOW_QR_CODE"
     NONE = "NONE"
+    VERIFY_REQUIRED = "VERIFY_REQUIRED"
