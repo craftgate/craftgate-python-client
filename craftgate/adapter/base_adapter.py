@@ -1,7 +1,7 @@
 import uuid
 from typing import Dict, Optional
 
-from _version import VERSION
+from craftgate._version import VERSION
 from craftgate.request.common.base_request import BaseRequest
 from craftgate.request.common.header_options import HeaderOptions
 from craftgate.request_options import RequestOptions
