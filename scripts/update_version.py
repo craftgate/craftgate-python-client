@@ -6,8 +6,9 @@ Usage:
 
 The script normalizes the provided version (strips a leading "v" if present),
 validates it loosely against SemVer rules and writes the value into the
-_version.py file that is consumed by setuptools. It prints the normalized
-version to stdout for downstream tooling.
+craftgate/_version.py file that is consumed by setuptools and sent in the
+x-client-version header. It prints the normalized version to stdout for
+downstream tooling.
 """
 
 from __future__ import annotations
@@ -19,11 +20,11 @@ from pathlib import Path
 
 VERSION_PATTERN = re.compile(r"^v?(?P<num>\d+\.\d+\.\d+(?:[0-9A-Za-z.\-+_]*)?)$")
 PROJECT_ROOT = Path(__file__).resolve().parent.parent
-VERSION_FILE = PROJECT_ROOT / "_version.py"
+VERSION_FILE = PROJECT_ROOT / "craftgate" / "_version.py"
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Update _version.py")
+    parser = argparse.ArgumentParser(description="Update craftgate/_version.py")
     parser.add_argument(
         "version",
         help="New version string (e.g. 1.2.3 or v1.2.3).",

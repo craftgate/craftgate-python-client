@@ -139,7 +139,7 @@ A variety of end-to-end samples (3DS, Checkout, APM, refunds, stored cards, mark
 Run a single test:
 
 ~~~bash
-python -m unittest tests/test_payment_sample.py::PaymentSample::test_create_payment
+python -m unittest tests.test_payment_sample.PaymentSample.test_create_payment
 ~~~
 
 ## Contributions

@@ -23,7 +23,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
           ssh-key: ${{ secrets.SSH_KEY }}
@@ -60,7 +60,7 @@ jobs:
         run: |
           git config --global user.name "craftgate-sdlc"
           git config --global user.email "sdlc@craftgate.io"
-          git add _version.py
+          git add craftgate/_version.py
           if git diff --cached --quiet; then
             echo "::error::No changes detected. Is the requested version already released?"
             exit 1
@@ -86,7 +86,7 @@ jobs:
         run: twine upload dist/*
 
       - name: Create GitHub release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           tag_name: v${{ steps.bump_version.outputs.version }}
           name: v${{ steps.bump_version.outputs.version }}
