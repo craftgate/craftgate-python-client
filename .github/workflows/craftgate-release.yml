@@ -6,10 +6,6 @@ on:
       version:
         description: "Release version (format: 1.2.3)"
         required: true
-      release_notes:
-        description: "Optional release notes (markdown)."
-        required: false
-        default: ""
       publish_to_pypi:
         description: "Upload build artifacts to PyPI"
         type: boolean
@@ -90,7 +86,6 @@ jobs:
         with:
           tag_name: v${{ steps.bump_version.outputs.version }}
           name: v${{ steps.bump_version.outputs.version }}
-          body: ${{ inputs.release_notes }}
           generate_release_notes: true
           files: |
             dist/*
