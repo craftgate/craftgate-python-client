@@ -1,4 +1,3 @@
-from .account_owner import AccountOwner
 from .additional_action import AdditionalAction
 from .apm_additional_action import ApmAdditionalAction
 from .apm_type import ApmType
@@ -40,7 +39,6 @@ from .payment_refund_status import PaymentRefundStatus
 from .payment_source import PaymentSource
 from .payment_status import PaymentStatus
 from .payment_type import PaymentType
-from .payout_account_type import PayoutAccountType
 from .pos_apm_payment_provider import PosApmPaymentProvider
 from .pos_integrator import PosIntegrator
 from .pos_operation_type import PosOperationType
