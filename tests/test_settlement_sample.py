@@ -1,11 +1,14 @@
 # tests/test_settlement_sample.py
 import os
 import unittest
+from decimal import Decimal
 
 from craftgate import Craftgate, RequestOptions
-from craftgate.model import AccountOwner, Currency, PayoutAccountType
-from craftgate.request import CreateInstantWalletSettlementRequest, CreatePayoutAccountRequest, \
-    DeletePayoutAccountRequest, SearchPayoutAccountRequest, UpdatePayoutAccountRequest
+from craftgate.model import AccountOwner, Currency, MerchantType, PayoutAccountType
+from craftgate.request import ApprovePaymentTransactionsRequest, CreateInstantWalletSettlementRequest, \
+    CreatePayoutAccountRequest, DeletePayoutAccountRequest, DisapprovePaymentTransactionsRequest, \
+    SearchPayoutAccountRequest, UpdatePaymentTransactionRequest, UpdatePayoutAccountRequest
+from craftgate.response import PaymentTransactionApprovalListResponse, PaymentTxPayoutResponse
 
 
 class SettlementSample(unittest.TestCase):
@@ -77,6 +80,40 @@ class SettlementSample(unittest.TestCase):
     def test_delete_payout_account(self):
         self.settlement.delete_payout_account(DeletePayoutAccountRequest(id=10))
         self.assertTrue(True)
+
+    def test_approve_payment_transactions(self):
+        req = ApprovePaymentTransactionsRequest()
+        req.is_transactional = True
+        req.payment_transaction_ids = [1, 2]
+
+        resp: PaymentTransactionApprovalListResponse = self.settlement.approve_payment_transactions(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertEqual(2, resp.size)
+
+    def test_disapprove_payment_transactions(self):
+        req = DisapprovePaymentTransactionsRequest()
+        req.is_transactional = True
+        req.payment_transaction_ids = [1, 2]
+
+        resp: PaymentTransactionApprovalListResponse = self.settlement.disapprove_payment_transactions(req)
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertEqual(2, resp.size)
+
+    def test_update_payment_transaction(self):
+        req = UpdatePaymentTransactionRequest()
+        req.payment_transaction_id = 10
+        req.sub_merchant_member_id = 1
+        req.sub_merchant_member_price = Decimal("10")
+
+        resp: PaymentTxPayoutResponse = self.settlement.update_payment_transaction(req)
+        print(resp)
+        self.assertEqual(req.payment_transaction_id, resp.payment_transaction_id)
+        self.assertTrue(any(
+            item.merchant_type == MerchantType.SUB_MERCHANT_MEMBER and item.merchant_id == req.sub_merchant_member_id
+            for item in resp.payout_items
+        ))
 
 
 if __name__ == "__main__":
