@@ -8,7 +8,6 @@ from .check_masterpass_user_request import CheckMasterpassUserRequest
 from .clone_card_request import CloneCardRequest
 from .common import BaseRequest, HeaderOptions
 from .complete_apm_payment_request import CompleteApmPaymentRequest
-from .complete_bkm_express_request import CompleteBkmExpressRequest
 from .complete_pos_apm_payment_request import CompletePosApmPaymentRequest
 from .complete_three_ds_payment_request import CompleteThreeDSPaymentRequest
 from .create_apm_payment_request import CreateApmPaymentRequest
@@ -39,7 +38,6 @@ from .fraud_add_card_fingerprint_to_list_request import FraudAddCardFingerprintT
 from .fraud_value_list_request import FraudValueListRequest
 from .init_apm_deposit_payment_request import InitApmDepositPaymentRequest
 from .init_apm_payment_request import InitApmPaymentRequest
-from .init_bkm_express_request import InitBkmExpressRequest
 from .init_bnpl_payment_request import InitBnplPaymentRequest
 from .init_checkout_card_verify_request import InitCheckoutCardVerifyRequest
 from .init_checkout_payment_request import InitCheckoutPaymentRequest
