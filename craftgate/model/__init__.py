@@ -41,6 +41,8 @@ from .payment_source import PaymentSource
 from .payment_status import PaymentStatus
 from .payment_type import PaymentType
 from .payout_account_type import PayoutAccountType
+from .payout_approval_status import PayoutApprovalStatus
+from .payout_item_subject import PayoutItemSubject
 from .pos_apm_payment_provider import PosApmPaymentProvider
 from .pos_integrator import PosIntegrator
 from .pos_operation_type import PosOperationType
@@ -58,6 +60,7 @@ from .report_type import ReportType
 from .reward import Reward
 from .settlement_earnings_destination import SettlementEarningsDestination
 from .settlement_result_status import SettlementResultStatus
+from .settlement_row_item_subject import SettlementRowItemSubject
 from .settlement_source import SettlementSource
 from .settlement_type import SettlementType
 from .status import Status
