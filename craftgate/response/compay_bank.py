@@ -1,7 +1,7 @@
 from typing import Optional
 
 
-class InstantTransferBank(object):
+class CompayBank(object):
     def __init__(
             self,
             bank_code: Optional[str] = None,
