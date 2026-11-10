@@ -16,7 +16,6 @@ from .fraud_check_list_response import FraudCheckListResponse
 from .fraud_rule_response import FraudRuleResponse
 from .fraud_value_list_response import FraudValueListResponse
 from .fund_transfer_deposit_payment_response import FundTransferDepositPaymentResponse
-from .init_bkm_express_response import InitBkmExpressResponse
 from .init_bnpl_payment_response import InitBnplPaymentResponse
 from .init_checkout_card_verify_response import InitCheckoutCardVerifyResponse
 from .bnpl_limit_inquiry_response import BnplLimitInquiryResponse
