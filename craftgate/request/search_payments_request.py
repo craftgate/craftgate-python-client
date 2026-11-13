@@ -34,6 +34,7 @@ class SearchPaymentsRequest(BaseRequest):
             max_paid_price: Optional[Decimal] = None,
             installment: Optional[int] = None,
             is_three_ds: Optional[bool] = None,
+            is_masked_card_payment: Optional[bool] = None,
             min_created_date: Optional[datetime] = None,
             max_created_date: Optional[datetime] = None
     ) -> None:
@@ -58,5 +59,6 @@ class SearchPaymentsRequest(BaseRequest):
         self.max_paid_price = max_paid_price
         self.installment = installment
         self.is_three_ds = is_three_ds
+        self.is_masked_card_payment = is_masked_card_payment
         self.min_created_date = min_created_date
         self.max_created_date = max_created_date
