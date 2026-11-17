@@ -9,20 +9,19 @@ from craftgate.model import AdditionalAction, ApmAdditionalAction, ApmType, Card
     CardType, CardVerificationAuthType, CardVerifyStatus, Currency, Loyalty, LoyaltyParams, LoyaltyType, \
     PaymentGroup, PaymentPhase, PaymentStatus, PaymentType, \
     PosApmPaymentProvider, RefundDestinationType, RefundStatus, Reward, WalletTransactionType
-from craftgate.request import ApprovePaymentTransactionsRequest, CloneCardRequest, CompleteApmPaymentRequest, \
+from craftgate.request import CloneCardRequest, CompleteApmPaymentRequest, \
     CompletePosApmPaymentRequest, CompleteThreeDSPaymentRequest, CreateApmPaymentRequest, CreateDepositPaymentRequest, \
     CreateFundTransferDepositPaymentRequest, CreatePaymentRequest, DeleteStoredCardRequest, \
-    DisapprovePaymentTransactionsRequest, Card, ExpireCheckoutPaymentRequest, GarantiPayInstallment, \
+    Card, ExpireCheckoutPaymentRequest, GarantiPayInstallment, \
     InitApmDepositPaymentRequest, InitApmPaymentRequest, InitCheckoutCardVerifyRequest, InitCheckoutPaymentRequest, \
     InitGarantiPayPaymentRequest, InitPosApmPaymentRequest, InitThreeDSPaymentRequest, PaymentItem, \
     PostAuthPaymentRequest, RefundPaymentRequest, \
     RefundPaymentTransactionMarkAsRefundedRequest, RefundPaymentTransactionRequest, RetrieveLoyaltiesRequest, \
     RetrieveProviderCardRequest, SearchStoredCardsRequest, StoreCardRequest, UpdateCardRequest, \
-    UpdatePaymentTransactionRequest, VerifyCard, VerifyCardRequest
+    VerifyCard, VerifyCardRequest
 from craftgate.request.init_multi_payment_request import InitMultiPaymentRequest
 from craftgate.request.retrieve_card_from_ivr_request import RetrieveCardFromIvrRequest
-from craftgate.response import MultiPaymentResponse, PaymentTransactionApprovalListResponse, PaymentTransactionResponse, \
-    StoredCardListResponse
+from craftgate.response import MultiPaymentResponse, StoredCardListResponse
 from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizationResponse
 
 
@@ -1608,26 +1607,6 @@ class PaymentSample(unittest.TestCase):
 
         self.payment.delete_stored_card(req)
 
-    def test_approve_payment_transactions(self):
-        req = ApprovePaymentTransactionsRequest()
-        req.is_transactional = True
-        req.payment_transaction_ids = [1, 2]
-
-        resp: PaymentTransactionApprovalListResponse = self.payment.approve_payment_transactions(req)
-        print(resp)
-        self.assertIsNotNone(resp)
-        self.assertEqual(2, resp.size)
-
-    def test_disapprove_payment_transactions(self):
-        req = DisapprovePaymentTransactionsRequest()
-        req.is_transactional = True
-        req.payment_transaction_ids = [1, 2]
-
-        resp: PaymentTransactionApprovalListResponse = self.payment.disapprove_payment_transactions(req)
-        print(resp)
-        self.assertIsNotNone(resp)
-        self.assertEqual(2, resp.size)
-
     def test_create_pre_auth_payment(self):
         items = []
 
@@ -1733,18 +1712,6 @@ class PaymentSample(unittest.TestCase):
         self.assertEqual("0004", resp.last_four_digits)
         self.assertTrue(hasattr(resp, "payment_transactions"))
         self.assertEqual(3, len(resp.payment_transactions))
-
-    def test_update_payment_transaction(self):
-        req = UpdatePaymentTransactionRequest()
-        req.payment_transaction_id = 10
-        req.sub_merchant_member_id = 1
-        req.sub_merchant_member_price = Decimal("10")
-
-        resp: PaymentTransactionResponse = self.payment.update_payment_transaction(req)
-        print(resp)
-        self.assertIsNotNone(resp)
-        self.assertEqual(req.sub_merchant_member_id, resp.sub_merchant_member_id)
-        self.assertEqual(float(req.sub_merchant_member_price), float(resp.sub_merchant_member_price))
 
     def test_init_multi_payment(self):
         items = []

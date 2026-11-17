@@ -5,8 +5,8 @@ from datetime import datetime, timedelta
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import FileStatus, SettlementType
-from craftgate.request import SearchPayoutBouncedTransactionsRequest, SearchPayoutCompletedTransactionsRequest, \
-    SearchPayoutRowsRequest
+from craftgate.request import SearchPaymentTransactionPayoutsRequest, SearchPayoutBouncedTransactionsRequest, \
+    SearchPayoutCompletedItemsRequest, SearchPayoutRowsRequest
 
 
 class SettlementReportingSample(unittest.TestCase):
@@ -27,14 +27,14 @@ class SettlementReportingSample(unittest.TestCase):
         now = datetime.now()
         start = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
         end = (now - timedelta(days=1)).replace(hour=23, minute=59, second=59, microsecond=0)
-        request = SearchPayoutCompletedTransactionsRequest(
+        request = SearchPayoutCompletedItemsRequest(
             settlement_type=SettlementType.SETTLEMENT,
             start_date=start,
             end_date=end,
             page=0,
             size=10
         )
-        response = self.settlement_reporting.search_payout_completed_transactions(request)
+        response = self.settlement_reporting.search_payout_completed_items(request)
         print(response)
         self.assertTrue(len(response.items) > 0)
 
@@ -42,14 +42,14 @@ class SettlementReportingSample(unittest.TestCase):
         now = datetime.now()
         start = (now - timedelta(days=1)).replace(hour=0, minute=0, second=0, microsecond=0)
         end = (now - timedelta(days=1)).replace(hour=23, minute=59, second=59, microsecond=0)
-        request = SearchPayoutCompletedTransactionsRequest(
+        request = SearchPayoutCompletedItemsRequest(
             settlement_type=SettlementType.BOUNCED_SETTLEMENT,
             start_date=start,
             end_date=end,
             page=0,
             size=10
         )
-        response = self.settlement_reporting.search_payout_completed_transactions(request)
+        response = self.settlement_reporting.search_payout_completed_items(request)
         print(response)
         self.assertTrue(len(response.items) > 0)
 
@@ -65,11 +65,12 @@ class SettlementReportingSample(unittest.TestCase):
         print(response)
         self.assertTrue(len(response.items) > 0)
 
-    def test_retrieve_payout_details(self):
-        payout_id = 1
-        response = self.settlement_reporting.retrieve_payout_details(payout_id)
+    def test_retrieve_settlement_row(self):
+        settlement_row_id = 1
+        response = self.settlement_reporting.retrieve_settlement_row(settlement_row_id)
         print(response)
         self.assertIsNotNone(response)
+        self.assertTrue(len(response.items) > 0)
 
     def test_search_payout_rows(self):
         now = datetime.now()
@@ -83,6 +84,21 @@ class SettlementReportingSample(unittest.TestCase):
             size=10
         )
         response = self.settlement_reporting.search_payout_rows(request)
+        print(response)
+        self.assertTrue(len(response.items) > 0)
+
+    def test_retrieve_payment_transaction_payout(self):
+        payment_transaction_id = 1
+        response = self.settlement_reporting.retrieve_payment_transaction_payout(payment_transaction_id)
+        print(response)
+        self.assertEqual(payment_transaction_id, response.payment_transaction_id)
+        self.assertTrue(len(response.payout_items) > 0)
+
+    def test_search_payment_transaction_payouts(self):
+        request = SearchPaymentTransactionPayoutsRequest(
+            payment_transaction_ids=[1, 2]
+        )
+        response = self.settlement_reporting.search_payment_transaction_payouts(request)
         print(response)
         self.assertTrue(len(response.items) > 0)
 

@@ -8,8 +8,10 @@ class PaymentTransactionApproval(object):
             self,
             payment_transaction_id: Optional[int] = None,
             approval_status: Optional[ApprovalStatus] = None,
-            failed_reason: Optional[str] = None
+            failed_reason: Optional[str] = None,
+            failed_reason_code: Optional[str] = None
     ) -> None:
         self.payment_transaction_id = payment_transaction_id
         self.approval_status = approval_status
         self.failed_reason = failed_reason
+        self.failed_reason_code = failed_reason_code

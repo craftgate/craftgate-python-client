@@ -2,7 +2,6 @@ from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.apple_pay_merchant_session_create_request import ApplePayMerchantSessionCreateRequest
 from craftgate.request.approve_bnpl_payment_request import ApproveBnplPaymentRequest
-from craftgate.request.approve_payment_transactions_request import ApprovePaymentTransactionsRequest
 from craftgate.request.bnpl_payment_offer_request import BnplPaymentOfferRequest
 from craftgate.request.clone_card_request import CloneCardRequest
 from craftgate.request.complete_apm_payment_request import CompleteApmPaymentRequest
@@ -13,7 +12,6 @@ from craftgate.request.create_deposit_payment_request import CreateDepositPaymen
 from craftgate.request.create_fund_transfer_deposit_payment_request import CreateFundTransferDepositPaymentRequest
 from craftgate.request.create_payment_request import CreatePaymentRequest
 from craftgate.request.delete_stored_card_request import DeleteStoredCardRequest
-from craftgate.request.disapprove_payment_transactions_request import DisapprovePaymentTransactionsRequest
 from craftgate.request.expire_checkout_payment_request import ExpireCheckoutPaymentRequest
 from craftgate.request.init_apm_deposit_payment_request import InitApmDepositPaymentRequest
 from craftgate.request.init_apm_payment_request import InitApmPaymentRequest
@@ -36,7 +34,6 @@ from craftgate.request.retrieve_provider_card_request import RetrieveProviderCar
 from craftgate.request.search_stored_cards_request import SearchStoredCardsRequest
 from craftgate.request.store_card_request import StoreCardRequest
 from craftgate.request.update_card_request import UpdateCardRequest
-from craftgate.request.update_payment_transaction_request import UpdatePaymentTransactionRequest
 from craftgate.request.verify_bnpl_payment_request import VerifyBnplPaymentRequest
 from craftgate.request.verify_card_request import VerifyCardRequest
 from craftgate.request_options import RequestOptions
@@ -60,10 +57,8 @@ from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizatio
 from craftgate.response.multi_payment_response import MultiPaymentResponse
 from craftgate.response.payment_refund_response import PaymentRefundResponse
 from craftgate.response.payment_response import PaymentResponse
-from craftgate.response.payment_transaction_approval_list_response import PaymentTransactionApprovalListResponse
 from craftgate.response.payment_transaction_refund_list_response import PaymentTransactionRefundListResponse
 from craftgate.response.payment_transaction_refund_response import PaymentTransactionRefundResponse
-from craftgate.response.payment_transaction_response import PaymentTransactionResponse
 from craftgate.response.retrieve_checkout_card_verify_response import RetrieveCheckoutCardVerifyResponse
 from craftgate.response.retrieve_loyalties_response import RetrieveLoyaltiesResponse
 from craftgate.response.stored_card_list_response import StoredCardListResponse
@@ -458,41 +453,6 @@ class PaymentAdapter(BaseAdapter):
             headers=headers,
             body=request,
             response_type=VerifyCardResponse
-        )
-
-    def approve_payment_transactions(self,
-                                     request: ApprovePaymentTransactionsRequest) -> PaymentTransactionApprovalListResponse:
-        path = "/payment/v1/payment-transactions/approve"
-        headers = self._create_headers(request, path)
-        return self._http_client.request(
-            method="POST",
-            url=self.request_options.base_url + path,
-            headers=headers,
-            body=request,
-            response_type=PaymentTransactionApprovalListResponse
-        )
-
-    def disapprove_payment_transactions(self,
-                                        request: DisapprovePaymentTransactionsRequest) -> PaymentTransactionApprovalListResponse:
-        path = "/payment/v1/payment-transactions/disapprove"
-        headers = self._create_headers(request, path)
-        return self._http_client.request(
-            method="POST",
-            url=self.request_options.base_url + path,
-            headers=headers,
-            body=request,
-            response_type=PaymentTransactionApprovalListResponse
-        )
-
-    def update_payment_transaction(self, request: UpdatePaymentTransactionRequest) -> PaymentTransactionResponse:
-        path = "/payment/v1/payment-transactions/{}".format(request.payment_transaction_id)
-        headers = self._create_headers(request, path)
-        return self._http_client.request(
-            method="PUT",
-            url=self.request_options.base_url + path,
-            headers=headers,
-            body=request,
-            response_type=PaymentTransactionResponse
         )
 
     def create_apple_pay_merchant_session(self, request: ApplePayMerchantSessionCreateRequest) -> object:
