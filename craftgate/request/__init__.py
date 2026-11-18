@@ -22,6 +22,7 @@ from .create_payment_request import CreatePaymentRequest
 from .create_payment_token_request import CreatePaymentTokenRequest
 from .create_product_request import CreateProductRequest
 from .create_remittance_request import CreateRemittanceRequest
+from .create_report_from_template_request import CreateReportFromTemplateRequest
 from .create_report_request import CreateReportRequest
 from .create_wallet_request import CreateWalletRequest
 from .create_withdraw_request import CreateWithdrawRequest

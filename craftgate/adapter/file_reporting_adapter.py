@@ -3,12 +3,14 @@ from typing import Dict, Optional
 from craftgate.adapter.base_adapter import BaseAdapter
 from craftgate.net.base_http_client import BaseHttpClient
 from craftgate.request.common.base_request import BaseRequest
+from craftgate.request.create_report_from_template_request import CreateReportFromTemplateRequest
 from craftgate.request.create_report_request import CreateReportRequest
 from craftgate.request.retrieve_daily_payment_report_request import RetrieveDailyPaymentReportRequest
 from craftgate.request.retrieve_daily_transaction_report_request import RetrieveDailyTransactionReportRequest
 from craftgate.request.retrieve_report_request import RetrieveReportRequest
 from craftgate.request_options import RequestOptions
 from craftgate.response.report_demand_response import ReportDemandResponse
+from craftgate.response.report_from_template_response import ReportFromTemplateResponse
 from craftgate.utils.request_query_params_builder import RequestQueryParamsBuilder
 
 
@@ -56,6 +58,19 @@ class FileReportingAdapter(BaseAdapter):
             headers=headers,
             body=request,
             response_type=ReportDemandResponse
+        )
+
+    def create_report_from_template(
+            self, template_id: int, request: CreateReportFromTemplateRequest
+    ) -> ReportFromTemplateResponse:
+        path = "/file-reporting/v1/report-templates/{}/reports".format(template_id)
+        headers = self._create_headers(request, path)
+        return self._http_client.request(
+            method="POST",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=request,
+            response_type=ReportFromTemplateResponse
         )
 
     def retrieve_report(self, request: RetrieveReportRequest, report_id: int) -> bytes:

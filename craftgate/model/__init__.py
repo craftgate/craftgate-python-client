@@ -52,6 +52,7 @@ from .remittance_reason_type import RemittanceReasonType
 from .remittance_type import RemittanceType
 from .report_file_type import ReportFileType
 from .report_period import ReportPeriod
+from .report_state import ReportState
 from .report_type import ReportType
 from .reward import Reward
 from .settlement_earnings_destination import SettlementEarningsDestination

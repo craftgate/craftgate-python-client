@@ -10,6 +10,7 @@ from .masterpass_create_payment import MasterpassCreatePayment
 from .meal_voucher_card_tokenization_data import MealVoucherCardTokenizationData
 from .payment_item import PaymentItem
 from .pos_apm_installment import PosApmInstallment
+from .report_filter import ReportFilter
 from .routing_options import OrderingRule, RoutingOptions
 from .tokenized_card import TokenizedCard
 from .update_merchant_pos_commission import UpdateMerchantPosCommission

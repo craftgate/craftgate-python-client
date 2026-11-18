@@ -5,7 +5,9 @@ from datetime import date, datetime, timedelta
 
 from craftgate import Craftgate, RequestOptions
 from craftgate.model import ReportFileType
+from craftgate.request.dto import ReportFilter
 from craftgate.request import (
+    CreateReportFromTemplateRequest,
     CreateReportRequest,
     RetrieveDailyPaymentReportRequest,
     RetrieveDailyTransactionReportRequest,
@@ -66,6 +68,17 @@ class FileReportingSample(unittest.TestCase):
         )
 
         response = self.file_reporting.create_report(request)
+        print(response)
+        self.assertIsNotNone(response)
+        self.assertIsNotNone(getattr(response, "id", None))
+
+    def test_create_report_from_template(self):
+        request = CreateReportFromTemplateRequest(
+            filters=[ReportFilter.report_date(datetime.now() - timedelta(days=2), datetime.now())],
+            file_formats=[ReportFileType.CSV]
+        )
+
+        response = self.file_reporting.create_report_from_template(7, request)
         print(response)
         self.assertIsNotNone(response)
         self.assertIsNotNone(getattr(response, "id", None))
