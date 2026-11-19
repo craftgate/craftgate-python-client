@@ -25,3 +25,4 @@ class PaymentMethod(str, Enum):
     MULTINET_NEO_GIFT = "MULTINET_NEO_GIFT"
     BIZUM = "BIZUM"
     PAYCELL_DCB = "PAYCELL_DCB"
+    ISPAY_POS_APM = "ISPAY_POS_APM"
