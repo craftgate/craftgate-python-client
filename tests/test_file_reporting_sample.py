@@ -83,6 +83,14 @@ class FileReportingSample(unittest.TestCase):
         self.assertIsNotNone(response)
         self.assertIsNotNone(getattr(response, "id", None))
 
+    def test_download_report(self):
+        report_id = 123  # id returned by create_report_from_template
+        request = RetrieveReportRequest(file_type=ReportFileType.CSV)
+
+        blob = self.file_reporting.download_report(request, report_id=report_id)
+        self.assertIsInstance(blob, (bytes, bytearray))
+        self.assertGreater(len(blob), 0)
+
     def test_retrieve_report_by_id(self):
         self.REPORT_ID = "25397"
         request = RetrieveReportRequest(file_type=ReportFileType.CSV)

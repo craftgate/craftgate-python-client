@@ -85,6 +85,18 @@ class FileReportingAdapter(BaseAdapter):
             response_type=bytes
         )
 
+    def download_report(self, request: RetrieveReportRequest, report_id: int) -> bytes:
+        query = RequestQueryParamsBuilder.build_query_params(request)
+        path = "/file-reporting/v1/reports/{}/download".format(report_id) + query
+        headers = self._prepare_binary_headers(request, path)
+        return self._http_client.request(
+            method="GET",
+            url=self.request_options.base_url + path,
+            headers=headers,
+            body=None,
+            response_type=bytes
+        )
+
     def _prepare_binary_headers(self, request: Optional[BaseRequest], path: str) -> Dict[str, str]:
         headers = self._create_headers_without_body(request, path)
         headers["Content-Type"] = self.APPLICATION_OCTET_STREAM
