@@ -12,7 +12,7 @@ class PaymentProvider(str, Enum):
     SODEXO = "SODEXO"
     EDENRED = "EDENRED"
     TOKENFLEX = "TOKENFLEX"
-    INSTANT_TRANSFER = "INSTANT_TRANSFER"
+    COMPAY = "COMPAY"
     ALIPAY = "ALIPAY"
     PAYPAL = "PAYPAL"
     KLARNA = "KLARNA"

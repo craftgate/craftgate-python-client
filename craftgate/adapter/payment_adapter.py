@@ -55,7 +55,7 @@ from craftgate.response.init_garanti_pay_payment_response import InitGarantiPayP
 from craftgate.response.init_multi_payment_response import InitMultiPaymentResponse
 from craftgate.response.init_pos_apm_payment_response import InitPosApmPaymentResponse
 from craftgate.response.init_three_ds_payment_response import InitThreeDSPaymentResponse
-from craftgate.response.instant_transfer_banks_response import InstantTransferBanksResponse
+from craftgate.response.compay_banks_response import CompayBanksResponse
 from craftgate.response.ivr_card_tokenization_response import IVRCardTokenizationResponse
 from craftgate.response.multi_payment_response import MultiPaymentResponse
 from craftgate.response.payment_refund_response import PaymentRefundResponse
@@ -572,15 +572,15 @@ class PaymentAdapter(BaseAdapter):
             response_type=BnplLimitInquiryResponse
         )
 
-    def retrieve_active_banks(self) -> InstantTransferBanksResponse:
-        path = "/payment/v1/instant-transfer-banks"
+    def retrieve_active_banks(self) -> CompayBanksResponse:
+        path = "/payment/v1/compay/banks"
         headers = self._create_headers(None, path)
         return self._http_client.request(
             method="GET",
             url=self.request_options.base_url + path,
             headers=headers,
             body=None,
-            response_type=InstantTransferBanksResponse
+            response_type=CompayBanksResponse
         )
 
     def init_multi_payment(self, request: InitMultiPaymentRequest) -> InitMultiPaymentResponse:
