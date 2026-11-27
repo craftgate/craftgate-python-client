@@ -4,7 +4,7 @@ import unittest
 from decimal import Decimal
 
 from craftgate import Craftgate
-from craftgate.model import Currency
+from craftgate.model import Currency, PaymentProvider
 from craftgate.request import SearchInstallmentsRequest
 from craftgate.request_options import RequestOptions
 
@@ -28,6 +28,20 @@ class InstallmentSample(unittest.TestCase):
             bin_number="520922",
             price=Decimal("100"),
             currency=Currency.TRY
+        )
+
+        resp = self.installment.search_installments(request)
+
+        print(resp)
+        self.assertIsNotNone(resp)
+        self.assertIsInstance(getattr(resp, "items", []), list)
+
+    def test_search_installments_with_payment_provider(self):
+        request = SearchInstallmentsRequest(
+            bin_number="520922",
+            price=Decimal("100"),
+            currency=Currency.TRY,
+            payment_provider=PaymentProvider.MASTERPASS
         )
 
         resp = self.installment.search_installments(request)
