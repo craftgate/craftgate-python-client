@@ -43,6 +43,7 @@ class PaymentReportingSample(unittest.TestCase):
             max_paid_price=Decimal("100"),
             installment=1,
             is_three_ds=False,
+            is_masked_card_payment=False,
             min_created_date=now - timedelta(days=30),
             max_created_date=now
         )

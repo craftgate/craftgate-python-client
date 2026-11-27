@@ -38,6 +38,7 @@ class BasePaymentResponse:
             payment_phase: Optional[PaymentPhase] = None,
             payment_channel: Optional[str] = None,
             is_three_ds: Optional[bool] = None,
+            is_masked_card_payment: Optional[bool] = None,
             merchant_commission_rate: Optional[Decimal] = None,
             merchant_commission_rate_amount: Optional[Decimal] = None,
             bank_commission_rate: Optional[Decimal] = None,
@@ -85,6 +86,7 @@ class BasePaymentResponse:
         self.payment_phase = payment_phase
         self.payment_channel = payment_channel
         self.is_three_ds = is_three_ds
+        self.is_masked_card_payment = is_masked_card_payment
         self.merchant_commission_rate = merchant_commission_rate
         self.merchant_commission_rate_amount = merchant_commission_rate_amount
         self.bank_commission_rate = bank_commission_rate
