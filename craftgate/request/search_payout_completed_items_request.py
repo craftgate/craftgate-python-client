@@ -5,7 +5,7 @@ from craftgate.model.settlement_type import SettlementType
 from craftgate.request.common.base_request import BaseRequest
 
 
-class SearchPayoutCompletedTransactionsRequest(BaseRequest):
+class SearchPayoutCompletedItemsRequest(BaseRequest):
     def __init__(
             self,
             settlement_file_id: Optional[int] = None,
